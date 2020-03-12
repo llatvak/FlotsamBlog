@@ -12,7 +12,7 @@ export default function App() {
         <CssBaseline>
           <Switch>
             <Route path="/" exact={true} component={Main}/>
-            <Route path="/newpost" component={NewPost}/>
+            <Route path="/new" component={NewPost}/>
           </Switch>
         </CssBaseline>
       </div>

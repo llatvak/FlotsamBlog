@@ -41,7 +41,7 @@ const NavBar = (props) => {
                 {title}
                 </Typography>
                 <Toolbar className={classes.toolbarUserActions}>
-                    <Button variant="contained" color="secondary" component={RouterLink} to="/newpost">
+                    <Button variant="contained" color="secondary" component={RouterLink} to="/new">
                         New post
                     </Button>
                 </Toolbar>
