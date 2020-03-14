@@ -28,4 +28,9 @@ public class MyRestController {
 
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/posts", method = RequestMethod.GET)
+    public Iterable<BlogPost> fetchLocation() {
+        return postRepository.findAll();
+    }
 }
