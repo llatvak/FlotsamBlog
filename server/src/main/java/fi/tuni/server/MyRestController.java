@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.Optional;
 
 @RestController
 public class MyRestController {
@@ -18,7 +17,7 @@ public class MyRestController {
     BlogPostRepository postRepository;
 
     @RequestMapping(value = "/posts", method = RequestMethod.POST)
-    public ResponseEntity<Void> saveLocation(@RequestBody BlogPost p, UriComponentsBuilder b) {
+    public ResponseEntity<Void> savePost(@RequestBody BlogPost p, UriComponentsBuilder b) {
 
         this.postRepository.save(p);
 
@@ -30,7 +29,12 @@ public class MyRestController {
     }
 
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
-    public Iterable<BlogPost> fetchLocation() {
+    public Iterable<BlogPost> fetchPosts() {
         return postRepository.findAll();
+    }
+
+    @RequestMapping(value = "/posts/{postId}", method = RequestMethod.GET)
+    public Optional<BlogPost> fetchPost(@PathVariable int postId) {
+        return postRepository.findById(postId);
     }
 }
