@@ -37,4 +37,10 @@ public class MyRestController {
     public Optional<BlogPost> fetchPost(@PathVariable int postId) {
         return postRepository.findById(postId);
     }
+
+    @RequestMapping(value = "/posts/{postId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deletePost(@PathVariable int postId) {
+        postRepository.deleteById(postId);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
 }
