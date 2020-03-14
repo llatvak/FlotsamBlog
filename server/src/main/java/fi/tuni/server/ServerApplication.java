@@ -26,6 +26,7 @@ public class ServerApplication implements CommandLineRunner {
 		blogPosts.add(new BlogPost("Featured post", "Feb 12", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "https://source.unsplash.com/random", "Image text", "Category 2"));
 		blogPosts.add(new BlogPost("Featured post", "Jan 13", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "https://source.unsplash.com/random", "Image text", "Category 3"));
 		postRepository.saveAll(blogPosts);
+		postRepository.findAll().forEach(System.out::println);
 	}
 
 }

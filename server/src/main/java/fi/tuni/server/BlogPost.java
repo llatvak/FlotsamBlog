@@ -17,9 +17,10 @@ public class BlogPost {
     private String imageText;
     private String category;
 
-    public BlogPost(String title, String date, String description, String image, String imageText, String category) {
+    public BlogPost(String title, String description, String date, String image, String imageText, String category) {
         this.title = title;
         this.description = description;
+        this.date = date;
         this.image = image;
         this.imageText = imageText;
         this.category = category;
