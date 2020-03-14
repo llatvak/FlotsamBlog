@@ -1,13 +1,14 @@
 package fi.tuni.server;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+@Entity
 public class BlogPost {
 
     @Id
     @GeneratedValue
-
     private int id;
     private String title;
     private String description;
@@ -16,7 +17,6 @@ public class BlogPost {
     private String category;
 
     public BlogPost(String title, String description, String image, String imageText, String category) {
-        this.id = id;
         this.title = title;
         this.description = description;
         this.image = image;
