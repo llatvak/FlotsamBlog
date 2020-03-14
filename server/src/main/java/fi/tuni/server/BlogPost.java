@@ -13,10 +13,11 @@ public class BlogPost {
     private String title;
     private String description;
     private String image;
+    private String date;
     private String imageText;
     private String category;
 
-    public BlogPost(String title, String description, String image, String imageText, String category) {
+    public BlogPost(String title, String date, String description, String image, String imageText, String category) {
         this.title = title;
         this.description = description;
         this.image = image;
@@ -33,6 +34,14 @@ public class BlogPost {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getDescription() {
@@ -77,6 +86,7 @@ public class BlogPost {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", date='" + date + '\'' +
                 ", image='" + image + '\'' +
                 ", imageText='" + imageText + '\'' +
                 ", category='" + category + '\'' +
