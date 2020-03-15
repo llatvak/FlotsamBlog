@@ -1,54 +1,66 @@
-import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
+import React from 'react'
+import { Navbar, Button, Control, Input, Field, Form, Icon} from "react-bulma-components";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
-const useStyles = makeStyles({
-    appbar: {
-        padding: 5,
-        justify: "space-between",
-      },
-    title: {
-        flexGrow: 1,
-    },
-    toolbarCategories: {
 
-    },
-    toolbarUserActions: {
-        
-    }
-  });
-
-const NavBar = (props) => {
-
-    const { categories, title } = props;
-    const classes = useStyles();
-    const [clicked, setClicked] = useState(false);
-
-    function handleClick() {
-        return setClicked(true);
-      }
+export default function NavBar(props) {
+    const { post } = props;
 
     return (
-
         <div>
-        <AppBar className={classes.appbar} position="static">
-            <Toolbar>
-                <Typography className={classes.title} variant="title" color="inherit" >
-                {title}
-                </Typography>
-                <Toolbar className={classes.toolbarUserActions}>
-                    <Button variant="contained" color="secondary" component={RouterLink} to="/new">
-                        New post
-                    </Button>
-                </Toolbar>
-            </Toolbar>
-        </AppBar>
-        
+            <Navbar>
+                <Navbar.Brand>
+                    <Navbar.Item>
+                        <img src="logo.png" alt="logo" />
+                    </Navbar.Item>
+                <Navbar.Burger />
+                </Navbar.Brand>
+                
+                <Navbar.Menu>
+                    <Navbar.Container position="start">
+                        <Navbar.Link arrowless="true">
+                            One
+                        </Navbar.Link>
+                        <Navbar.Link arrowless="true">
+                            Two
+                        </Navbar.Link>
+                        <Navbar.Link arrowless="true">
+                            Three
+                        </Navbar.Link>
+                    </Navbar.Container>
+
+                    <Navbar.Container position="end">
+                        <Navbar.Item>
+                        <Form.Field kind="addons">
+                            <Form.Control>
+                                <Form.Input placeholder="Search post" />
+                            </Form.Control>
+                            <Form.Control>
+                                <Button color="primary">
+                                    <Icon>
+                                        <FontAwesomeIcon icon={faSearch} />
+                                    </Icon>
+                                </Button>
+                            </Form.Control>
+                        </Form.Field>
+
+                        </Navbar.Item>
+
+                        <Navbar.Item dropdown hoverable href="#">
+                            <Navbar.Link>
+                                
+                            </Navbar.Link>
+                            <Navbar.Dropdown right="false">
+                                <Navbar.Item>
+                                    <Button color="primary">New post</Button>
+                                </Navbar.Item>
+                            </Navbar.Dropdown>
+                        </Navbar.Item>
+                    </Navbar.Container>
+
+                </Navbar.Menu>
+            </Navbar>
         </div>
-    )
+    );
 }
-export default NavBar;

@@ -1,89 +1,83 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
+import React from 'react'
+import { Columns, Container, Card } from "react-bulma-components";
 
-import NavBar from './NavBar'
-import BlogPost from './BlogPost'
+import BlogPost from "./BlogPost";
+import NavBar from "./NavBar";
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-  },
-});
+const featuredPosts = [
+    {
+      title: 'Post title #1',
+      date: '11 April 2019',
+      body:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
+      image: 'https://source.unsplash.com/random',
+      imageText: 'Image Text',
+    },
+    {
+      title: 'Post title #2',
+      date: '12 May 2020',
+      body:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
+      image: 'https://source.unsplash.com/random',
+      imageText: 'Image Text',
+    },
+    {
+      title: 'Post title #3',
+      date: '13 June 2021',
+      body:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
+      image: 'https://source.unsplash.com/random',
+      imageText: 'Image Text',
+    },
+    {
+      title: 'Post title #4',
+      date: '14 July 2022',
+      body:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
+      image: 'https://source.unsplash.com/random',
+      imageText: 'Image Text',
+    },
+    {
+      title: 'Post title #5',
+      date: '15 August 2023',
+      body:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
+      image: 'https://source.unsplash.com/random',
+      imageText: 'Image Text',
+    },
+    {
+      title: 'Post title #6',
+      date: '15 September 2024',
+      body:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
+      image: 'https://source.unsplash.com/random',
+      imageText: 'Image Text',
+    },
 
+];
 
 const categories = [
   { title: 'Category 1', url: '#' },
   { title: 'Category 2', url: '#' },
   { title: 'Category 3', url: '#' },
 ];
-
-const featuredPosts = [
-  {
-    title: 'Featured post',
-    date: 'Mar 11',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
-  },
-  {
-    title: 'Post title',
-    date: 'Mar 11',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
-  },
-  {
-    title: 'Featured post',
-    date: 'Mar 11',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
-  },
-  {
-    title: 'Post title',
-    date: 'Mar 11',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
-  },
-  {
-    title: 'Featured post',
-    date: 'Mar 11',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
-  },
-  {
-    title: 'Post title',
-    date: 'Mar 11',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
-  },
-
-];
-
 export default function Main() {
 
-  const classes = useStyles();
-  return (
-    <div>
-      <NavBar title="Flotsam" categories={categories}/>
-      <Container maxWidth="lg">
-        <Grid container className={classes.root} spacing={1}>
-              {featuredPosts.map(post => (
-                <BlogPost key={post.title} post={post} />
-              ))}
-        </Grid>
-      </Container>
-    </div>
-  );
+    return (
+
+            
+
+        <div>
+        <NavBar category={categories}/>
+        <Container>
+            <Columns>
+                {featuredPosts.map(post => (
+                    <Columns.Column size="one-third">
+                        <BlogPost key={post.title} post={post} />
+                    </Columns.Column>
+                ))}
+            </Columns>
+        </Container>
+        </div>
+    );
 }
