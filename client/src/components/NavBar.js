@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState }from 'react'
 import { Navbar, Button, Control, Input, Field, Form, Icon} from "react-bulma-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -7,14 +7,16 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 export default function NavBar(props) {
     const { post } = props;
 
+    const [navbarOpen, setNavbarOpen] = useState(true);
+
     return (
         <div>
-            <Navbar>
+            <Navbar active={navbarOpen} >
                 <Navbar.Brand>
                     <Navbar.Item>
                         <img src="logo.png" alt="logo" />
                     </Navbar.Item>
-                <Navbar.Burger />
+                <Navbar.Burger onClick={() => setNavbarOpen(!navbarOpen)}/>
                 </Navbar.Brand>
                 
                 <Navbar.Menu>
