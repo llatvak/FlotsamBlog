@@ -1,5 +1,6 @@
 import React, { useState }from 'react'
 import { Navbar, Button, Control, Input, Field, Form, Icon} from "react-bulma-components";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
@@ -55,7 +56,7 @@ export default function NavBar(props) {
                             </Navbar.Link>
                             <Navbar.Dropdown right="false">
                                 <Navbar.Item>
-                                    <Button color="primary">New post</Button>
+                                    <Button renderAs={Link} to="/newpost" color="primary" >New post</Button>
                                 </Navbar.Item>
                             </Navbar.Dropdown>
                         </Navbar.Item>
