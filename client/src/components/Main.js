@@ -1,7 +1,7 @@
 import React from 'react'
 import { Columns, Container, Card } from "react-bulma-components";
 
-import BlogPost from "./BlogPost";
+import BlogPostPreview from "./BlogPostPreview";
 import NavBar from "./NavBar";
 
 const featuredPosts = [
@@ -73,7 +73,7 @@ export default function Main() {
             <Columns>
                 {featuredPosts.map(post => (
                     <Columns.Column size="one-third">
-                        <BlogPost key={post.title} post={post} />
+                        <BlogPostPreview key={post.title} post={post} />
                     </Columns.Column>
                 ))}
             </Columns>
