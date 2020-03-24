@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
+import useFetch from "./useFetch";
 
 export default function NavBar(props) {
-    const { post } = props;
-
+    const { category } = props;
+    const data = useFetch('https://my-json-server.typicode.com/mkauha/demo/categories');
     const [navbarOpen, setNavbarOpen] = useState(true);
 
     return (
@@ -22,15 +23,11 @@ export default function NavBar(props) {
                 
                 <Navbar.Menu>
                     <Navbar.Container position="start">
-                        <Navbar.Link arrowless="true">
-                            One
-                        </Navbar.Link>
-                        <Navbar.Link arrowless="true">
-                            Two
-                        </Navbar.Link>
-                        <Navbar.Link arrowless="true">
-                            Three
-                        </Navbar.Link>
+                        {data.map(category => (
+                            <Navbar.Link arrowless="true">
+                                {category.title}
+                            </Navbar.Link>
+                        ))}
                     </Navbar.Container>
 
                     <Navbar.Container position="end">
