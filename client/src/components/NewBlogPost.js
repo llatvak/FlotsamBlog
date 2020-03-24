@@ -2,12 +2,20 @@ import React from 'react'
 import { Box, Button, Form } from "react-bulma-components";
 import NavBar from "./NavBar";
 
+const boxStyle = {
+    margin: '60px',
+};
+
+const buttonStyle = {
+    marginRight: '20px',
+};
+
 export default function BlogPost(props) {
 
     return (
         <div>
-            <NavBar></NavBar>
-            <Box>
+            <NavBar />
+            <Box style={boxStyle}>
                 <Form.Field>
                     <Form.Label>Title</Form.Label>
                     <Form.Control>
@@ -24,8 +32,8 @@ export default function BlogPost(props) {
 
                 <Form.Field>
                     <Form.Control>
-                        <Button color="danger">Cancel</Button>
-                        <Button color="success">Post</Button>
+                        <Button style={buttonStyle} color="danger">Cancel</Button>
+                        <Button style={buttonStyle} color="success">Post</Button>
                     </Form.Control>
                 </Form.Field>
             </Box>
