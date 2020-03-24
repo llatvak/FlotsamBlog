@@ -1,8 +1,11 @@
-import React from 'react'
-import { Columns, Container, Card } from "react-bulma-components";
+import React, { useState, useEffect } from "react";
+import { Columns, Container } from "react-bulma-components";
 
 import BlogPostPreview from "./BlogPostPreview";
 import NavBar from "./NavBar";
+import useFetch from "./useFetch";
+
+
 
 const featuredPosts = [
     {
@@ -61,23 +64,23 @@ const categories = [
   { title: 'Category 2', url: '#' },
   { title: 'Category 3', url: '#' },
 ];
+
+
 export default function Main() {
-
+  const data = useFetch('https://my-json-server.typicode.com/mkauha/demo/blogposts');
     return (
-
-            
-
         <div>
-        <NavBar category={categories}/>
+        <NavBar />
         <Container>
             <Columns>
-                {featuredPosts.map(post => (
+                {data.map(post => (
                     <Columns.Column size="one-third">
                         <BlogPostPreview key={post.title} post={post} />
                     </Columns.Column>
                 ))}
             </Columns>
         </Container>
+
         </div>
     );
 }
