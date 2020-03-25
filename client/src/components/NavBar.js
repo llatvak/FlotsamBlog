@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Button, Control, Input, Field, Icon} from "rbx";
+import { Navbar, Button, Control, Input, Field, Icon, Image} from "rbx";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+
+const tempCategories = [
+    { title: 'Food', url: '#' },
+    { title: 'Health', url: '#' },
+    { title: 'Travel', url: '#' },
+  ];
 
 export default function NavBar(props) {
     const { category } = props;
@@ -27,14 +33,14 @@ export default function NavBar(props) {
             <Navbar active={navbarOpen} >
                 <Navbar.Brand>
                     <Navbar.Item>
-                        <img src="logo.png" alt="logo" />
+                        <Image src="logo.png" />
                     </Navbar.Item>
                 <Navbar.Burger onClick={() => setNavbarOpen(!navbarOpen)}/>
                 </Navbar.Brand>
                 
                 <Navbar.Menu>
                     <Navbar.Segment align="start">
-                         {categories.map(category => (
+                         {tempCategories.map(category => (
                             <Navbar.Item key={category.title}>
                                 {category.title}
                             </Navbar.Item>
