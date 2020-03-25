@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default function BlogPost(props) {
     const { post } = props;
-    const url = 'http://localhost:8080/api/posts/{post.id}';
+    const url = `http://localhost:8080/api/posts/${post.id}`;
     const route = `/${post.id}`
 
     function onReadMore(event) {
