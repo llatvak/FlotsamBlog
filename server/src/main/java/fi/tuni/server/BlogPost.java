@@ -15,14 +15,16 @@ public class BlogPost {
     private String body;
     private String imageUrl;
     private String date;
+    private String url;
     private String category;
 
-    public BlogPost(String title, String description, String body, String date, String imageUrl, String category) {
+    public BlogPost(String title, String description, String body, String date, String url, String imageUrl, String category) {
         this.title = title;
         this.description = description;
         this.body = body;
         this.date = date;
         this.imageUrl = imageUrl;
+        this.url = url;
         this.category = category;
     }
 
@@ -69,6 +71,14 @@ public class BlogPost {
         this.body = body;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public String getCategory() {
         return category;
     }
@@ -89,6 +99,7 @@ public class BlogPost {
                 ", description='" + description + '\'' +
                 ", body='" + body + '\'' +
                 ", date='" + date + '\'' +
+                ", date='" + url + '\'' +
                 ", image='" + imageUrl + '\'' +
                 ", category='" + category + '\'' +
                 '}';
