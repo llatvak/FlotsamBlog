@@ -1,28 +1,31 @@
-*.class
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.ear
-
-#Gradle temporary files
+HELP.md
 target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
 
-#Eclipse files
-**/.project
-**/.classpath
-**/.settings/
-blog/bin/
-**/.tern-project
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
-#IntelliJ files
-**/*.iml
-**/.idea
-**/.gradle
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
 
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+### VS Code ###
+.vscode/

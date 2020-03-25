@@ -5,7 +5,13 @@ import axios from 'axios';
 
 export default function BlogPost(props) {
     const { post } = props;
-    const url = `http://localhost:8080/api/posts/${post.id}`;
+
+    let url = `https://flotsamblog.herokuapp.com/api/posts/${post.id}`;
+
+    if(process.env.NODE_ENV !== 'production') {
+        const url = `https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts/${post.id}`;
+    }
+
     const route = `/${post.id}`
 
     function onReadMore(event) {
