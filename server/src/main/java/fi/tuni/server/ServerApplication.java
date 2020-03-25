@@ -16,6 +16,18 @@ public class ServerApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServerApplication.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		// Insert dummy data as list to database and print them
+		List<BlogPost> blogPosts = new ArrayList();
+		blogPosts.add(new BlogPost("Featured post", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "Mar 11", "https://source.unsplash.com/random", "Image text", "Category 1"));
+		blogPosts.add(new BlogPost("Featured post", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "Feb 12", "https://source.unsplash.com/random", "Image text", "Category 2"));
+		blogPosts.add(new BlogPost("Featured post", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "Jan 13", "https://source.unsplash.com/random", "Image text", "Category 3"));
+		postRepository.saveAll(blogPosts);
+
+		// Curl commands and author text
 		System.out.println("AUTHORS");
 		System.out.println("-------------");
 		System.out.println("Lauri Latva-Kyyny & Miko Kauhanen");
@@ -29,17 +41,10 @@ public class ServerApplication implements CommandLineRunner {
 		System.out.println("DELETE one post: ");
 		System.out.println("	curl -X DELETE http://localhost:8080/posts/1");
 		System.out.println("POST one post: ");
-		System.out.println("	curl -X POST -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Featured post\\\", \\\"description\\\": \\\"Post description\\\", \\\"date\\\": \\\"Featured post\\\", \\\"image\\\": \\\"https://source.unsplash.com/random\\\", \\\"imageText\\\": \\\"Image text\\\", \\\"category\\\": \\\"Category 1\\\"}\" http://localhost:8080/posts/");
-	}
+		System.out.println("	curl -X POST -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Featured post\\\", \\\"description\\\": \\\"Post description\\\", \\\"date\\\": \\\"Dec 20\\\", \\\"image\\\": \\\"https://source.unsplash.com/random\\\", \\\"imageText\\\": \\\"Image text\\\", \\\"category\\\": \\\"Category 1\\\"}\" http://localhost:8080/posts/");
+		System.out.println("UPDATE post: ");
+		System.out.println("	curl -X PUT -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Updated Featured post\\\", \\\"description\\\": \\\"Updated Post description\\\", \\\"date\\\": \\\"Dec 24\\\", \\\"image\\\": \\\"https://source.unsplash.com/random\\\", \\\"imageText\\\": \\\"Updated Image text\\\", \\\"category\\\": \\\"Updated Category 1\\\"}\" http://localhost:8080/posts/1");
 
-	@Override
-	public void run(String... args) throws Exception {
-		// Insert dummy data as list to database and print them
-		List<BlogPost> blogPosts = new ArrayList();
-		blogPosts.add(new BlogPost("Featured post", "Mar 11", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "https://source.unsplash.com/random", "Image text", "Category 1"));
-		blogPosts.add(new BlogPost("Featured post", "Feb 12", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "https://source.unsplash.com/random", "Image text", "Category 2"));
-		blogPosts.add(new BlogPost("Featured post", "Jan 13", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "https://source.unsplash.com/random", "Image text", "Category 3"));
-		postRepository.saveAll(blogPosts);
 		postRepository.findAll().forEach(System.out::println);
 	}
 
