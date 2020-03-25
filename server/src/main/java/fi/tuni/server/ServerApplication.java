@@ -35,15 +35,15 @@ public class ServerApplication implements CommandLineRunner {
 		System.out.println("CURL COMMANDS");
 		System.out.println("-------------");
 		System.out.println("GET all posts: ");
-		System.out.println("	curl -X GET http://localhost:8080/posts");
+		System.out.println("	curl -X GET http://localhost:8080/api/posts");
 		System.out.println("GET one post: ");
-		System.out.println("	curl -X GET http://localhost:8080/posts/1");
+		System.out.println("	curl -X GET http://localhost:8080/api/posts/1");
 		System.out.println("DELETE one post: ");
-		System.out.println("	curl -X DELETE http://localhost:8080/posts/1");
+		System.out.println("	curl -X DELETE http://localhost:8080/api/posts/1");
 		System.out.println("POST one post: ");
-		System.out.println("	curl -X POST -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Featured post\\\", \\\"description\\\": \\\"Post description\\\",  \\\"body\\\": \\\"Post body\\\", \\\"date\\\": \\\"Dec 20\\\", \\\"imageUrl\\\": \\\"https://source.unsplash.com/random\\\", \\\"category\\\": \\\"Category 1\\\"}\" http://localhost:8080/posts/");
+		System.out.println("	curl -X POST -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Featured post\\\", \\\"description\\\": \\\"Post description\\\",  \\\"body\\\": \\\"Post body\\\", \\\"date\\\": \\\"Dec 20\\\", \\\"imageUrl\\\": \\\"https://source.unsplash.com/random\\\", \\\"category\\\": \\\"Category 1\\\"}\" http://localhost:8080/api/posts/");
 		System.out.println("UPDATE post: ");
-		System.out.println("	curl -X PUT -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Updated Featured post\\\", \\\"description\\\": \\\"Updated Post description\\\",  \\\"body\\\": \\\"Updated post body\\\", \\\"date\\\": \\\"Dec 24\\\", \\\"imageUrl\\\": \\\"https://source.unsplash.com/random\\\", \\\"category\\\": \\\"Updated Category 1\\\"}\" http://localhost:8080/posts/1");
+		System.out.println("	curl -X PUT -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Updated Featured post\\\", \\\"description\\\": \\\"Updated Post description\\\",  \\\"body\\\": \\\"Updated post body\\\", \\\"date\\\": \\\"Dec 24\\\", \\\"imageUrl\\\": \\\"https://source.unsplash.com/random\\\", \\\"category\\\": \\\"Updated Category 1\\\"}\" http://localhost:8080/api/posts/1");
 
 		postRepository.findAll().forEach(System.out::println);
 	}

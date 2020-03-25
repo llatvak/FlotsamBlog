@@ -17,12 +17,12 @@ public class MyRestController {
     @Autowired
     BlogPostRepository postRepository;
 
-    @RequestMapping(value = "/posts", method = RequestMethod.POST)
+    @RequestMapping(value = "api/posts", method = RequestMethod.POST)
     public ResponseEntity<BlogPost> savePost(@RequestBody BlogPost p, UriComponentsBuilder b) {
 
         this.postRepository.save(p);
 
-        UriComponents uriComponents = b.path("/posts/{id}").buildAndExpand(p.getId());
+        UriComponents uriComponents = b.path("api/posts/{id}").buildAndExpand(p.getId());
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponents.toUri());
 
@@ -38,7 +38,7 @@ public class MyRestController {
         return new ResponseEntity<BlogPost>(p, headers, HttpStatus.OK);
     }*/
 
-    @PutMapping("posts/{postId}")
+    @PutMapping("api/posts/{postId}")
     public ResponseEntity<BlogPost> updatePost(@PathVariable(value = "postId") int postId, @Valid @RequestBody BlogPost postDetails) throws Exception {
         BlogPost post = postRepository.findById(postId).orElseThrow(() -> new Exception("Not valid id"));
         post.setTitle(postDetails.getTitle());
@@ -51,17 +51,17 @@ public class MyRestController {
         return ResponseEntity.ok(updatedPost);
     }
 
-    @RequestMapping(value = "/posts", method = RequestMethod.GET)
+    @RequestMapping(value = "api/posts", method = RequestMethod.GET)
     public Iterable<BlogPost> fetchPosts() {
         return postRepository.findAll();
     }
 
-    @RequestMapping(value = "/posts/{postId}", method = RequestMethod.GET)
+    @RequestMapping(value = "api/posts/{postId}", method = RequestMethod.GET)
     public Optional<BlogPost> fetchPost(@PathVariable int postId) {
         return postRepository.findById(postId);
     }
 
-    @RequestMapping(value = "/posts/{postId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "api/posts/{postId}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deletePost(@PathVariable int postId) {
         postRepository.deleteById(postId);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
