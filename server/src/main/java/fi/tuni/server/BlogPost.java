@@ -12,17 +12,17 @@ public class BlogPost {
     private int id;
     private String title;
     private String description;
-    private String image;
+    private String body;
+    private String imageUrl;
     private String date;
-    private String imageText;
     private String category;
 
-    public BlogPost(String title, String description, String date, String image, String imageText, String category) {
+    public BlogPost(String title, String description, String body, String date, String imageUrl, String category) {
         this.title = title;
         this.description = description;
+        this.body = body;
         this.date = date;
-        this.image = image;
-        this.imageText = imageText;
+        this.imageUrl = imageUrl;
         this.category = category;
     }
 
@@ -53,20 +53,20 @@ public class BlogPost {
         this.description = description;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getImageText() {
-        return imageText;
+    public String getBody() {
+        return body;
     }
 
-    public void setImageText(String imageText) {
-        this.imageText = imageText;
+    public void setBody(String body) {
+        this.body = body;
     }
 
     public String getCategory() {
@@ -87,9 +87,9 @@ public class BlogPost {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", body='" + body + '\'' +
                 ", date='" + date + '\'' +
-                ", image='" + image + '\'' +
-                ", imageText='" + imageText + '\'' +
+                ", image='" + imageUrl + '\'' +
                 ", category='" + category + '\'' +
                 '}';
     }

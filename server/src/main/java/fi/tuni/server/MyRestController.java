@@ -42,10 +42,10 @@ public class MyRestController {
     public ResponseEntity<BlogPost> updatePost(@PathVariable(value = "postId") int postId, @Valid @RequestBody BlogPost postDetails) throws Exception {
         BlogPost post = postRepository.findById(postId).orElseThrow(() -> new Exception("Not valid id"));
         post.setTitle(postDetails.getTitle());
-        post.setDate(postDetails.getDate());
         post.setDescription(postDetails.getDescription());
-        post.setImageText(postDetails.getImageText());
-        post.setImage(postDetails.getImage());
+        post.setBody(postDetails.getBody());
+        post.setDate(postDetails.getDate());
+        post.setImageUrl(postDetails.getImageUrl());
         post.setCategory(postDetails.getCategory());
         final BlogPost updatedPost = postRepository.save(post);
         return ResponseEntity.ok(updatedPost);
