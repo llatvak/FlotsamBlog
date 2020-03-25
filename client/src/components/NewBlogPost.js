@@ -13,7 +13,7 @@ const buttonStyle = {
 
 export default function BlogPost(props) {
 
-    const url = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
+    const url = 'http://localhost:8080/posts';
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState(new Date());

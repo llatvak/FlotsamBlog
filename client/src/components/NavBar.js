@@ -10,7 +10,7 @@ export default function NavBar(props) {
     const [navbarOpen, setNavbarOpen] = useState(true);
     const [categories, setCategories] = useState([])
 
-    const url = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/categories';
+    const url = 'http://localhost:8080/posts';
 
 
     useEffect(() => {

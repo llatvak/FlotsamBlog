@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default function BlogPost(props) {
     const { post } = props;
-    const url = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts/{post.id}';
+    const url = 'http://localhost:8080/posts{post.id}';
     const route = `/${post.id}`
 
     function onReadMore(event) {

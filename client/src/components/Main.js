@@ -69,7 +69,7 @@ const categories = [
 
 export default function Main() {
   const [posts, setPosts] = useState([])
-  const url = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
+  const url = 'http://localhost:8080/posts';
   
   useEffect(() => {
      axios
