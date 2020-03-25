@@ -69,7 +69,7 @@ const categories = [
 
 export default function Main() {
   const [posts, setPosts] = useState([])
-  const url = 'http://localhost:8080/posts';
+  const url = 'http://localhost:8080/api/posts';
   
   useEffect(() => {
      axios

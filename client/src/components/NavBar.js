@@ -10,7 +10,7 @@ export default function NavBar(props) {
     const [navbarOpen, setNavbarOpen] = useState(true);
     const [categories, setCategories] = useState([])
 
-    const url = 'http://localhost:8080/posts';
+    const url = 'http://localhost:8080/api/posts';
 
 
     useEffect(() => {

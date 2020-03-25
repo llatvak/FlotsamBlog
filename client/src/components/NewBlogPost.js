@@ -13,7 +13,7 @@ const buttonStyle = {
 
 export default function BlogPost(props) {
 
-    const url = 'http://localhost:8080/posts';
+    const url = 'http://localhost:8080/api/posts';
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState(new Date());
