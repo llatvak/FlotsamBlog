@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Column, Container } from "rbx";
 import axios from 'axios';
 
-import BlogPostPreview from "./BlogPostPreview";
+import BlogPostPreview from "./BlogPostCard";
 import NavBar from "./NavBar";
 
 
@@ -69,20 +69,23 @@ const categories = [
 
 export default function Main() {
   const [posts, setPosts] = useState([])
-
+  const url = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
+  
   useEffect(() => {
      axios
-      .get('https://my-json-server.typicode.com/mkauha/demo/blogposts')
+      .get(url)
       .then(response => {
         setPosts(response.data);
-      })
+      }).catch(error => {
+        alert(`Backend error: ${error}`)
+    })
   }, [])
 
     return (
         <div>
         <NavBar />
         <Container>
-            <Column.Group>
+            <Column.Group vcentered multiline>
                 {posts.map(post => (
                     <Column size="one-third">
                         <BlogPostPreview key={post.title} post={post} />
