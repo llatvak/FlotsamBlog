@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import 'react-bulma-components/dist/react-bulma-components.min.css';
+import "rbx/index.css";
 
 import Main from './components/Main';
 import NewBlogPost from './components/NewBlogPost';

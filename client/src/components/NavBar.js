@@ -1,10 +1,10 @@
 import React, { useState }from 'react'
-import { Navbar, Button, Control, Input, Field, Form, Icon} from "react-bulma-components";
+import { Navbar, Button, Control, Input, Field, Icon} from "rbx";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
-import useFetch from "./useFetch";
+import useFetch from "./controllers/FetchRequest";
 
 export default function NavBar(props) {
     const { category } = props;
@@ -22,42 +22,34 @@ export default function NavBar(props) {
                 </Navbar.Brand>
                 
                 <Navbar.Menu>
-                    <Navbar.Container position="start">
-                        {data.map(category => (
-                            <Navbar.Link arrowless="true">
+                    <Navbar.Segment align="start">
+                         {data.map(category => (
+                            <Navbar.Item arrowless="true">
                                 {category.title}
-                            </Navbar.Link>
+                            </Navbar.Item>
                         ))}
-                    </Navbar.Container>
+                    </Navbar.Segment>
 
-                    <Navbar.Container position="end">
+                    <Navbar.Segment align="end">
                         <Navbar.Item>
-                        <Form.Field kind="addons">
-                            <Form.Control>
-                                <Form.Input placeholder="Search post" />
-                            </Form.Control>
-                            <Form.Control>
+                        <Field kind="addons">
+                            <Control>
+                                <Input placeholder="Search post" />
+                            </Control>
+                            <Control>
                                 <Button color="primary">
                                     <Icon>
                                         <FontAwesomeIcon icon={faSearch} />
                                     </Icon>
                                 </Button>
-                            </Form.Control>
-                        </Form.Field>
+                            </Control>
+                        </Field>
 
                         </Navbar.Item>
-
-                        <Navbar.Item dropdown hoverable href="#">
-                            <Navbar.Link>
-                                
-                            </Navbar.Link>
-                            <Navbar.Dropdown right="false">
-                                <Navbar.Item>
-                                    <Button renderAs={Link} to="/newpost" color="primary" >New post</Button>
-                                </Navbar.Item>
-                            </Navbar.Dropdown>
+                        <Navbar.Item>
+                            <Button as={Link} to="/newpost" color="primary" >New post</Button>
                         </Navbar.Item>
-                    </Navbar.Container>
+                    </Navbar.Segment>
 
                 </Navbar.Menu>
             </Navbar>

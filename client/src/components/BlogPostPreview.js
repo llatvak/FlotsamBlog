@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Button, Heading } from "react-bulma-components";
+import { Card, Button, Title, Image } from "rbx";
 
 export default function BlogPost(props) {
     const { post } = props;
@@ -15,11 +15,15 @@ export default function BlogPost(props) {
     return (
         <div>
             <Card>
-                <Card.Image size='4by3' src='https://source.unsplash.com/random'></Card.Image>
+                <Card.Image size='4by3'>
+                    <Image.Container size="4by3">
+                        <Image src="https://source.unsplash.com/random" />
+                    </Image.Container>
+                </Card.Image>
 
                 <Card.Content>
-                    <Heading>{post.title}</Heading>
-                    <Heading subtitle="true">{post.description}</Heading>
+                    <Title>{post.title}</Title>
+                    <Title subtitle="true">{post.description}</Title>
                     <Button color="primary" onClick={onReadMore}>Read more</Button>
                     <Button color="danger" onClick={onDelete}>Delete</Button>
                 </Card.Content>

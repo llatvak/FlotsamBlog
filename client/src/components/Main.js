@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Columns, Container } from "react-bulma-components";
+import { Column, Container } from "rbx";
+import axios from 'axios';
 
 import BlogPostPreview from "./BlogPostPreview";
 import NavBar from "./NavBar";
-import useFetch from "./useFetch";
+
 
 
 
@@ -67,18 +68,27 @@ const categories = [
 
 
 export default function Main() {
-  const data = useFetch('https://my-json-server.typicode.com/mkauha/demo/blogposts');
+  const [posts, setPosts] = useState([])
+
+  useEffect(() => {
+     axios
+      .get('https://my-json-server.typicode.com/mkauha/demo/blogposts')
+      .then(response => {
+        setPosts(response.data);
+      })
+  }, [])
+
     return (
         <div>
         <NavBar />
         <Container>
-            <Columns>
-                {data.map(post => (
-                    <Columns.Column size="one-third">
+            <Column.Group>
+                {posts.map(post => (
+                    <Column size="one-third">
                         <BlogPostPreview key={post.title} post={post} />
-                    </Columns.Column>
+                    </Column>
                 ))}
-            </Columns>
+            </Column.Group>
         </Container>
 
         </div>
