@@ -14,7 +14,12 @@ const buttonStyle = {
 
 export default function BlogPost(props) {
 
-    const url = 'http://localhost:8080/api/posts';
+    let url = 'https://flotsamblog.herokuapp.com/api/posts';
+
+    if(process.env.NODE_ENV !== 'production') {
+        url = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
+    }
+
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [body, setBody] = useState('');

@@ -7,7 +7,11 @@ import NavBar from "./NavBar";
 
 export default function Main() {
   const [posts, setPosts] = useState([])
-  const url = 'http://localhost:8080/api/posts';
+  let url = 'https://flotsamblog.herokuapp.com/api/posts';
+
+  if(process.env.NODE_ENV !== 'production') {
+      url = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
+  }
   
   useEffect(() => {
      axios
