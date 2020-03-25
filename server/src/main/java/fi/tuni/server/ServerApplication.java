@@ -22,9 +22,9 @@ public class ServerApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		// Insert dummy data as list to database and print them
 		List<BlogPost> blogPosts = new ArrayList();
-		blogPosts.add(new BlogPost("Featured post","Post description.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "Mar 11", "https://source.unsplash.com/random", "Category 1"));
-		blogPosts.add(new BlogPost("Featured post", "Post description.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "Feb 12", "https://source.unsplash.com/random", "Category 2"));
-		blogPosts.add(new BlogPost("Featured post", "Post description.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "Jan 13", "https://source.unsplash.com/random", "Category 3"));
+		blogPosts.add(new BlogPost("Featured post","Post description.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "Mar 11", "Post url.", "https://source.unsplash.com/random", "Category 1"));
+		blogPosts.add(new BlogPost("Featured post", "Post description.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "Feb 12", "Post url.", "https://source.unsplash.com/random", "Category 2"));
+		blogPosts.add(new BlogPost("Featured post", "Post description.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.", "Jan 13", "Post url.", "https://source.unsplash.com/random", "Category 3"));
 		postRepository.saveAll(blogPosts);
 
 		// Curl commands and author text
@@ -41,9 +41,9 @@ public class ServerApplication implements CommandLineRunner {
 		System.out.println("DELETE one post: ");
 		System.out.println("	curl -X DELETE http://localhost:8080/api/posts/1");
 		System.out.println("POST one post: ");
-		System.out.println("	curl -X POST -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Featured post\\\", \\\"description\\\": \\\"Post description\\\",  \\\"body\\\": \\\"Post body\\\", \\\"date\\\": \\\"Dec 20\\\", \\\"imageUrl\\\": \\\"https://source.unsplash.com/random\\\", \\\"category\\\": \\\"Category 1\\\"}\" http://localhost:8080/api/posts/");
+		System.out.println("	curl -X POST -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Featured post\\\", \\\"description\\\": \\\"Post description\\\",  \\\"body\\\": \\\"Post body\\\", \\\"date\\\": \\\"Dec 20\\\", \\\"url\\\": \\\"Post url.\\\", \\\"imageUrl\\\": \\\"https://source.unsplash.com/random\\\", \\\"category\\\": \\\"Category 1\\\"}\" http://localhost:8080/api/posts/");
 		System.out.println("UPDATE post: ");
-		System.out.println("	curl -X PUT -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Updated Featured post\\\", \\\"description\\\": \\\"Updated Post description\\\",  \\\"body\\\": \\\"Updated post body\\\", \\\"date\\\": \\\"Dec 24\\\", \\\"imageUrl\\\": \\\"https://source.unsplash.com/random\\\", \\\"category\\\": \\\"Updated Category 1\\\"}\" http://localhost:8080/api/posts/1");
+		System.out.println("	curl -X PUT -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Updated Featured post\\\", \\\"description\\\": \\\"Updated Post description\\\",  \\\"body\\\": \\\"Updated post body\\\", \\\"date\\\": \\\"Dec 24\\\", \\\"url\\\": \\\"Updated post url.\\\", \\\"imageUrl\\\": \\\"https://source.unsplash.com/random\\\", \\\"category\\\": \\\"Updated Category 1\\\"}\" http://localhost:8080/api/posts/1");
 
 		postRepository.findAll().forEach(System.out::println);
 	}
