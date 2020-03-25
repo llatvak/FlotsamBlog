@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Input, Field, Button, Box, Label, Control, Textarea  } from "rbx";
+import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
 import axios from 'axios';
 
@@ -16,6 +17,7 @@ export default function BlogPost(props) {
     const url = 'http://localhost:8080/api/posts';
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [body, setBody] = useState('');
     const [date, setDate] = useState(new Date());
     const dateMonthYear = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
 
@@ -25,6 +27,7 @@ export default function BlogPost(props) {
     }
     const handleChangeDescription = e => {
         setDescription(e.target.value);
+        setBody(e.target.value);
     }
 
    const handleSubmit = event => {
@@ -33,7 +36,8 @@ export default function BlogPost(props) {
         axios
             .post(url, blogpost)
             .then(response => {
-                console.log(response)
+                console.log(response);
+                alert(`Post ${blogpost.title} created`);
             })
             .catch(error => {
                 alert(`Error: Post '${blogpost.title}' was not posted`)
@@ -44,9 +48,11 @@ export default function BlogPost(props) {
     const blogpost = {
         title: title,
         description: description,
-        image: "https://source.unsplash.com/random",
+        body: body,
+        imageUrl: "https://source.unsplash.com/random",
         date: dateMonthYear,
-        category: "food"
+        category: "food",
+        url: url
     }
 
     return (
@@ -73,8 +79,9 @@ export default function BlogPost(props) {
                     </Control>
                     
                     <Control>
-                        <Button style={buttonStyle} color="danger">Cancel</Button>
+                        <Button as={Link} to="/" style={buttonStyle} color="danger">Cancel</Button>
                         <Button onClick={handleSubmit} style={buttonStyle} color="success" >Post</Button>
+                        <Button as={Link} to="/" style={buttonStyle} color="info" >Home</Button>
                     </Control>
                 </Field>
             </Box>
