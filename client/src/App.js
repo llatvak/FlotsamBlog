@@ -5,6 +5,8 @@ import "rbx/index.css";
 import Main from './components/Main';
 import NewBlogPost from './components/NewBlogPost';
 import BlogPost from './components/BlogPost';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 
 
 export default function App() {
@@ -15,7 +17,8 @@ export default function App() {
             <Route path="/" exact={true} component={Main}/>
             <Route path="/posts/:id" component={BlogPost}/>
             <Route path="/new" component={NewBlogPost}/>
-
+            <Route path="/user/login" component={Login}/>
+            <Route path="/user/dashboard" component={Dashboard}/>
           </Switch>
       </div>
     </Router>
