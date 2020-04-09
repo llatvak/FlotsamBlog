@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Content, Title, Container, Image } from "rbx";
+import { Content, Title, Box, Image, Media } from "rbx";
 import axios from 'axios';
 import NavBar from "./NavBar";
 
-const content = {
-  'margin': '80px',
-  'background-color': '#fafafa',
-  'border-radius': '25px'
+const box = {
+  'margin': 'auto',
+  'marginTop': '60px',
+  'maxWidth': '50%'
+};
+
+const imageContainer = {
+  'marginTop': '20px',
+  'marginBottom': '20px',
 };
 
 const image = {
-  'margin-top': '20px',
-  'border-radius': '25px'
+  'borderRadius': '5px',
 };
 
 const body = {
-  'padding': '25px',
+  'padding': '50px',
+};
+
+const title = {
+
 };
 
 
@@ -43,27 +51,28 @@ export default function BlogPost(props) {
   return (
     <div>
     <NavBar />
-    <Container>
-      <Content style={content}>
-      <Image.Container  size={'3by2'} >
-        <Image src={post.imageUrl} style={image}/>
-      </Image.Container>
-
+    <Box breakpoint="tablet" style={box}>
+        
         <Content style={body}>
-          <Title>{post.title}</Title>
-          <Title size={6}>{post.category}</Title>
-          <p>
-            {post.body}
-          </p>
-
+          <Title style={title}>{post.title}</Title>
+          <Title style={title} size={6}>{post.category}</Title>
           <p>
             {post.date}
           </p>
+          </Content>
 
-        </Content>
+          <Image.Container size={'16by9'} style={imageContainer}>
+            <Image src={post.imageUrl} style={image}/>
+          </Image.Container>
 
-      </Content>
-    </Container>
+          <Content>
+            <p>
+              {post.body}
+            </p>
+          </Content>
+        
+
+    </Box>
     </div>
   );
 }
