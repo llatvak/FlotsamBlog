@@ -35,7 +35,7 @@ export default function NavBar(props) {
         <div>
             <Navbar active={navbarOpen} >
                 <Navbar.Brand>
-                    <Navbar.Item>
+                    <Navbar.Item as={Link} to="/">
                         <Image src="logo.png" />
                     </Navbar.Item>
                 <Navbar.Burger onClick={() => setNavbarOpen(!navbarOpen)}/>
@@ -66,8 +66,11 @@ export default function NavBar(props) {
                         </Field>
 
                         </Navbar.Item>
-                        <Navbar.Item>
-                            <Button as={Link} to="/new" color="primary" >New post</Button>
+                        <Navbar.Item as={Link} to="/new">
+                            <Button  color="primary" >New post</Button>
+                        </Navbar.Item>
+                        <Navbar.Item as={Link} to="/user/login">
+                            <Button outlined color="primary" >Login</Button>
                         </Navbar.Item>
                     </Navbar.Segment>
 
