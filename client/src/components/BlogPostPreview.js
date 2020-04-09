@@ -3,7 +3,7 @@ import { Card, Button, Title, Image } from "rbx";
 import { Router, Switch, Route, Link } from "react-router-dom";
 import axios from 'axios';
 
-export default function BlogPost(props) {
+export default function BlogPostPreview(props) {
     const { post } = props;
 
     let url = `https://flotsamblog.herokuapp.com/api/posts/${post.id}`;
@@ -12,10 +12,10 @@ export default function BlogPost(props) {
         const url = `https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts/${post.id}`;
     }
 
-    const route = `/${post.id}`
+    const route = `/posts/${post.id}`
 
     function onReadMore(event) {
-        console.log('Read more ' + route);
+        //console.log('Read more ' + route);
     }
 
     function onDelete(event) {
