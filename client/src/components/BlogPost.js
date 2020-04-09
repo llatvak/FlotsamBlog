@@ -1,7 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Content, Title,  } from "rbx";
+import { Content, Title, Container, Image } from "rbx";
 import axios from 'axios';
 import NavBar from "./NavBar";
+
+const content = {
+  'margin': '80px',
+  'background-color': '#fafafa',
+  'border-radius': '25px'
+};
+
+const image = {
+  'margin-top': '20px',
+  'border-radius': '25px'
+};
+
+const body = {
+  'padding': '25px',
+};
+
 
 export default function BlogPost(props) {
   const id  = props.match.params.id;
@@ -27,12 +43,27 @@ export default function BlogPost(props) {
   return (
     <div>
     <NavBar />
-    <Content>
-      <Title>{post.title}</Title>
-        <p>
-          {post.body}
-        </p>
-    </Content>
+    <Container>
+      <Content style={content}>
+      <Image.Container  size={'3by2'} >
+        <Image src={post.imageUrl} style={image}/>
+      </Image.Container>
+
+        <Content style={body}>
+          <Title>{post.title}</Title>
+          <Title size={6}>{post.category}</Title>
+          <p>
+            {post.body}
+          </p>
+
+          <p>
+            {post.date}
+          </p>
+
+        </Content>
+
+      </Content>
+    </Container>
     </div>
   );
 }
