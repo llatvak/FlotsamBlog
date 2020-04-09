@@ -3,7 +3,7 @@ import { Navbar, Button, Control, Input, Field, Icon, Image} from "rbx";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 const tempCategories = [
     { title: 'Food', url: '#' },
@@ -66,11 +66,12 @@ export default function NavBar(props) {
                         </Field>
 
                         </Navbar.Item>
-                        <Navbar.Item as={Link} to="/new">
-                            <Button  color="primary" >New post</Button>
-                        </Navbar.Item>
                         <Navbar.Item as={Link} to="/user/login">
-                            <Button outlined color="primary" >Login</Button>
+                            <Button color="primary" >
+                                <Icon>
+                                    <FontAwesomeIcon icon={faUserCircle} />
+                                </Icon>
+                            </Button>
                         </Navbar.Item>
                     </Navbar.Segment>
 
