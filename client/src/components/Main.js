@@ -34,7 +34,7 @@ export default function Main() {
             <Column.Group vcentered multiline>
                 {posts.map(post => (
                     <Column size="one-third">
-                        <BlogPostPreview key={post.title} post={post} />
+                        <BlogPostPreview key={post.id} post={post} />
                     </Column>
                 ))}
             </Column.Group>
