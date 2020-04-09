@@ -67,7 +67,7 @@ export default function NavBar(props) {
 
                         </Navbar.Item>
                         <Navbar.Item>
-                            <Button as={Link} to="/newpost" color="primary" >New post</Button>
+                            <Button as={Link} to="/new" color="primary" >New post</Button>
                         </Navbar.Item>
                     </Navbar.Segment>
 
