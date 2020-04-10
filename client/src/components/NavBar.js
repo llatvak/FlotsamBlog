@@ -5,32 +5,28 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
-const tempCategories = [
-    { title: 'Food', url: '#' },
-    { title: 'Health', url: '#' },
-    { title: 'Travel', url: '#' },
-  ];
-
-export default function NavBar(props) {
-    const { category } = props;
+export default function NavBar() {
     const [navbarOpen, setNavbarOpen] = useState(true);
     const [categories, setCategories] = useState([])
 
-    let url = 'https://flotsamblog.herokuapp.com/api/posts';
+    let postUrl = 'https://flotsamblog.herokuapp.com/api/posts';
+    let categoryUrl = 'https://flotsamblog.herokuapp.com/api/categories';
 
     if(process.env.NODE_ENV !== 'production') {
-        url = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
+        postUrl = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
+        categoryUrl = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/categories';
     }
 
     useEffect(() => {
         axios
-         .get(url)
+         .get(categoryUrl)
          .then(response => {
             setCategories(response.data);
          }).catch(error => {
            alert(`Backend error: ${error}`)
        })
      }, [])
+
     return (
         <div>
             <Navbar active={navbarOpen} >
@@ -43,8 +39,8 @@ export default function NavBar(props) {
                 
                 <Navbar.Menu>
                     <Navbar.Segment align="start">
-                         {tempCategories.map(category => (
-                            <Navbar.Item key={category.title}>
+                         {categories.map(category => (
+                            <Navbar.Item key={category.id}>
                                 {category.title}
                             </Navbar.Item>
                         ))}
@@ -67,11 +63,9 @@ export default function NavBar(props) {
 
                         </Navbar.Item>
                         <Navbar.Item as={Link} to="/user/login">
-                            <Button color="primary" >
-                                <Icon>
-                                    <FontAwesomeIcon icon={faUserCircle} />
-                                </Icon>
-                            </Button>
+                            <Icon>
+                                <FontAwesomeIcon icon={faUserCircle} />
+                            </Icon>
                         </Navbar.Item>
                     </Navbar.Segment>
 
