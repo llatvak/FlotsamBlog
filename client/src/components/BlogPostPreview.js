@@ -18,18 +18,6 @@ export default function BlogPostPreview(props) {
         //console.log('Read more ' + route);
     }
 
-    function onDelete(event) {
-        axios
-            .delete(url)
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                alert(`Error: Post ${post.id} was not deleted`)
-            })
-            console.log('delete');
-    }
-
     return (
         <div>
             <Card>
@@ -43,7 +31,6 @@ export default function BlogPostPreview(props) {
                     <Title>{post.title}</Title>
                     <Title subtitle>{post.description}</Title>
                     <Button as={Link} to={route} color="primary" onClick={onReadMore}>Read more</Button>
-                    <Button color="danger" onClick={onDelete}>Delete</Button>
                 </Card.Content>
                 <Card.Footer>
                     {post.date}
