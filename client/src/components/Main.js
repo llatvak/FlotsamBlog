@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Column, Container } from "rbx";
-import { BrowserRouter as Router, Switch, Route, useRouteMatch, useParams } from "react-router-dom";
 import axios from 'axios';
 
 import BlogPostPreview from "./BlogPostPreview";
-import NavBar from "./NavBar";
 
 export default function Main() {
   const [posts, setPosts] = useState([])

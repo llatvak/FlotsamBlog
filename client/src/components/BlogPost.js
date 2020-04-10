@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Content, Title, Box, Image, Media } from "rbx";
 import axios from 'axios';
-import NavBar from "./NavBar";
 
 const box = {
   'margin': 'auto',
