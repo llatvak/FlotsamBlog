@@ -29,11 +29,11 @@ export default function Main() {
 
     return (
         <div>
-        <NavBar />
+
         <Container>
             <Column.Group vcentered multiline>
                 {posts.map(post => (
-                    <Column size="one-third">
+                    <Column key={post.id} size="one-third">
                         <BlogPostPreview key={post.id} post={post} />
                     </Column>
                 ))}

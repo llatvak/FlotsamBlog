@@ -6,6 +6,7 @@ import NavBar from "./NavBar";
 const box = {
   'margin': 'auto',
   'marginTop': '60px',
+  'marginBottom': '100px',
   'maxWidth': '50%'
 };
 
@@ -50,7 +51,6 @@ export default function BlogPost(props) {
 
   return (
     <div>
-    <NavBar />
     <Box breakpoint="tablet" style={box}>
         
         <Content style={body}>
