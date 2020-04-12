@@ -3,39 +3,35 @@ import { Navbar, Button, Control, Input, Field, Icon, Image} from "rbx";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
-const tempCategories = [
-    { title: 'Food', url: '#' },
-    { title: 'Health', url: '#' },
-    { title: 'Travel', url: '#' },
-  ];
-
-export default function NavBar(props) {
-    const { category } = props;
+export default function NavBar() {
     const [navbarOpen, setNavbarOpen] = useState(true);
     const [categories, setCategories] = useState([])
 
-    let url = 'https://flotsamblog.herokuapp.com/api/posts';
+    let postUrl = 'https://flotsamblog.herokuapp.com/api/posts';
+    let categoryUrl = 'https://flotsamblog.herokuapp.com/api/categories';
 
     if(process.env.NODE_ENV !== 'production') {
-        url = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
+        postUrl = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
+        categoryUrl = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/categories';
     }
 
     useEffect(() => {
         axios
-         .get(url)
+         .get(categoryUrl)
          .then(response => {
             setCategories(response.data);
          }).catch(error => {
            alert(`Backend error: ${error}`)
        })
      }, [])
+
     return (
         <div>
             <Navbar active={navbarOpen} >
                 <Navbar.Brand>
-                    <Navbar.Item>
+                    <Navbar.Item as={Link} to="/">
                         <Image src="logo.png" />
                     </Navbar.Item>
                 <Navbar.Burger onClick={() => setNavbarOpen(!navbarOpen)}/>
@@ -43,8 +39,8 @@ export default function NavBar(props) {
                 
                 <Navbar.Menu>
                     <Navbar.Segment align="start">
-                         {tempCategories.map(category => (
-                            <Navbar.Item key={category.title}>
+                         {categories.map(category => (
+                            <Navbar.Item key={category.id}>
                                 {category.title}
                             </Navbar.Item>
                         ))}
@@ -66,8 +62,10 @@ export default function NavBar(props) {
                         </Field>
 
                         </Navbar.Item>
-                        <Navbar.Item>
-                            <Button as={Link} to="/newpost" color="primary" >New post</Button>
+                        <Navbar.Item as={Link} to="/user/login">
+                            <Icon>
+                                <FontAwesomeIcon icon={faUserCircle} />
+                            </Icon>
                         </Navbar.Item>
                     </Navbar.Segment>
 
