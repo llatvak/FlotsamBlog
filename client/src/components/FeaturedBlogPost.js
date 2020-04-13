@@ -3,7 +3,7 @@ import { Card, Button, Title, Image } from "rbx";
 import { Router, Switch, Route, Link } from "react-router-dom";
 import axios from 'axios';
 
-export default function BlogPostPreview(props) {
+export default function FeaturedBlogPost(props) {
     const { post } = props;
 
     let url = `https://flotsamblog.herokuapp.com/api/posts/${post.id}`;
