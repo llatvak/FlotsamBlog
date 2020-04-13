@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Input, Field, Button, Box, Label, Control, Textarea, Select, Container, File, Icon, Divider, Media, Image } from "rbx";
+import { Input, Field, Button, Box, Label, Control, Textarea, Select, Container, File, Icon, Divider, Media, Image, Title, Content } from "rbx";
 import { Link } from "react-router-dom";
-import NavBar from "./NavBar";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload, faImage } from '@fortawesome/free-solid-svg-icons'
@@ -18,7 +17,8 @@ const buttonControls = {
     marginTop: '20px',
 };
 
-export default function BlogPost(props) {
+
+export default function NewBlogPost(props) {
 
     let postUrl = 'https://flotsamblog.herokuapp.com/api/posts';
     let categoryUrl = 'https://flotsamblog.herokuapp.com/api/categories';
@@ -37,6 +37,8 @@ export default function BlogPost(props) {
     const [categories, setCategories] = useState([])
     const [date, setDate] = useState(new Date());
     const dateMonthYear = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
+
+    const [previewHidden, setPreviewHidden] = useState(true);
 
     useEffect(() => {
         axios
@@ -74,9 +76,9 @@ export default function BlogPost(props) {
         setImageUrl(imageSrc);
     }
 
-   const handleSubmit = event => {
+   const handleSubmit = e => {
         setDate(new Date());
-        event.preventDefault();
+        e.preventDefault();
         axios
             .post(postUrl, blogpost)
             .then(response => {
@@ -89,8 +91,9 @@ export default function BlogPost(props) {
             console.log('submit');
     }
 
-    const handlePreview = event => {
-        event.preventDefault();
+    const handlePreview = e => {
+        e.preventDefault();
+        setPreviewHidden(!previewHidden);
     }
 
     const renderImage = () => {
@@ -151,7 +154,7 @@ export default function BlogPost(props) {
                                 <Select onChange={handleChangeCategory}>
                                 <Select.Option>None</Select.Option>
                                     {categories.map(cat => (
-                                        <Select.Option key={cat.id} value={cat.title}>{cat.title}</Select.Option>
+                                        <Select.Option key={cat.title} value={cat.title}>{cat.title}</Select.Option>
                                     ))}
                                 </Select>
                             </Select.Container>
@@ -209,6 +212,10 @@ export default function BlogPost(props) {
                 </form>
             </Box>
             </Container>
+
+            <div hidden={previewHidden}>
+                
+            </div>
         </div>
     );
 }
