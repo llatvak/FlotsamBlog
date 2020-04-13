@@ -9,12 +9,12 @@ export default function NavBar() {
     const [navbarOpen, setNavbarOpen] = useState(true);
     const [categories, setCategories] = useState([])
 
-    let postUrl = 'https://flotsamblog.herokuapp.com/api/posts';
-    let categoryUrl = 'https://flotsamblog.herokuapp.com/api/categories';
+    let postUrl = process.env.REACT_APP_POSTS_API_URL_PROD;
+    let categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_PROD;
 
     if(process.env.NODE_ENV !== 'production') {
-        postUrl = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
-        categoryUrl = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/categories';
+        postUrl = process.env.REACT_APP_POSTS_API_URL_DEVEL;
+        categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_DEVEL;
     }
 
     useEffect(() => {

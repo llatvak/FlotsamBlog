@@ -8,10 +8,10 @@ export default function Main() {
   const [posts, setPosts] = useState([])
 
 
-  let url = 'https://flotsamblog.herokuapp.com/api/posts';
+  let url = process.env.REACT_APP_POSTS_API_URL_PROD;
 
   if(process.env.NODE_ENV !== 'production') {
-      url = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
+      url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
   }
   
   useEffect(() => {

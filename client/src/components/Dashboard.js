@@ -20,11 +20,12 @@ export default function Dashboard(props) {
 
   let shortDescription = '';
 
-  let url = `https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts/`;
+  let url = process.env.REACT_APP_POSTS_API_URL_PROD;
 
-  if(process.env.NODE_ENV === 'production') {
-     url = `https://flotsamblog.herokuapp.com/api/posts/`;
+  if(process.env.NODE_ENV !== 'production') {
+      url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
   }
+  
 
 
    useEffect(() => {

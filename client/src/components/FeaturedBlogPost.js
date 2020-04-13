@@ -6,10 +6,11 @@ import axios from 'axios';
 export default function FeaturedBlogPost(props) {
     const { post } = props;
 
-    let url = `https://flotsamblog.herokuapp.com/api/posts/${post.id}`;
+
+    let url = process.env.REACT_APP_POSTS_API_URL_PROD + `${post.id}`;
 
     if(process.env.NODE_ENV !== 'production') {
-        const url = `https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts/${post.id}`;
+        url = process.env.REACT_APP_POSTS_API_URL_DEVEL + `${post.id}`;
     }
 
     const route = `/posts/${post.id}`
