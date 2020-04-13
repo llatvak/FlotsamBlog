@@ -31,11 +31,12 @@ export default function BlogPost(props) {
   const id  = props.match.params.id;
   const [post, setPost] = useState([])
 
-  let url = `https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts/${id}`;
+  let url = process.env.REACT_APP_POSTS_API_URL_PROD + `${id}`;
 
-  if(process.env.NODE_ENV === 'production') {
-     url = `https://flotsamblog.herokuapp.com/api/posts/${id}`;
+  if(process.env.NODE_ENV !== 'production') {
+      url = process.env.REACT_APP_POSTS_API_URL_DEVEL + `${id}`;
   }
+
 
   useEffect(() => {
     axios
