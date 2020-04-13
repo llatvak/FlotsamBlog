@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Column, Container } from "rbx";
 import axios from 'axios';
 
-import BlogPostPreview from "./BlogPostPreview";
+import FeaturedBlogPost from "./FeaturedBlogPost";
 
 export default function Main() {
   const [posts, setPosts] = useState([])
+
+
   let url = 'https://flotsamblog.herokuapp.com/api/posts';
 
   if(process.env.NODE_ENV !== 'production') {
@@ -32,7 +34,7 @@ export default function Main() {
             <Column.Group vcentered multiline>
                 {posts.map(post => (
                     <Column key={post.id} size="one-third">
-                        <BlogPostPreview key={post.id} post={post} />
+                        <FeaturedBlogPost key={post.id} post={post} />
                     </Column>
                 ))}
             </Column.Group>
