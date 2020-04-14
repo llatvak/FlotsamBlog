@@ -25,7 +25,6 @@ export default function Comment(props) {
   const [heartAmount, setHeartAmount] = useState(0)
   let [heartIconColor, setHeartIconColor] = useState('default')
 
-  let commentUrl = process.env.REACT_APP_COMMENTS_API_URL_DEVEL;
   const { comment } = props;
 
   const handleHeartIconClick = e => {
@@ -47,10 +46,10 @@ export default function Comment(props) {
         <Media.Item align="content">
             <Content>
                 <p>
-                <strong>John Smith</strong> <small>@johnsmith</small>{' '}
-                <small>31m</small>
+                <strong>{comment.author}</strong> <small>@{comment.author}</small>{' '}
+                <small>{comment.date}</small>
                 <br />
-                Very cool post!
+                {comment.body}
                 </p>
             </Content>
                 <Level breakpoint="mobile">
