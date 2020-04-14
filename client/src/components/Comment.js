@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Content, Title, Box, Image, Media, Level, Icon, Button, Field, Control, Textarea } from "rbx";
+import React, { useState } from "react";
+import { Content, Media, Level, Icon } from "rbx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faReply, faRetweet, faHeart, faUserCircle } from '@fortawesome/free-solid-svg-icons'
-import axios from 'axios';
+import { faHeart, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 const body = {
   'padding': '50px',
@@ -22,11 +21,12 @@ const title = {
 
 };
 
-export default function Comment() {
+export default function Comment(props) {
   const [heartAmount, setHeartAmount] = useState(0)
   let [heartIconColor, setHeartIconColor] = useState('default')
 
   let commentUrl = process.env.REACT_APP_COMMENTS_API_URL_DEVEL;
+  const { comment } = props;
 
   const handleHeartIconClick = e => {
     if (heartIconColor === 'default') {

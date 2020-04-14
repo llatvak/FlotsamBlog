@@ -44,13 +44,7 @@ export default function BlogPost(props) {
   const id  = props.match.params.id;
   const [post, setPost] = useState([])
   const [commentsBoxOpen, setCommentBoxOpen] = useState(true);
-
-  let placeHolderObject = {
-    id: 1,
-    author: 'Quest 2123',
-    content: 'Very nice post',
-    reactAmount: 0
-  }
+  const [comments, setComments] = useState([])
 
   let url = process.env.REACT_APP_POSTS_API_URL_PROD + `${id}`;
 
@@ -61,6 +55,11 @@ export default function BlogPost(props) {
   }
 
   useEffect(() => {
+    fetchPost();
+    fetchComments();
+  }, [])
+
+  const fetchPost = () => {
     axios
      .get(url)
      .then(response => {
@@ -69,7 +68,18 @@ export default function BlogPost(props) {
      }).catch(error => {
        alert(`${error}`)
    })
- }, [])
+  }
+
+  const fetchComments = () => {
+    axios
+     .get(commentUrl)
+     .then(response => {
+       setComments(response.data);
+       console.log(response);
+     }).catch(error => {
+       alert(`${error}`)
+   })
+  }
 
   return (
     <div>
@@ -95,12 +105,14 @@ export default function BlogPost(props) {
 
           <Control>
             <Button style={button} outlined color={'#333'} key={'#333'} onClick={() => setCommentBoxOpen(!commentsBoxOpen)} >
-              View Comments (1)
+              View Comments ({comments.length})
             </Button>
           </Control>
 
-          <Content hidden={commentsBoxOpen} key={placeHolderObject.id}>
-              <Comment key={placeHolderObject.id} comment={placeHolderObject} />
+          <Content hidden={commentsBoxOpen} key={comments.id}>
+              {comments.map(comment => (
+                <Comment key={comment.id} comment={comment} />
+              ))}
           </Content>
 
           <Content hidden={commentsBoxOpen}>
