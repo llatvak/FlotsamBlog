@@ -62,10 +62,10 @@ export default function Comment(props) {
                             <Icon size="small">
                                 <FontAwesomeIcon color={heartIconColor} icon={faHeart} onClick={() => handleHeartIconClick()} />
                             </Icon>
-                            <Content>
-                                <small>{comment.likes}</small>
-                            </Content>
                         </Level.Item>
+                        <Content>
+                            <small>{comment.likes}</small>
+                        </Content>
                     </Level.Item>
             </Level>
         </Media.Item>
