@@ -49,6 +49,17 @@ export default function Dashboard(props) {
       .catch(error => {
           alert(`Error: Post  was not deleted`)
       })
+
+      for(let i = 0; i < posts.length; i++) {
+        if (posts[i].id === id) {
+            console.log(posts[i].id)
+            posts.splice(i, 1)
+            console.log(posts)
+            break;
+        }
+      }
+      // is setPosts necessary?
+      setPosts(posts);
 }
 
 function shorten(description) {
@@ -76,7 +87,7 @@ function shorten(description) {
           </Control>
         </Field>
 
-        <Table bordered fullwidth>
+        <Table fullwidth>
           <Table.Head>
             <Table.Row>
               <Table.Heading>ID</Table.Heading>
