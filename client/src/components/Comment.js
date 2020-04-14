@@ -22,7 +22,6 @@ const title = {
 };
 
 export default function Comment(props) {
-  const [heartAmount, setHeartAmount] = useState(0)
   let [heartIconColor, setHeartIconColor] = useState('default')
 
   const { comment } = props;
@@ -30,10 +29,10 @@ export default function Comment(props) {
   const handleHeartIconClick = e => {
     if (heartIconColor === 'default') {
       setHeartIconColor('red')
-      setHeartAmount(heartAmount + 1);
+      comment.likes++;
     } else {
       setHeartIconColor('default')
-      setHeartAmount(heartAmount - 1);
+      comment.likes--;
     }
   }
 
@@ -64,7 +63,7 @@ export default function Comment(props) {
                                 <FontAwesomeIcon color={heartIconColor} icon={faHeart} onClick={() => handleHeartIconClick()} />
                             </Icon>
                             <Content>
-                                <small>{heartAmount}</small>
+                                <small>{comment.likes}</small>
                             </Content>
                         </Level.Item>
                     </Level.Item>
