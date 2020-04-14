@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Content, Title, Box, Image, Media, Level, Icon, Button, Field, Control, Textarea } from "rbx";
+import { Content, Title, Box, Image, Media, Button, Field, Control, Textarea } from "rbx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faReply, faRetweet, faHeart, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import Comment from './Comment';
 import axios from 'axios';
 
 const box = {
@@ -42,9 +43,14 @@ const title = {
 export default function BlogPost(props) {
   const id  = props.match.params.id;
   const [post, setPost] = useState([])
-  const [heartAmount, setHeartAmount] = useState(0)
-  let [heartIconColor, setHeartIconColor] = useState('default')
   const [commentsBoxOpen, setCommentBoxOpen] = useState(true);
+
+  let placeHolderObject = {
+    id: 1,
+    author: 'Quest 2123',
+    content: 'Very nice post',
+    reactAmount: 0
+  }
 
   let url = process.env.REACT_APP_POSTS_API_URL_PROD + `${id}`;
 
@@ -52,16 +58,6 @@ export default function BlogPost(props) {
 
   if(process.env.NODE_ENV !== 'production') {
       url = process.env.REACT_APP_POSTS_API_URL_DEVEL + `${id}`;
-  }
-
-  const handleHeartIconClick = e => {
-    if (heartIconColor === 'default') {
-      setHeartIconColor('red')
-      setHeartAmount(heartAmount + 1);
-    } else {
-      setHeartIconColor('default')
-      setHeartAmount(heartAmount - 1);
-    }
   }
 
   useEffect(() => {
@@ -103,41 +99,12 @@ export default function BlogPost(props) {
             </Button>
           </Control>
 
+          <Content key={placeHolderObject.id}>
+              <Comment key={placeHolderObject.id} comment={placeHolderObject} />
+          </Content>
+
           <Content hidden={commentsBoxOpen}>
-            <Media style={media}>
-              <Media.Item as="figure" align="left">
-                <FontAwesomeIcon size={'3x'} icon={faUserCircle} />
-              </Media.Item>
-              <Media.Item align="content">
-                <Content>
-                  <p>
-                    <strong>John Smith</strong> <small>@johnsmith</small>{' '}
-                    <small>31m</small>
-                    <br />
-                    Very cool post!
-                  </p>
-                </Content>
-                <Level breakpoint="mobile">
-                  <Level.Item align="left">
-                    <Level.Item>
-                    <small>
-                      <a href="#reply">Reply</a>
-                    </small>
-                    </Level.Item>
-                    <Level.Item as="a">
-                      <Icon size="small">
-                        <FontAwesomeIcon color={heartIconColor} icon={faHeart} onClick={() => handleHeartIconClick()} />
-                      </Icon>
-                      <Content>
-                        <small>{heartAmount}</small>
-                      </Content>
-                    </Level.Item>
-                  </Level.Item>
-                </Level>
-              </Media.Item>
-            </Media>
-    
-            <Media as="article">
+            <Media style={media} as="article">
               <Media.Item align="left">
                 <FontAwesomeIcon size={'3x'} icon={faUserCircle} />
               </Media.Item>
