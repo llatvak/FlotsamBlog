@@ -99,7 +99,7 @@ export default function BlogPost(props) {
             </Button>
           </Control>
 
-          <Content key={placeHolderObject.id}>
+          <Content hidden={commentsBoxOpen} key={placeHolderObject.id}>
               <Comment key={placeHolderObject.id} comment={placeHolderObject} />
           </Content>
 
