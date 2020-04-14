@@ -33,7 +33,6 @@ export default function Dashboard(props) {
      .get(url)
      .then(response => {
        setPosts(response.data);
-       console.log(response);
      }).catch(error => {
        alert(`${error}`)
    })
@@ -96,7 +95,11 @@ function shorten(description) {
               <Table.Cell>{shorten(post.description)}</Table.Cell>
               <Table.Cell>{post.date}</Table.Cell>
               <Table.Cell>
-                <Button color="info">
+                <Button color="info"
+                    as={Link} to={{
+                      pathname: '/user/new',
+                      state: { postData: post }
+                    }}>
                   <Icon>
                       <FontAwesomeIcon icon={faEdit} />
                   </Icon>
