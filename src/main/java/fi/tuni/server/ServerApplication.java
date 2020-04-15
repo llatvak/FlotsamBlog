@@ -14,6 +14,9 @@ public class ServerApplication implements CommandLineRunner {
     @Autowired
     BlogPostRepository postRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
     }
@@ -27,13 +30,6 @@ public class ServerApplication implements CommandLineRunner {
         List<Comment> comments2 = new ArrayList<>();
         List<Comment> comments3 = new ArrayList<>();
 
-        categories.add(new Category("Programming"));
-        categories.add(new Category("Technology"));
-        categories.add(new Category("AI"));
-        categories.add(new Category("Android"));
-        categories.add(new Category("Work"));
-        categories.add(new Category("Lifestyle"));
-
         comments1.add(new Comment("Guest123","Very good post!", "14.4.2020", 3));
         comments1.add(new Comment("Guest222","Best post!", "13.3.2020", 100));
         comments1.add(new Comment("Guest333", "Nice one!", "23.3.2020", 22));
@@ -45,10 +41,6 @@ public class ServerApplication implements CommandLineRunner {
         comments3.add(new Comment("Guest123","Very good post!", "14.4.2020", 3));
         comments3.add(new Comment("Guest222","Best post!", "13.3.2020", 100));
         comments3.add(new Comment("Guest333", "Nice one!", "23.3.2020", 22));
-
-        Comment[] array1 = comments1.toArray(new Comment[0]);
-        Comment[] array2 = comments2.toArray(new Comment[0]);
-        Comment[] array3 = comments3.toArray(new Comment[0]);
 
         BlogPost post1 = new BlogPost("There won't be new emoji in 2021 because of coronavirus",
                                         "No new emoji will be unveiled in 2021. The planned annual release inst...", 
@@ -85,10 +77,20 @@ public class ServerApplication implements CommandLineRunner {
                                         "Android"
                                     );
 
+        // Add dummy BlogPosts to list and save to crud repository
         blogPosts.add(post1);
         blogPosts.add(post2);
         blogPosts.add(post3);
         postRepository.saveAll(blogPosts);
+
+        // Add dummy Categories to list and save to crud repository
+        categories.add(new Category("Programming"));
+        categories.add(new Category("Technology"));
+        categories.add(new Category("AI"));
+        categories.add(new Category("Android"));
+        categories.add(new Category("Work"));
+        categories.add(new Category("Lifestyle"));
+        categoryRepository.saveAll(categories);
 
         // Curl commands and author text
         System.out.println("AUTHORS");
