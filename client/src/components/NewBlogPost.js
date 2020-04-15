@@ -28,6 +28,7 @@ export default function NewBlogPost(props) {
         categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_DEVEL;
     }
 
+    const [id, setId] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [body, setBody] = useState('');
@@ -36,7 +37,8 @@ export default function NewBlogPost(props) {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [categories, setCategories] = useState([])
     const [date, setDate] = useState(new Date());
-    const dateMonthYear = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
+    const [dateMonthYear, setDateMonthYear] = useState(`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`)
+    const [edited, setEdited] = useState(false);
 
     const [previewHidden, setPreviewHidden] = useState(true);
 
@@ -49,7 +51,21 @@ export default function NewBlogPost(props) {
            alert(`Backend error: ${error}`)
        })
 
+       if(props.location.state !== undefined) {
+            const postData = props.location.state.postData;
+            console.log(postData);
+            setId(postData.id);
+            setTitle(postData.title);
+            setDescription(postData.description);
+            setBody(postData.body);
+            setImageUrl(postData.imageUrl);
+            setSelectedCategory(postData.category);
+            setDateMonthYear(postData.date);
+            setEdited(true);
+        }
      }, [])
+
+
 
     const handleChangeTitle = e => {
         setTitle(e.target.value);
@@ -77,18 +93,35 @@ export default function NewBlogPost(props) {
     }
 
    const handleSubmit = e => {
-        setDate(new Date());
         e.preventDefault();
-        axios
+        if(!edited) {
+            setDate(new Date());
+            axios
             .post(postUrl, blogpost)
             .then(response => {
                 console.log(response);
                 alert(`Post ${blogpost.title} created`);
             })
             .catch(error => {
+                 console.log(error);
                 alert(`Error: Post '${blogpost.title}' was not posted`)
             })
-            console.log('submit');
+       } else {
+            postUrl = postUrl + `${id}`
+            axios
+            .put(postUrl, blogpost)
+            .then(response => {
+                console.log(response);
+                alert(`Post ${blogpost.title} updated`);
+            })
+            .catch(error => {
+                 console.log(error);
+                alert(`Error: Post '${blogpost.title}' was not updated`)
+            })
+       }
+
+
+       console.log('submit');
     }
 
     const handlePreview = e => {
@@ -153,8 +186,8 @@ export default function NewBlogPost(props) {
                             <Select.Container>
                                 <Select onChange={handleChangeCategory}>
                                 <Select.Option>None</Select.Option>
-                                    {categories.map(cat => (
-                                        <Select.Option key={cat.title} value={cat.title}>{cat.title}</Select.Option>
+                                    {categories.map(category => (
+                                        <Select.Option key={category.title} value={category.title}>{category.title}</Select.Option>
                                     ))}
                                 </Select>
                             </Select.Container>
