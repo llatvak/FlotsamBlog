@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins="*")
 public class MyRestController {
 
     private final String POSTS_URL = "api/posts";
