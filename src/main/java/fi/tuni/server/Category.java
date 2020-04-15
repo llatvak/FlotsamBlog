@@ -16,6 +16,10 @@ public class Category {
         this.title = title;
     }
 
+    public Category() {
+
+    }
+
     public String getTitle() {
         return title;
     }

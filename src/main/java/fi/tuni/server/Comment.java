@@ -22,6 +22,10 @@ public class Comment {
         this.likes = likes;
     }
 
+    public Comment() {
+
+    }
+
     public String getAuthor() {
         return author;
     }
