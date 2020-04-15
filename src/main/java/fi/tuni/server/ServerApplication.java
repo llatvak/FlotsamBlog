@@ -46,6 +46,10 @@ public class ServerApplication implements CommandLineRunner {
         comments3.add(new Comment("Guest222","Best post!", "13.3.2020", 100));
         comments3.add(new Comment("Guest333", "Nice one!", "23.3.2020", 22));
 
+        Comment[] array1 = comments1.toArray(new Comment[0]);
+        Comment[] array2 = comments2.toArray(new Comment[0]);
+        Comment[] array3 = comments3.toArray(new Comment[0]);
+
         BlogPost post1 = new BlogPost("There won't be new emoji in 2021 because of coronavirus",
                                         "No new emoji will be unveiled in 2021. The planned annual release inst...", 
                                         "No new emoji will be unveiled in 2021. The planned annual release instead will be pushed back to 2022, according to the Unicode Consortium, a non-profit that oversees emoji standards and is responsible for new releases.\n" +
@@ -58,7 +62,7 @@ public class ServerApplication implements CommandLineRunner {
                                         "https://edition.cnn.com/2020/04/12/business/new-emoji-apple-android-2021-postponed/index.html", 
                                         "Technology",
                                         10,
-                                        (Comment[]) comments1.toArray()
+                                        array1
                                     );
          BlogPost post2 = new BlogPost("How to Share Files Wirelessly Between Windows 10 and Your Samsung Phone",
                                         "The latest Windows 10 Insider build now supports wireless file transfe...", 
@@ -71,7 +75,7 @@ public class ServerApplication implements CommandLineRunner {
                                         "https://lifehacker.com/how-to-share-files-wirelessly-between-windows-10-and-yo-1842839656", 
                                         "Technology",
                                         6,
-                                        (Comment[]) comments2.toArray()
+                                         array2
                                     );
         BlogPost post3 = new BlogPost("Meet the finalists of the Google Play Indie Games Festival ",
                                         "At the start of this year we opened submissions for 2020’s Google Play...", 
@@ -84,7 +88,7 @@ public class ServerApplication implements CommandLineRunner {
                                         "https://android-developers.googleblog.com/2020/03/meet-finalists-of-google-play-indie.html", 
                                         "Android",
                                         14,
-                                        (Comment[]) comments3.toArray()
+                                        array3
                                     );
 
 

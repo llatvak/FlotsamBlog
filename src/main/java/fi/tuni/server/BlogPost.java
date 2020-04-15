@@ -3,6 +3,7 @@ package fi.tuni.server;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Arrays;
 
 @Entity
 public class BlogPost {
@@ -123,7 +124,7 @@ public class BlogPost {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", category='" + category + '\'' +
                 ", likes='" + likes + '\'' +
-                ", comments='" + comments + '\'' +
+                ", comments='" + Arrays.toString(comments) + '\'' +
                 '}';
     }
 
