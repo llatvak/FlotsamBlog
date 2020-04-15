@@ -23,7 +23,8 @@ public class MyRestController {
     @Autowired
     CategoryRepository categoryRepository;
 
-
+    @Autowired
+    CommentRepository commentRepository;
 
     // ##################### Blogposts #####################
     @RequestMapping(value = POSTS_URL, method = RequestMethod.POST)
@@ -75,8 +76,6 @@ public class MyRestController {
         postRepository.deleteById(postId);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
-    
-
 
     // ##################### Categories #####################
     @RequestMapping(value = "api/categories", method = RequestMethod.POST)
@@ -112,6 +111,47 @@ public class MyRestController {
     @RequestMapping(value = "api/categories/{categoryId}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCategory(@PathVariable int categoryId) {
         categoryRepository.deleteById(categoryId);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
+    // ##################### Comments #####################
+    @RequestMapping(value = "api/comments", method = RequestMethod.POST)
+    public ResponseEntity<Comment> saveComment(@RequestBody Comment c, UriComponentsBuilder b) {
+
+        this.commentRepository.save(c);
+
+        UriComponents uriComponents = b.path("api/comments/{id}").buildAndExpand(c.getId());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(uriComponents.toUri());
+
+        return new ResponseEntity<Comment>(c, headers, HttpStatus.CREATED);
+    }
+
+    @PutMapping("api/comments/{commentId}")
+    public ResponseEntity<Comment> updateComment(@PathVariable(value = "commentId") int commentId, @Valid @RequestBody Comment commentDetails) throws Exception {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new Exception("Not valid id"));
+        comment.setAuthor(commentDetails.getAuthor());
+        comment.setContent(commentDetails.getContent());
+        comment.setDate(commentDetails.getDate());
+        comment.setLikes(commentDetails.getLikes());
+        comment.setPostId(commentDetails.getPostId());
+        final Comment updatedComment = commentRepository.save(comment);
+        return ResponseEntity.ok(updatedComment);
+    }
+
+    @RequestMapping(value = "api/comments", method = RequestMethod.GET)
+    public Iterable<Comment> fetchComments() {
+        return commentRepository.findAll();
+    }
+
+    @RequestMapping(value = "api/comments/{commentId}", method = RequestMethod.GET)
+    public Optional<Comment> fetchComments(@PathVariable int commentId) {
+        return commentRepository.findById(commentId);
+    }
+
+    @RequestMapping(value = "api/comments/{commentId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteComment(@PathVariable int commentId) {
+        commentRepository.deleteById(commentId);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 }
