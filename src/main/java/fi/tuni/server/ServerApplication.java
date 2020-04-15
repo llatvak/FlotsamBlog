@@ -30,6 +30,7 @@ public class ServerApplication implements CommandLineRunner {
         List<Comment> comments2 = new ArrayList<>();
         List<Comment> comments3 = new ArrayList<>();
 
+
         comments1.add(new Comment("Guest123","Very good post!", "14.4.2020", 3));
         comments1.add(new Comment("Guest222","Best post!", "13.3.2020", 100));
         comments1.add(new Comment("Guest333", "Nice one!", "23.3.2020", 22));
