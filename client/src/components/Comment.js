@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Content, Media, Level, Icon } from "rbx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios';
+
 
 const body = {
   'padding': '50px',
@@ -26,14 +28,29 @@ export default function Comment(props) {
 
   const { comment } = props;
 
+  let commentUrl = `${process.env.REACT_APP_COMMENTS_API_URL_DEVEL}${comment.id}` ;
+
   const handleHeartIconClick = e => {
     if (heartIconColor === 'default') {
       setHeartIconColor('red')
       comment.likes++;
+      updateLikes();
     } else {
       setHeartIconColor('default')
       comment.likes--;
+      updateLikes();
     }
+  }
+
+  const updateLikes = (e) => {
+    const tempComment = {id: comment.id, author: comment.author, body: comment.body, likes: comment.likes, date: comment.date}
+    axios
+     .put(commentUrl, tempComment)
+     .then(response => {
+       console.log(response)
+     }).catch(error => {
+       alert(`${error}`)
+   })
   }
 
   return (
