@@ -100,8 +100,8 @@ public class MyRestController {
     }
 
     @RequestMapping(value = "api/categories", method = RequestMethod.GET)
-    public Iterable<BlogPost> fetchCategories() {
-        return postRepository.findAll();
+    public Iterable<Category> fetchCategories() {
+        return categoryRepository.findAll();
     }
 
     @RequestMapping(value = "api/categories/{categoryId}", method = RequestMethod.GET)
