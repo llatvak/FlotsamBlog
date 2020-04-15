@@ -45,7 +45,7 @@ export default function BlogPost(props) {
   const [post, setPost] = useState([])
   const [commentsBoxOpen, setCommentBoxOpen] = useState(true);
   const [comments, setComments] = useState([])
-  const [commentAreaValue, setCommentAreaValue] = useState('')
+  const [commentAreaRef, setCommentAreaRef] = useState('')
 
   let url = process.env.REACT_APP_POSTS_API_URL_PROD + `${id}`;
 
@@ -85,12 +85,13 @@ export default function BlogPost(props) {
   const handleCommentPost = (e) => {
     const tempDate = formatDate(new Date().toString())
     const tempId = comments.length+1
-    const tempBody = commentAreaValue.value
+    const tempBody = commentAreaRef.value
     const tempComment = {id: tempId, author: 'Guest515', body: tempBody, likes: 0, date: tempDate}
     axios
      .post(commentUrl, tempComment)
      .then(response => {
        console.log(response)
+       commentAreaRef.value = ''
      }).catch(error => {
        alert(`${error}`)
    })
@@ -152,7 +153,7 @@ export default function BlogPost(props) {
               <Media.Item align="content">
                 <Field>
                   <Control as="p">
-                    <Textarea ref={(textarea) => {setCommentAreaValue(textarea)}} placeholder="Add a comment..." />
+                    <Textarea ref={(textarea) => {setCommentAreaRef(textarea)}} placeholder="Add a comment..." />
                   </Control>
                 </Field>
                 <Field>
