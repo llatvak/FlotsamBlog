@@ -2,20 +2,23 @@ package fi.tuni.server;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Comment {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private int postId;
     private String author;
     private String content;
     private String date;
     private int likes;
 
-    public Comment(String author, String content, String date, int likes) {
+    public Comment(int postId, String author, String content, String date, int likes) {
+        this.postId = postId;
         this.author = author;
         this.content = content;
         this.date = date;
@@ -24,6 +27,14 @@ public class Comment {
 
     public Comment() {
 
+    }
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 
     public String getAuthor() {
@@ -66,6 +77,7 @@ public class Comment {
     public String toString() {
         return "Comment{" +
                 "id=" + id +
+                ", postId='" + postId + '\'' +
                 ", author='" + author + '\'' +
                 ", content='" + content + '\'' +
                 ", date='" + date + '\'' +

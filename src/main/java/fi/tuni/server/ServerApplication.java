@@ -17,31 +17,19 @@ public class ServerApplication implements CommandLineRunner {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    CommentRepository commentRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         // Insert dummy data as list to database and print them
         List<BlogPost> blogPosts = new ArrayList<>();
         List<Category> categories = new ArrayList<>();
-        List<Comment> comments1 = new ArrayList<>();
-        List<Comment> comments2 = new ArrayList<>();
-        List<Comment> comments3 = new ArrayList<>();
-
-
-        comments1.add(new Comment("Guest123","Very good post!", "14.4.2020", 3));
-        comments1.add(new Comment("Guest222","Best post!", "13.3.2020", 100));
-        comments1.add(new Comment("Guest333", "Nice one!", "23.3.2020", 22));
-
-        comments2.add(new Comment("Guest123","Very good post!", "14.4.2020", 3));
-        comments2.add(new Comment("Guest222","Best post!", "13.3.2020", 100));
-        comments2.add(new Comment("Guest333", "Nice one!", "23.3.2020", 22));
-
-        comments3.add(new Comment("Guest123","Very good post!", "14.4.2020", 3));
-        comments3.add(new Comment("Guest222","Best post!", "13.3.2020", 100));
-        comments3.add(new Comment("Guest333", "Nice one!", "23.3.2020", 22));
+        List<Comment> comments = new ArrayList<>();
 
         BlogPost post1 = new BlogPost("There won't be new emoji in 2021 because of coronavirus",
                                         "No new emoji will be unveiled in 2021. The planned annual release inst...", 
@@ -92,6 +80,12 @@ public class ServerApplication implements CommandLineRunner {
         categories.add(new Category("Work"));
         categories.add(new Category("Lifestyle"));
         categoryRepository.saveAll(categories);
+
+        // Add dummy Comments to list and save to crud repository
+        comments.add(new Comment(1,"Guest123","Very good post!", "14.4.2020", 3));
+        comments.add(new Comment(2, "Guest222","Best post!", "13.3.2020", 100));
+        comments.add(new Comment(3, "Guest333", "Nice one!", "23.3.2020", 22));
+        commentRepository.saveAll(comments);
 
         // Curl commands and author text
         System.out.println("AUTHORS");
