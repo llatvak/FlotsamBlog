@@ -60,9 +60,7 @@ public class ServerApplication implements CommandLineRunner {
                                         "11.3.2020", 
                                         "https://blog.emojipedia.org/content/images/2018/07/facebook-emoji-set-emojipedia.jpg", 
                                         "https://edition.cnn.com/2020/04/12/business/new-emoji-apple-android-2021-postponed/index.html", 
-                                        "Technology",
-                                        10,
-                                        array1
+                                        "Technology"
                                     );
          BlogPost post2 = new BlogPost("How to Share Files Wirelessly Between Windows 10 and Your Samsung Phone",
                                         "The latest Windows 10 Insider build now supports wireless file transfe...", 
@@ -73,9 +71,7 @@ public class ServerApplication implements CommandLineRunner {
                                         "15.3.2020", 
                                         "https://blog.emojipedia.org/content/images/2018/07/facebook-emoji-set-emojipedia.jpg", 
                                         "https://lifehacker.com/how-to-share-files-wirelessly-between-windows-10-and-yo-1842839656", 
-                                        "Technology",
-                                        6,
-                                         array2
+                                        "Technology"
                                     );
         BlogPost post3 = new BlogPost("Meet the finalists of the Google Play Indie Games Festival ",
                                         "At the start of this year we opened submissions for 2020’s Google Play...", 
@@ -86,12 +82,8 @@ public class ServerApplication implements CommandLineRunner {
                                         "20.4.2020", 
                                         "https://3.bp.blogspot.com/-Z7zdfBjgT7s/Xn5KK2tHgSI/AAAAAAAAOx8/T6bReu6ky4E8gnTOSsSZJDbTOs4W1HbzQCLcBGAsYHQ/s1600/Android%2BDevelopers%2BBlog%2B%25281200x600%2529.png", 
                                         "https://android-developers.googleblog.com/2020/03/meet-finalists-of-google-play-indie.html", 
-                                        "Android",
-                                        14,
-                                        array3
+                                        "Android"
                                     );
-
-
 
         blogPosts.add(post1);
         blogPosts.add(post2);

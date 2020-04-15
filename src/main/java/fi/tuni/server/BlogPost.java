@@ -1,7 +1,6 @@
 package fi.tuni.server;
 
 import javax.persistence.*;
-import java.util.Arrays;
 
 @Entity
 public class BlogPost {
@@ -18,10 +17,8 @@ public class BlogPost {
     private String date;
     private String url;
     private String category;
-    private int likes;
-    private Comment[] comments;
 
-    public BlogPost(String title, String description, String body, String date, String url, String imageUrl, String category, int likes, Comment[] comments) {
+    public BlogPost(String title, String description, String body, String date, String url, String imageUrl, String category) {
         this.title = title;
         this.description = description;
         this.body = body;
@@ -29,8 +26,6 @@ public class BlogPost {
         this.imageUrl = imageUrl;
         this.url = url;
         this.category = category;
-        this.likes = likes;
-        this.comments = comments;
     }
 
     public BlogPost() {
@@ -96,22 +91,6 @@ public class BlogPost {
         return id;
     }
 
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
-    public Comment[] getComments() {
-        return comments;
-    }
-
-    public void setComments(Comment[] comments) {
-        this.comments = comments;
-    }
-
     @Override
     public String toString() {
         return "BlogPost{" +
@@ -123,8 +102,6 @@ public class BlogPost {
                 ", url='" + url + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", category='" + category + '\'' +
-                ", likes='" + likes + '\'' +
-                ", comments='" + Arrays.toString(comments) + '\'' +
                 '}';
     }
 
