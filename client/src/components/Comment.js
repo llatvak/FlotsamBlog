@@ -20,7 +20,6 @@ export default function Comment(props) {
   useEffect(() => {
     // Get liked comments from localstorage and compare to post id
     let likedComments = [];
-    console.log('Tykätyt kommentit: ' + likedComments)
     if(localStorage.getItem(`likedComments${comment.postId}`)) {
       likedComments = JSON.parse(localStorage.getItem(`likedComments${comment.postId}`));
         
@@ -41,9 +40,7 @@ export default function Comment(props) {
 
     if(!likedCommentsInStorage.includes(comment.id)) {
       likedCommentsInStorage.push(comment.id)
-      console.log('pushed to array')
     }
-    console.log('Tykätyt kommentit in storage: ' + likedCommentsInStorage)
     localStorage.setItem(`likedComments${comment.postId}`, JSON.stringify(likedCommentsInStorage));
 
     if (!isCommentLiked) {
