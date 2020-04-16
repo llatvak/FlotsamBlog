@@ -13,7 +13,7 @@ export default function Comment(props) {
 
   const { comment } = props;
 
-  let commentUrl = `${process.env.REACT_APP_COMMENTS_API_URL_DEVEL}/${comment.id}` ;
+  let commentUrl = `${process.env.REACT_APP_COMMENTS_API_URL_DEVEL}${comment.id}` ;
 
   const handleHeartIconClick = e => {
     if (heartIconColor === 'default') {
