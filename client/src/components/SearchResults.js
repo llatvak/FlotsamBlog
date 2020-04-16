@@ -5,8 +5,12 @@ import { Link } from "react-router-dom";
 import GridView from "./GridView";
 
 export default function SearchResults(props) {
-    const [posts, setPosts] = useState(props.location.state.results)
+    const [posts, setPosts] = useState([])
     
+    const button = {
+        marginTop: '20px',
+    };
+
     useEffect(() => {
        if(props.location.state !== undefined) {
             const postData = props.location.state.results;
@@ -19,7 +23,7 @@ export default function SearchResults(props) {
             <Container>
                 <Title>Results: {posts.length} </Title>
                 <GridView posts={posts}></GridView>
-                <Button as={Link} to="/" >Back</Button>
+                <Button style={button} as={Link} to="/" >Back</Button>
             </Container>
         </div>
     );
