@@ -10,7 +10,6 @@ const readCheckIcon = {
 
 export default function FeaturedBlogPost(props) {
 
-    console.log(props)
     const { post } = props;
     const [ isPostRead, setIsPostRead ] = useState(false);
 
@@ -64,14 +63,14 @@ export default function FeaturedBlogPost(props) {
     return (
         <div>
             <Card>
-                <Card.Image size='4by3'>
-                    <Image.Container size="4by3">
-                        <Image src="https://source.unsplash.com/random" />
+                <Card.Image size='16by9'>
+                    <Image.Container size='16by9'>
+                        <Image src={post.imageUrl} />
                     </Image.Container>
                 </Card.Image>
 
                 <Card.Content>
-                    <Title>{post.title}</Title>
+                    <Title size={4}>{post.title}</Title>
                     <Title subtitle>{post.description}</Title>
                     <Button as={Link} to={route} color="primary" onClick={onReadMore}>Read more</Button>
                     {renderReadIcon()}
