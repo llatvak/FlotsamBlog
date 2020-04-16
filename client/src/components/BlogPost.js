@@ -84,9 +84,8 @@ export default function BlogPost(props) {
 
   const handleCommentPost = (e) => {
     const tempDate = formatDate(new Date().toString())
-    const tempId = comments.length+1
     const tempBody = commentAreaRef.value
-    const tempComment = {id: tempId, author: 'Guest515', body: tempBody, likes: 0, date: tempDate}
+    const tempComment = {author: 'Guest515', content: tempBody, date: tempDate, likes: 0}
     axios
      .post(commentUrl, tempComment)
      .then(response => {
@@ -108,7 +107,7 @@ export default function BlogPost(props) {
     if (day.length < 2) 
         day = '0' + day;
 
-    return [year, month, day].join('-');
+    return [year, month, day].join('.');
 }
 
   return (
@@ -141,7 +140,7 @@ export default function BlogPost(props) {
 
           <Content hidden={commentsBoxOpen} key={comments.id}>
               {comments.map(comment => (
-                <Comment key={comment.id} comment={comment} />
+                <Comment key={comment.id} comment={comment} postId={post.id}/>
               ))}
           </Content>
 

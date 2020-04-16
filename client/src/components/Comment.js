@@ -28,7 +28,7 @@ export default function Comment(props) {
 
   const { comment } = props;
 
-  let commentUrl = `${process.env.REACT_APP_COMMENTS_API_URL_DEVEL}${comment.id}` ;
+  let commentUrl = `${process.env.REACT_APP_COMMENTS_API_URL_DEVEL}/${comment.id}` ;
 
   const handleHeartIconClick = e => {
     if (heartIconColor === 'default') {
@@ -43,7 +43,8 @@ export default function Comment(props) {
   }
 
   const updateLikes = (e) => {
-    const tempComment = {id: comment.id, author: comment.author, body: comment.body, likes: comment.likes, date: comment.date}
+    const tempComment = {author: comment.author, content: comment.content, date: comment.date, likes: comment.likes, postId: comment.postId}
+    console.log(tempComment)
     axios
      .put(commentUrl, tempComment)
      .then(response => {
