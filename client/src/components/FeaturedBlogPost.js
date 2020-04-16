@@ -22,7 +22,7 @@ export default function FeaturedBlogPost(props) {
 
     const route = `/posts/${post.id}`
 
-    React.useEffect(() => {
+    useEffect(() => {
         // Get read posts from localstorage and compare to post id
         var readPosts = [];
 
@@ -31,10 +31,12 @@ export default function FeaturedBlogPost(props) {
             
             if(!readPosts.includes(post.id)) {
                 setIsPostRead(true);
-            };
-        };
+            }
+        } else {
+            localStorage.setItem('readPosts', JSON.stringify(readPosts));
+        }
 
-      }, [isPostRead]);
+      }, []);
 
     function onReadMore(event) {
         // Mark post as read to local storage
