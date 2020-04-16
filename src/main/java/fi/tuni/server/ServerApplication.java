@@ -130,5 +130,4 @@ public class ServerApplication implements CommandLineRunner {
 
         //postRepository.findAll().forEach(System.out::println);
     }
-
 }
