@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Content, Media, Level, Icon } from "rbx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faUserCircle } from '@fortawesome/free-solid-svg-icons'
@@ -10,20 +10,51 @@ const media = {
 
 export default function Comment(props) {
   let [heartIconColor, setHeartIconColor] = useState('default')
+  const [isCommentLiked, setCommentLiked] = useState(false)
+  const [initialized, setInitialized] = useState(false)
 
   const { comment } = props;
 
   let commentUrl = `${process.env.REACT_APP_COMMENTS_API_URL_DEVEL}${comment.id}` ;
 
+  useEffect(() => {
+    // Get liked comments from localstorage and compare to post id
+    let likedComments = [];
+    console.log('Tykätyt kommentit: ' + likedComments)
+    if(localStorage.getItem(`likedComments${comment.postId}`)) {
+      likedComments = JSON.parse(localStorage.getItem(`likedComments${comment.postId}`));
+        
+        if(likedComments.includes(comment.id) && !initialized) {
+            setCommentLiked(true);
+            setHeartIconColor('red')
+            setInitialized(true)
+        };
+    };
+  }, [isCommentLiked]);
+
   const handleHeartIconClick = e => {
-    if (heartIconColor === 'default') {
+    // Mark comments as liked to local storage
+    let likedCommentsInStorage = [];
+    if(localStorage.getItem(`likedComments${comment.postId}`)) {
+      likedCommentsInStorage = JSON.parse(localStorage.getItem(`likedComments${comment.postId}`));
+    }
+
+    if(!likedCommentsInStorage.includes(comment.id)) {
+      likedCommentsInStorage.push(comment.id)
+      console.log('pushed to array')
+    }
+    console.log('Tykätyt kommentit in storage: ' + likedCommentsInStorage)
+    localStorage.setItem(`likedComments${comment.postId}`, JSON.stringify(likedCommentsInStorage));
+
+    if (!isCommentLiked) {
       setHeartIconColor('red')
-      comment.likes++;
-      updateLikes();
+      updateLikes(++comment.likes);
+      setCommentLiked(true)
     } else {
+      updateLikes(--comment.likes)
       setHeartIconColor('default')
-      comment.likes--;
-      updateLikes();
+      setCommentLiked(false)
+      localStorage.setItem(`likedComments${comment.postId}`, '')
     }
   }
 
