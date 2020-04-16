@@ -75,26 +75,41 @@ export default function BlogPost(props) {
     axios
      .get(commentUrl)
      .then(response => {
-       setComments(response.data);
+       filterData(response.data);
        console.log(response);
      }).catch(error => {
        alert(`${error}`)
    })
   }
 
+  const filterData = (data) => {
+    const commentArray = [];
+    for(let i = 0; i < data.length; i++) {
+      if(Number(data[i].postId) === Number(id)) {
+        commentArray.push(data[i]);
+      }
+    }
+    setComments(commentArray);
+  }
+
   const handleCommentPost = (e) => {
     const tempDate = formatDate(new Date().toString())
-    const tempId = comments.length+1
-    const tempBody = commentAreaRef.value
-    const tempComment = {id: tempId, author: 'Guest515', body: tempBody, likes: 0, date: tempDate}
-    axios
-     .post(commentUrl, tempComment)
-     .then(response => {
-       console.log(response)
-       commentAreaRef.value = ''
-     }).catch(error => {
-       alert(`${error}`)
-   })
+    const tempContent = commentAreaRef.value
+    if (commentAreaRef.value.length > 0) {
+      const tempComment = {author: 'Guest515', content: tempContent, date: tempDate, likes: 0, postId: id}
+      axios
+      .post(commentUrl, tempComment)
+      .then(response => {
+        console.log(response)
+        commentAreaRef.value = ''
+      }).then(() =>
+          fetchComments()
+      ).catch(error => {
+        alert(`${error}`)
+      })
+    } else {
+      alert('Comment length must be at least 1')
+    }
   }
 
   const formatDate = (date) => {
@@ -108,7 +123,7 @@ export default function BlogPost(props) {
     if (day.length < 2) 
         day = '0' + day;
 
-    return [year, month, day].join('-');
+    return [year, month, day].join('.');
 }
 
   return (
@@ -141,7 +156,7 @@ export default function BlogPost(props) {
 
           <Content hidden={commentsBoxOpen} key={comments.id}>
               {comments.map(comment => (
-                <Comment key={comment.id} comment={comment} />
+                <Comment key={comment.id} comment={comment} postId={post.id}/>
               ))}
           </Content>
 

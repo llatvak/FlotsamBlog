@@ -4,23 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 
-
-const body = {
-  'padding': '50px',
-};
-
-const button = {
-  'width': '50%',
-  'marginLeft': '25%',
-  'marginRight': '25%',
-};
-
 const media = {
   'margin': '20px',
-};
-
-const title = {
-
 };
 
 export default function Comment(props) {
@@ -43,7 +28,8 @@ export default function Comment(props) {
   }
 
   const updateLikes = (e) => {
-    const tempComment = {id: comment.id, author: comment.author, body: comment.body, likes: comment.likes, date: comment.date}
+    const tempComment = {author: comment.author, content: comment.content, date: comment.date, likes: comment.likes, postId: comment.postId}
+    console.log(tempComment)
     axios
      .put(commentUrl, tempComment)
      .then(response => {
@@ -65,7 +51,7 @@ export default function Comment(props) {
                 <strong>{comment.author}</strong> <small>@{comment.author}</small>{' '}
                 <small>{comment.date}</small>
                 <br />
-                {comment.body}
+                {comment.content}
                 </p>
             </Content>
                 <Level breakpoint="mobile">
