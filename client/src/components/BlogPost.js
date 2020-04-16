@@ -95,17 +95,21 @@ export default function BlogPost(props) {
   const handleCommentPost = (e) => {
     const tempDate = formatDate(new Date().toString())
     const tempContent = commentAreaRef.value
-    const tempComment = {author: 'Guest515', content: tempContent, date: tempDate, likes: 0, postId: id}
-    axios
-     .post(commentUrl, tempComment)
-     .then(response => {
-       console.log(response)
-       commentAreaRef.value = ''
-     }).then(() =>
-        fetchComments()
-     ).catch(error => {
-       alert(`${error}`)
-   })
+    if (commentAreaRef.value.length > 0) {
+      const tempComment = {author: 'Guest515', content: tempContent, date: tempDate, likes: 0, postId: id}
+      axios
+      .post(commentUrl, tempComment)
+      .then(response => {
+        console.log(response)
+        commentAreaRef.value = ''
+      }).then(() =>
+          fetchComments()
+      ).catch(error => {
+        alert(`${error}`)
+      })
+    } else {
+      alert('Comment length must be at least 1')
+    }
   }
 
   const formatDate = (date) => {
