@@ -94,14 +94,16 @@ export default function BlogPost(props) {
 
   const handleCommentPost = (e) => {
     const tempDate = formatDate(new Date().toString())
-    const tempBody = commentAreaRef.value
-    const tempComment = {author: 'Guest515', content: tempBody, date: tempDate, likes: 0}
+    const tempContent = commentAreaRef.value
+    const tempComment = {author: 'Guest515', content: tempContent, date: tempDate, likes: 0, postId: id}
     axios
      .post(commentUrl, tempComment)
      .then(response => {
        console.log(response)
        commentAreaRef.value = ''
-     }).catch(error => {
+     }).then(() =>
+        fetchComments()
+     ).catch(error => {
        alert(`${error}`)
    })
   }

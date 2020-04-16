@@ -4,23 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios';
 
-
-const body = {
-  'padding': '50px',
-};
-
-const button = {
-  'width': '50%',
-  'marginLeft': '25%',
-  'marginRight': '25%',
-};
-
 const media = {
   'margin': '20px',
-};
-
-const title = {
-
 };
 
 export default function Comment(props) {

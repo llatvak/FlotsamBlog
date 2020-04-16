@@ -82,9 +82,9 @@ public class ServerApplication implements CommandLineRunner {
         categoryRepository.saveAll(categories);
 
         // Add dummy Comments to list and save to crud repository
-        comments.add(new Comment(1,"Guest123","Very good post!", "14.4.2020", 3));
-        comments.add(new Comment(2, "Guest222","Best post!", "13.3.2020", 100));
-        comments.add(new Comment(3, "Guest333", "Nice one!", "23.3.2020", 22));
+        comments.add(new Comment(1,"Guest123","Very good post!", "2020.04.14", 3));
+        comments.add(new Comment(2, "Guest222","Best post!", "2020.03.13", 100));
+        comments.add(new Comment(3, "Guest333", "Nice one!", "2020.03.23", 22));
         commentRepository.saveAll(comments);
 
         // Curl commands and author text
