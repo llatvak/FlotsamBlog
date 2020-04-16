@@ -75,11 +75,21 @@ export default function BlogPost(props) {
     axios
      .get(commentUrl)
      .then(response => {
-       setComments(response.data);
+       filterData(response.data);
        console.log(response);
      }).catch(error => {
        alert(`${error}`)
    })
+  }
+
+  const filterData = (data) => {
+    const commentArray = [];
+    for(let i = 0; i < data.length; i++) {
+      if(Number(data[i].postId) === Number(id)) {
+        commentArray.push(data[i]);
+      }
+    }
+    setComments(commentArray);
   }
 
   const handleCommentPost = (e) => {

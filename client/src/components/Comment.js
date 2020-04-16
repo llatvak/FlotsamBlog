@@ -66,7 +66,7 @@ export default function Comment(props) {
                 <strong>{comment.author}</strong> <small>@{comment.author}</small>{' '}
                 <small>{comment.date}</small>
                 <br />
-                {comment.body}
+                {comment.content}
                 </p>
             </Content>
                 <Level breakpoint="mobile">
