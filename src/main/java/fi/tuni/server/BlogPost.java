@@ -1,8 +1,6 @@
 package fi.tuni.server;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class BlogPost {
@@ -12,6 +10,8 @@ public class BlogPost {
     private int id;
     private String title;
     private String description;
+    @Lob
+    @Column(length=100000)
     private String body;
     private String imageUrl;
     private String date;
@@ -99,9 +99,10 @@ public class BlogPost {
                 ", description='" + description + '\'' +
                 ", body='" + body + '\'' +
                 ", date='" + date + '\'' +
-                ", date='" + url + '\'' +
-                ", image='" + imageUrl + '\'' +
+                ", url='" + url + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
                 ", category='" + category + '\'' +
                 '}';
     }
+
 }

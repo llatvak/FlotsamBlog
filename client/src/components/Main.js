@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Column, Container } from "rbx";
 import axios from 'axios';
 
-import BlogPostPreview from "./BlogPostCard";
-import NavBar from "./NavBar";
+import GridView from "./GridView";
 
 export default function Main() {
   const [posts, setPosts] = useState([])
-  let url = 'https://flotsamblog.herokuapp.com/api/posts';
+
+  let url = process.env.REACT_APP_POSTS_API_URL_PROD;
 
   if(process.env.NODE_ENV !== 'production') {
-      url = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
+      url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
   }
   
   useEffect(() => {
@@ -28,17 +27,7 @@ export default function Main() {
 
     return (
         <div>
-        <NavBar />
-        <Container>
-            <Column.Group vcentered multiline>
-                {posts.map(post => (
-                    <Column size="one-third">
-                        <BlogPostPreview key={post.title} post={post} />
-                    </Column>
-                ))}
-            </Column.Group>
-        </Container>
-
+            <GridView posts={posts}></GridView>
         </div>
     );
 }

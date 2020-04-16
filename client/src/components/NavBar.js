@@ -1,41 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Button, Control, Input, Field, Icon, Image} from "rbx";
+import { Navbar, Icon, Image} from "rbx";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import {faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
-const tempCategories = [
-    { title: 'Food', url: '#' },
-    { title: 'Health', url: '#' },
-    { title: 'Travel', url: '#' },
-  ];
+import Search from './SearchBar'
 
-export default function NavBar(props) {
-    const { category } = props;
-    const [navbarOpen, setNavbarOpen] = useState(true);
-    const [categories, setCategories] = useState([])
+export default function NavBar() {
+    const [navbarOpen, setNavbarOpen] = useState(false);
+    const [categories, setCategories] = useState([]);
 
-    let url = 'https://flotsamblog.herokuapp.com/api/posts';
+    let postUrl = process.env.REACT_APP_POSTS_API_URL_PROD;
+    let categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_PROD;
 
     if(process.env.NODE_ENV !== 'production') {
-        url = 'https://my-json-server.typicode.com/mkauha/JSON-server-demo/blogposts';
+        postUrl = process.env.REACT_APP_POSTS_API_URL_DEVEL;
+        categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_DEVEL;
     }
 
     useEffect(() => {
         axios
-         .get(url)
+         .get(categoryUrl)
          .then(response => {
             setCategories(response.data);
          }).catch(error => {
            alert(`Backend error: ${error}`)
-       })
+        })
+
      }, [])
+
     return (
         <div>
-            <Navbar active={navbarOpen} >
+            <Navbar fixed='top' active={navbarOpen} >
                 <Navbar.Brand>
-                    <Navbar.Item>
+                    <Navbar.Item as={Link} to="/">
                         <Image src="logo.png" />
                     </Navbar.Item>
                 <Navbar.Burger onClick={() => setNavbarOpen(!navbarOpen)}/>
@@ -43,31 +42,22 @@ export default function NavBar(props) {
                 
                 <Navbar.Menu>
                     <Navbar.Segment align="start">
-                         {tempCategories.map(category => (
-                            <Navbar.Item key={category.title}>
+                         {categories.map(category => (
+                            <Navbar.Item key={category.id}>
                                 {category.title}
                             </Navbar.Item>
                         ))}
                     </Navbar.Segment>
 
                     <Navbar.Segment align="end">
-                        <Navbar.Item>
-                        <Field kind="addons">
-                            <Control>
-                                <Input placeholder="Search post" />
-                            </Control>
-                            <Control>
-                                <Button color="primary">
-                                    <Icon>
-                                        <FontAwesomeIcon icon={faSearch} />
-                                    </Icon>
-                                </Button>
-                            </Control>
-                        </Field>
-
+                        <Navbar.Item as='div'>
+                            <Search></Search>
                         </Navbar.Item>
-                        <Navbar.Item>
-                            <Button as={Link} to="/newpost" color="primary" >New post</Button>
+
+                        <Navbar.Item as='div'>
+                            <Icon as={Link} to="/user/login">
+                                <FontAwesomeIcon icon={faUserCircle} />
+                            </Icon>
                         </Navbar.Item>
                     </Navbar.Segment>
 
