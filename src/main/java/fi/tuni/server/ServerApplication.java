@@ -39,8 +39,8 @@ public class ServerApplication implements CommandLineRunner {
                                         "\"Under the current circumstances we've heard that our contributors have a lot on their plates at the moment and decided it was in the best interests of our volunteers and the organizations that depend on the standard to push out our release date,\" Mark Davis, president of the Consortium, said in a statement.\n" +
                                         "However, the delay doesn't impact the release of the previously announced new emojis new for 2020 -- like the transgender flag, the gender-neutral Santa Claus and others that were announced in January and will come out this September. The new set, part of Unicodes 13.0 standard, includes 117 new animated characters.",
                                         "11.3.2020", 
-                                        "https://blog.emojipedia.org/content/images/2018/07/facebook-emoji-set-emojipedia.jpg", 
                                         "https://edition.cnn.com/2020/04/12/business/new-emoji-apple-android-2021-postponed/index.html", 
+                                        "https://blog.emojipedia.org/content/images/2018/07/facebook-emoji-set-emojipedia.jpg", 
                                         "Technology"
                                     );
          BlogPost post2 = new BlogPost("How to Share Files Wirelessly Between Windows 10 and Your Samsung Phone",
@@ -50,8 +50,8 @@ public class ServerApplication implements CommandLineRunner {
                                         "And those aren’t the only caveats: only 100 files can be transferred at a time via Link to Windows; each individual file must be 512MB or less; and both devices must be connected to the same wifi network in order for the process to work (obviously).\n" + 
                                         "If you clear all those requirements, here’s how to wirelessly share files between your PC and Samsung smartphone.",
                                         "15.3.2020", 
-                                        "https://blog.emojipedia.org/content/images/2018/07/facebook-emoji-set-emojipedia.jpg", 
                                         "https://lifehacker.com/how-to-share-files-wirelessly-between-windows-10-and-yo-1842839656", 
+                                        "https://i.kinja-img.com/gawker-media/image/upload/c_scale,f_auto,fl_progressive,q_80,w_1600/fmagv2s9zlk3iopmkwfb.jpg", 
                                         "Technology"
                                     );
         BlogPost post3 = new BlogPost("Meet the finalists of the Google Play Indie Games Festival ",
@@ -61,8 +61,8 @@ public class ServerApplication implements CommandLineRunner {
                                         "Please check out the games below (in alphabetical order); each one is a true work of art. They will be receiving promotions and prizes to help them grow their business. They’ll also be competing in the Finals for the top prizes.\n" +
                                         "While this is a happy announcement, we must also inform you that we will be unable to hold the Finals as planned on April 25 in Poland, Japan and South Korea due to the COVID-19 situation. We will be postponing the events until further notice, as the health and safety of finalists, jury members, players and others involved is our top priority. Please stay tuned for further announcements.",
                                         "20.4.2020", 
-                                        "https://3.bp.blogspot.com/-Z7zdfBjgT7s/Xn5KK2tHgSI/AAAAAAAAOx8/T6bReu6ky4E8gnTOSsSZJDbTOs4W1HbzQCLcBGAsYHQ/s1600/Android%2BDevelopers%2BBlog%2B%25281200x600%2529.png", 
                                         "https://android-developers.googleblog.com/2020/03/meet-finalists-of-google-play-indie.html", 
+                                        "https://3.bp.blogspot.com/-Z7zdfBjgT7s/Xn5KK2tHgSI/AAAAAAAAOx8/T6bReu6ky4E8gnTOSsSZJDbTOs4W1HbzQCLcBGAsYHQ/s1600/Android%2BDevelopers%2BBlog%2B%25281200x600%2529.png", 
                                         "Android"
                                     );
 
