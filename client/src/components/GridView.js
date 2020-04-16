@@ -1,0 +1,27 @@
+import React, { useState, useEffect } from "react";
+import { Column, Container } from "rbx";
+
+import FeaturedBlogPost from "./FeaturedBlogPost";
+
+export default function GridView(props) {
+
+  const [posts, setPosts] = useState(props.posts)
+  
+  useEffect(() => {
+    setPosts(props.posts);
+  }, [props.posts])
+
+    return (
+        <div>
+        <Container>
+            <Column.Group vcentered multiline>
+                {posts.map(post => (
+                    <Column key={post.id} size="one-third">
+                        <FeaturedBlogPost key={post.id} post={post} />
+                    </Column>
+                ))}
+            </Column.Group>
+        </Container>
+        </div>
+    );
+}

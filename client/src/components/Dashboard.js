@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faSearch, faEdit } from '@fortawesome/free-solid-svg-icons'
-import NavBar from "./NavBar";
 
 const box = {
   'margin': 'auto',
@@ -49,16 +48,16 @@ export default function Dashboard(props) {
           alert(`Error: Post  was not deleted`)
       })
 
+      let updatedPosts = [];
       for(let i = 0; i < posts.length; i++) {
         if (posts[i].id === id) {
             console.log(posts[i].id)
             posts.splice(i, 1)
-            console.log(posts)
+            updatedPosts = posts.splice(0)
             break;
         }
       }
-      // is setPosts necessary?
-      setPosts(posts);
+      setPosts(updatedPosts);
 }
 
 function shorten(description) {
@@ -75,10 +74,10 @@ function shorten(description) {
         <Label>All posts</Label>
         <Field kind="addons">
           <Control>
-              <Input placeholder="Search" />
+              <Input disabled placeholder="Search" />
           </Control>
           <Control>
-              <Button color="info">
+              <Button disabled color="info">
                   <Icon>
                       <FontAwesomeIcon icon={faSearch} />
                   </Icon>
