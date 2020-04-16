@@ -15,7 +15,11 @@ export default function Comment(props) {
 
   const { comment } = props;
 
-  let commentUrl = `${process.env.REACT_APP_COMMENTS_API_URL_DEVEL}${comment.id}` ;
+  let commentUrl = `${process.env.REACT_APP_COMMENTS_API_URL_PROD}${comment.id}` ;
+  
+  if(process.env.NODE_ENV !== 'production') {
+    commentUrl = process.env.REACT_APP_COMMENTS_API_URL_DEVEL + `${comment.id}`;
+  }
 
   useEffect(() => {
     // Get liked comments from localstorage and compare to post id
@@ -57,7 +61,6 @@ export default function Comment(props) {
 
   const updateLikes = (e) => {
     const tempComment = {author: comment.author, content: comment.content, date: comment.date, likes: comment.likes, postId: comment.postId}
-    console.log(tempComment)
     axios
      .put(commentUrl, tempComment)
      .then(response => {
