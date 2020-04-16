@@ -49,10 +49,11 @@ export default function BlogPost(props) {
 
   let url = process.env.REACT_APP_POSTS_API_URL_PROD + `${id}`;
 
-  let commentUrl = process.env.REACT_APP_COMMENTS_API_URL_DEVEL;
+  let commentUrl = process.env.REACT_APP_COMMENTS_API_URL_PROD;
 
   if(process.env.NODE_ENV !== 'production') {
       url = process.env.REACT_APP_POSTS_API_URL_DEVEL + `${id}`;
+      commentUrl = process.env.REACT_APP_COMMENTS_API_URL_DEVEL;
   }
 
   useEffect(() => {
