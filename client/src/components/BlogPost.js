@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Content, Title, Box, Container, Image, Media, Button, Field, Control, Textarea } from "rbx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+
 import Comment from './Comment';
+import GridView from './GridView'
+
 import axios from 'axios';
 
 const container = {
@@ -49,27 +52,30 @@ const title = {
 export default function BlogPost(props) {
   const id  = props.match.params.id;
   const [post, setPost] = useState([])
+  const [recommendedPosts, setRecommendedPosts] = useState([])
   const [commentsBoxOpen, setCommentBoxOpen] = useState(true);
   const [comments, setComments] = useState([])
   const [commentAreaRef, setCommentAreaRef] = useState('')
 
-  let url = process.env.REACT_APP_POSTS_API_URL_PROD + `${id}`;
-
+  let url = process.env.REACT_APP_POSTS_API_URL_PROD;
+  let postUrl = url + `${id}`;
   let commentUrl = process.env.REACT_APP_COMMENTS_API_URL_PROD;
 
   if(process.env.NODE_ENV !== 'production') {
-      url = process.env.REACT_APP_POSTS_API_URL_DEVEL + `${id}`;
+      url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
+      postUrl = url + `${id}`;
       commentUrl = process.env.REACT_APP_COMMENTS_API_URL_DEVEL;
   }
 
   useEffect(() => {
     fetchPost();
     fetchComments();
+    fetchRecommendations();
   }, [])
 
   const fetchPost = () => {
     axios
-     .get(url)
+     .get(postUrl)
      .then(response => {
        setPost(response.data);
        console.log(response);
@@ -83,11 +89,36 @@ export default function BlogPost(props) {
      .get(commentUrl)
      .then(response => {
        filterData(response.data);
-       console.log(response);
      }).catch(error => {
        alert(`${error}`)
    })
   }
+
+  const fetchRecommendations = () => {
+    axios
+     .get(url)
+     .then(response => {
+      setRecommendedPosts(randomizePosts(response.data));
+     }).catch(error => {
+       alert(`${error}`)
+   })
+  }
+
+  const randomizePosts = (allPosts) => {
+    let randomPosts = [];
+    let arr = [];
+
+    while(arr.length < 3){
+        var r = Math.floor(Math.random() * allPosts.length);
+        if(arr.indexOf(r) === -1) arr.push(r);
+    }
+
+    for(let i of arr) {
+      randomPosts.push(allPosts[i])
+    }
+    return randomPosts;
+ }
+ 
 
   const filterData = (data) => {
     const commentArray = [];
@@ -140,7 +171,7 @@ export default function BlogPost(props) {
         
         <Content>
           <Title style={title}>{post.title}</Title>
-          <Title size={6}>{post.category}</Title>
+          <Title size={6}><a>#{post.category}</a></Title>
             <p>{post.date}</p>
         </Content>
 
@@ -186,6 +217,12 @@ export default function BlogPost(props) {
             </Media>
           </Content>
 
+    </Box>
+    <Box style={box}>
+    <Content>
+          <Title style={title}>Recommended posts</Title>
+        </Content>
+      <GridView posts={recommendedPosts}></GridView>
     </Box>
     </Container>
     </div>

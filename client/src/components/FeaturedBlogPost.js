@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Title, Image, Icon } from "rbx";
+import { Card, Button, Title, Image, Icon, Level } from "rbx";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
-const readCheckIcon = {
-    marginTop:'7px'
+const title = {
+};
+const subtitle = {
+    'marginTop': '10px'
+};
+const button = {
 };
 
 export default function FeaturedBlogPost(props) {
@@ -55,9 +59,15 @@ export default function FeaturedBlogPost(props) {
     function renderReadIcon() {
         if(!isPostRead) {
             return (
-                <Icon  style={readCheckIcon} >
-                    <FontAwesomeIcon icon={faCheckCircle} />
-                </Icon>
+                <span>
+                <Button as={Link} to={route} color="light" onClick={onReadMore} style={button}>Read more</Button>
+                </span>
+            );
+        } else {
+            return (
+                <span>
+                <Button as={Link} to={route} color="primary" onClick={onReadMore} style={button}>Read more</Button>
+                </span>
             );
         }
     }
@@ -72,15 +82,22 @@ export default function FeaturedBlogPost(props) {
                 </Card.Image>
 
                 <Card.Content>
-                    <Title size={4}>{post.title}</Title>
-                    <Title subtitle>{post.description}</Title>
-                    <Button as={Link} to={route} color="primary" onClick={onReadMore}>Read more</Button>
+                <Level>
+                        <Level.Item align="left">{post.date}</Level.Item>
+                        <Level.Item align="right"><a>#{post.category}</a></Level.Item>
+                </Level>
+                    <span><Title as={Link} to={route} size={4} style={title} onClick={onReadMore}>{post.title}</Title></span>
+                    <span><Title 
+                        subtitle 
+                        style={subtitle}
+                        responsive={{
+                            touch: { hide: { value: true } }
+                          }}
+                        >{post.description}</Title></span>
+                </Card.Content>
+                <Card.Content>
                     {renderReadIcon()}
                 </Card.Content>
-                <Card.Footer>
-                    {post.date}
-                </Card.Footer>
-
             </Card>
         </div>
     );
