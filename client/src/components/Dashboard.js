@@ -64,12 +64,16 @@ function shorten(description) {
   return shortDescription = description.substring(0, 40) + '...'
 }
 
+function logOut() {
+  
+}
 
   return (
     <div>
       <Box style={box}>
         <Title>Dashboard</Title>
-        <Button as={Link} to="/user/new" color="primary" >New post</Button>
+        <Button as={Link} to="new" color="primary" >New post</Button>
+
 
         <Label>All posts</Label>
         <Field kind="addons">
@@ -107,7 +111,7 @@ function shorten(description) {
               <Table.Cell>
                 <Button color="info"
                     as={Link} to={{
-                      pathname: '/user/new',
+                      pathname: '/edit',
                       state: { postData: post }
                     }}>
                   <Icon>
@@ -126,6 +130,8 @@ function shorten(description) {
             ))}
           </Table.Body>
         </Table>
+        
+        <Button onClick={logOut} color="danger" >Logout</Button>
       </Box>
     </div>
   );

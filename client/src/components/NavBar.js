@@ -55,7 +55,7 @@ export default function NavBar() {
                         </Navbar.Item>
 
                         <Navbar.Item as='div'>
-                            <Icon as={Link} to="/user/login">
+                            <Icon as={Link} to="/dashboard">
                                 <FontAwesomeIcon icon={faUserCircle} />
                             </Icon>
                         </Navbar.Item>
