@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { Hero, Title, Container } from "rbx";
 
 import GridView from "./GridView";
+
+const hero = {
+  'marginBottom': '50px'
+};
 
 export default function Main() {
   const [posts, setPosts] = useState([])
@@ -27,6 +32,16 @@ export default function Main() {
 
     return (
         <div>
+            <Hero color="primary" style={hero}>
+              <Hero.Body>
+                <Container>
+                  <Title>FlotsamBlog</Title>
+                  <Title as="h2" subtitle>
+                    Read like you've never read before!
+                  </Title>
+                </Container>
+              </Hero.Body>
+            </Hero>
             <GridView posts={posts}></GridView>
         </div>
     );
