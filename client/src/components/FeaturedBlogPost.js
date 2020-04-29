@@ -10,7 +10,6 @@ const subtitle = {
     'marginTop': '10px'
 };
 const button = {
-    'marginTop': '10px'
 };
 
 export default function FeaturedBlogPost(props) {
@@ -88,7 +87,15 @@ export default function FeaturedBlogPost(props) {
                         <Level.Item align="right"><a>#{post.category}</a></Level.Item>
                 </Level>
                     <span><Title as={Link} to={route} size={4} style={title} onClick={onReadMore}>{post.title}</Title></span>
-                    <span><Title subtitle style={subtitle}>{post.description}</Title></span>
+                    <span><Title 
+                        subtitle 
+                        style={subtitle}
+                        responsive={{
+                            touch: { hide: { value: true } }
+                          }}
+                        >{post.description}</Title></span>
+                </Card.Content>
+                <Card.Content>
                     {renderReadIcon()}
                 </Card.Content>
             </Card>
