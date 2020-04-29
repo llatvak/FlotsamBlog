@@ -25,7 +25,8 @@ export default function App() {
             <Route path="/posts/:id" component={BlogPost}/>
             <Route path="/login" component={Login}/>
             <PrivateRoute path="/dashboard" component={Dashboard}/>
-            <PrivateRoute path="/dashboard/new" component={NewBlogPost}/>
+            <PrivateRoute path="/new" component={NewBlogPost}/>
+            <PrivateRoute path="/edit" component={NewBlogPost}/>
           </Switch>
       </div>
     </Router>

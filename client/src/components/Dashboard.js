@@ -72,7 +72,7 @@ function logOut() {
     <div>
       <Box style={box}>
         <Title>Dashboard</Title>
-        <Button as={Link} to="/dashboard/new" color="primary" >New post</Button>
+        <Button as={Link} to="new" color="primary" >New post</Button>
 
 
         <Label>All posts</Label>
@@ -111,7 +111,7 @@ function logOut() {
               <Table.Cell>
                 <Button color="info"
                     as={Link} to={{
-                      pathname: '/dashboard/new',
+                      pathname: '/edit',
                       state: { postData: post }
                     }}>
                   <Icon>
