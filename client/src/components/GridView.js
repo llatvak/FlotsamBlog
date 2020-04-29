@@ -3,6 +3,10 @@ import { Column, Container } from "rbx";
 
 import FeaturedBlogPost from "./FeaturedBlogPost";
 
+const card = {
+    'height': '100%'
+};
+
 export default function GridView(props) {
 
   const [posts, setPosts] = useState(props.posts)
@@ -14,10 +18,10 @@ export default function GridView(props) {
     return (
         <div>
         <Container>
-            <Column.Group vcentered multiline>
+            <Column.Group multiline>
                 {posts.map(post => (
                     <Column key={post.id} size="one-third">
-                        <FeaturedBlogPost key={post.id} post={post} />
+                        <FeaturedBlogPost key={post.id} post={post}/>
                     </Column>
                 ))}
             </Column.Group>
