@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Content, Title, Box, Image, Media, Button, Field, Control, Textarea } from "rbx";
+import { Content, Title, Box, Container, Image, Media, Button, Field, Control, Textarea } from "rbx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import Comment from './Comment';
 import axios from 'axios';
 
+const container = {
+  'padding': '16px'
+};
 const box = {
   'margin': 'auto',
   'marginTop': '60px',
   'marginBottom': '100px',
-  'maxWidth': '50%'
+  'padding': '48px'
 };
 
 const imageContainer = {
@@ -22,7 +25,9 @@ const image = {
 };
 
 const body = {
-  'padding': '50px',
+  'whiteSpace': 'pre-line',
+  'fontSize': '18px',
+  'padding': '32px'
 };
 
 const button = {
@@ -33,11 +38,14 @@ const button = {
 
 const media = {
   'margin': '20px',
+  'padding': '32px'
 };
 
 const title = {
-
+  'paddingTop': '20px',
 };
+
+
 
 
 export default function BlogPost(props) {
@@ -129,21 +137,20 @@ export default function BlogPost(props) {
 
   return (
     <div>
-    <Box breakpoint="tablet" style={box}>
+    <Container breakpoint="mobile" style={container}>
+    <Box style={box}>
         
-        <Content style={body}>
+        <Content>
           <Title style={title}>{post.title}</Title>
-          <Title style={title} size={6}>{post.category}</Title>
-            <p>
-              {post.date}
-            </p>
+          <Title size={6}>{post.category}</Title>
+            <p>{post.date}</p>
         </Content>
 
           <Image.Container size={'16by9'} style={imageContainer}>
             <Image src={post.imageUrl} style={image}/>
           </Image.Container>
 
-          <Content>
+          <Content style={body}>
             <p>
               {post.body}
             </p>
@@ -182,6 +189,7 @@ export default function BlogPost(props) {
           </Content>
 
     </Box>
+    </Container>
     </div>
   );
 }
