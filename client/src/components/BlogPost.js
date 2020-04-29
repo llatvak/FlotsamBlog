@@ -26,8 +26,7 @@ const image = {
 
 const body = {
   'whiteSpace': 'pre-line',
-  'fontSize': '18px',
-  'padding': '32px'
+  'fontSize': '18px'
 };
 
 const button = {
@@ -37,8 +36,7 @@ const button = {
 };
 
 const media = {
-  'margin': '20px',
-  'padding': '32px'
+  'margin': '20px'
 };
 
 const title = {
