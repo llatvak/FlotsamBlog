@@ -35,7 +35,7 @@ export default function NavBar() {
             <Navbar fixed='top' active={navbarOpen} >
                 <Navbar.Brand>
                     <Navbar.Item as={Link} to="/">
-                        <Image src="logo.png" />
+                        <Image src="favicon.png" />
                     </Navbar.Item>
                 <Navbar.Burger onClick={() => setNavbarOpen(!navbarOpen)}/>
                 </Navbar.Brand>
