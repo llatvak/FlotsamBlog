@@ -58,7 +58,7 @@ export default function Login(props) {
 
         <Field>
           <Control>
-            <Button as={Link} to="/user/dashboard" color="success">Login</Button>
+            <Button as={Link} to="/dashboard" color="success">Login</Button>
           </Control>
         </Field>
       </Box>
