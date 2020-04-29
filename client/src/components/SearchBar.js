@@ -1,9 +1,10 @@
 import React, { useState, useEffect  } from "react";
 import { Button, Control, Input, Field, Icon} from "rbx";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, Redirect, useHistory  } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 
 
 export default function SearchBar() {
@@ -13,6 +14,7 @@ export default function SearchBar() {
     const [filteredPosts, setFilteredPosts] = useState([]);
     const location = useLocation();
 
+    let history = useHistory();
 
     let postUrl = process.env.REACT_APP_POSTS_API_URL_PROD;
     let categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_PROD;
@@ -48,7 +50,14 @@ export default function SearchBar() {
 
     const handleClickSearch = e => {
       if(location.pathname === '/search') {
-        console.log(true)
+      }
+    }
+    const handleKeyPressSearch = (event) => {
+      if(event.key === 'Enter'){
+        history.push({
+                      pathname: '/search',
+                      state: { query: postFilter, results: filteredPosts }
+                    })
       }
     }
 
@@ -68,15 +77,16 @@ export default function SearchBar() {
                     <Input 
                         type="text" 
                         value={postFilter} 
-                        onChange={handleChangeSearchQuery} 
+                        onChange={handleChangeSearchQuery}
+                        onKeyDown={handleKeyPressSearch} 
                         placeholder="Search posts" />
                 </Control>
                 <Control>
                     <Button color="primary" 
-                      onClick={handleClickSearch} 
+                      onClick={handleClickSearch}
                       as={Link} to={{
                       pathname: '/search',
-                      state: { results: filteredPosts }
+                      state: { query: postFilter, results: filteredPosts }
                     }}>
                         <Icon>
                             <FontAwesomeIcon icon={faSearch} />
