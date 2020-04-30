@@ -15,11 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        /*http
                 .authorizeRequests()
                 .antMatchers("/dashboard").hasAuthority("ADMIN")
                 .antMatchers("/**").hasAuthority("ADMIN");
+        */
     }
+
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authentication)
