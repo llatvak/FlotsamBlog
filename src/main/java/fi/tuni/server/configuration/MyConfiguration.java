@@ -1,4 +1,4 @@
-package fi.tuni.server;
+package fi.tuni.server.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

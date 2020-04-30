@@ -1,4 +1,4 @@
-package fi.tuni.server;
+package fi.tuni.server.comment;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

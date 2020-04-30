@@ -1,4 +1,4 @@
-package fi.tuni.server;
+package fi.tuni.server.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,11 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
-                .and().httpBasic();
-
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/dashboard").hasAuthority("ADMIN")
+                .antMatchers("/**").hasAuthority("ADMIN");
     }
 
     @Autowired
@@ -27,7 +27,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     {
         authentication.inMemoryAuthentication()
                 .withUser("admin")
-                .password(passwordEncoder().encode("admin123"))
+                .password(passwordEncoder().encode("admin"))
                 .authorities("ADMIN");
     }
 

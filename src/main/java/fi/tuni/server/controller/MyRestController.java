@@ -1,5 +1,11 @@
-package fi.tuni.server;
+package fi.tuni.server.controller;
 
+import fi.tuni.server.blogpost.BlogPost;
+import fi.tuni.server.blogpost.BlogPostRepository;
+import fi.tuni.server.category.Category;
+import fi.tuni.server.category.CategoryRepository;
+import fi.tuni.server.comment.Comment;
+import fi.tuni.server.comment.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
