@@ -21,8 +21,6 @@ import java.time.LocalDate;
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
-    // Has to be long and secure
-    private final String SECRET_KEY = "securesecuresecuresecuresecuresecuresecuresecuresecuresecure";
 
     public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -54,11 +52,13 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         // Generate token with metadata
+        // Key has to be long and secure
+        String key = "securesecuresecuresecuresecuresecuresecuresecuresecuresecure";
         String token = Jwts.builder()
                 .setSubject(authResult.getName())
                 .claim("authorities", authResult.getAuthorities())
                 .setIssuedAt(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
-                .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
+                .signWith(Keys.hmacShaKeyFor(key.getBytes()))
                 .compact();
         response.addHeader("Authorization", "Bearer " + token);
     }
