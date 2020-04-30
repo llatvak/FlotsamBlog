@@ -34,8 +34,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager()))
                 .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/api/**").hasRole("ADMIN");
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll();
+                //.antMatchers("/api/**").hasRole(ApplicationUserRole.ADMIN.name());
     }
 
     // Retrieve user from database
@@ -45,7 +45,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails admin1 = User.builder()
                 .username("admin")
                 .password(passwordEncoder.encode("admin"))
-                .roles("ADMIN")
+                .roles(ApplicationUserRole.ADMIN.name())
                 .build();
         return new InMemoryUserDetailsManager(
                 admin1
