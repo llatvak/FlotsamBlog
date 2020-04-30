@@ -60,6 +60,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
             // Throw this if token is not valid (modified or expired)
             throw new IllegalStateException(String.format("Token %s cannot be truest", token));
         }
-
+        // Make sure request and response get is sent to the next filter chain
+        filterChain.doFilter(request, response);
     }
 }
