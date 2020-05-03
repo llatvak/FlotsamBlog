@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Field, Input, Box, Control, Button, Title, Label } from "rbx";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
-
+import { useAuth } from "../context/auth"
 
 const box = {
   'margin': 'auto',
@@ -15,11 +15,14 @@ const textField = {
 
 };
 
-
 export default function Login(props) {
   const [post, setPost] = useState([])
+  let isMounted = useRef(true)
+  const [isLoading, setLoading] = useState(false)
+  const [isLoggedIn, setLoggedIn] = useState(false)
   const [passwordRef, setPasswordRef] = useState('')
   const [usernameRef, setUsernameRef] = useState('')
+  const { setAuthTokens } = useAuth();
 
   let url = process.env.REACT_APP_POSTS_API_URL_PROD;
   let loginUrl = process.env.REACT_APP_LOGIN_URL_DEVEL;
@@ -48,25 +51,37 @@ export default function Login(props) {
     console.log(usernameValue)
     console.log(passwordValue)
     console.log(tempData)
+    setLoading(true)
     axios
     .post(loginUrl, tempData)
     .then(response => {
       if(response.status === 200) {
-        //setAuthTokens(response.data)
-        //setLoggedIn(true)
         console.log(response)
-        if(response.headers.authorization.startsWith("Bearer ")) {
-          const token = response.headers.authorization.substring(7)
-          console.log(token)
+        console.log(response.status)
+        if(isMounted.current) {
+          if(response.headers.authorization.startsWith("Bearer ")) {
+            console.log('here')
+            setLoggedIn(true)
+            setAuthTokens(response.headers.authorization)
+          } 
         }
       } else {
-        //setIsError(true)
         console.log("Error set")
       }
     }).catch(error => {
-      //setIsError(true)
-      console.log(error.message)
+        alert('Wrong username or password!')
+        console.log(error.message)
     })
+  }
+
+  useEffect(() => {  
+    return () => {
+      isMounted.current = false
+    }
+  }, []);
+  
+  if(isLoggedIn) {
+    return <Redirect to="/dashboard" />
   }
 
   return (
