@@ -22,13 +22,14 @@ export default function Main() {
       .get(url)
       .then(response => {
         setPosts(response.data);
-        console.log(response);
+
       }).catch(error => {
         alert(`${error}`)
 
     })
   }, [])
 
+  posts.reverse();
 
     return (
         <div>
