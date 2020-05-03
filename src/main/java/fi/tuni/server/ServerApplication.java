@@ -1,5 +1,11 @@
 package fi.tuni.server;
 
+import fi.tuni.server.blogpost.BlogPost;
+import fi.tuni.server.blogpost.BlogPostRepository;
+import fi.tuni.server.category.Category;
+import fi.tuni.server.category.CategoryRepository;
+import fi.tuni.server.comment.Comment;
+import fi.tuni.server.comment.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -127,6 +133,8 @@ public class ServerApplication implements CommandLineRunner {
         System.out.println("UPDATE category: ");
         System.out.println("	curl -X PUT -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Updated Category\\\"}\" http://localhost:8080/api/categories/1");
         System.out.println("-------------");
+        System.out.println("Dashboard admin username and password: ");
+        System.out.println("Username: admin, Password: admin");
 
         //postRepository.findAll().forEach(System.out::println);
     }

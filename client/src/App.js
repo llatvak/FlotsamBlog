@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "rbx/index.css";
 
@@ -14,8 +14,17 @@ import NavBar from "./components/NavBar";
 import SearchResults from './components/SearchResults';
 
 export default function App() {
+
+  const existingTokens = JSON.parse(localStorage.getItem('tokens'))
+  const [authTokens, setAuthTokens] = useState(existingTokens)
+
+  const setTokens = (data) => {
+    localStorage.setItem('tokens', JSON.stringify(data))
+    setAuthTokens(data)
+  }
+
   return (
-    <AuthContext.Provider value={true}>
+    <AuthContext.Provider value={{authTokens, setAuthTokens: setTokens}}>
     <Router>
       <NavBar />
       <div>

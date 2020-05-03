@@ -1,4 +1,4 @@
-package fi.tuni.server;
+package fi.tuni.server.blogpost;
 
 import org.springframework.data.repository.CrudRepository;
 

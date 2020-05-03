@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faSearch, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { useAuth } from "../context/auth";
 
 const box = {
   'margin': 'auto',
@@ -12,12 +13,11 @@ const box = {
   'maxWidth': '80%'
 };
 
-
-
 export default function Dashboard(props) {
   const [posts, setPosts] = useState([])
 
   let shortDescription = '';
+  const { setAuthTokens } = useAuth();
 
   let url = process.env.REACT_APP_POSTS_API_URL_PROD;
 
@@ -65,7 +65,7 @@ function shorten(description) {
 }
 
 function logOut() {
-  
+  setAuthTokens("");
 }
 
   return (
