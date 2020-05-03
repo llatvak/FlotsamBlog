@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Input, Field, Button, Box, Label, Control, Textarea, Select, Container, File, Icon, Divider, Media, Image, Title, Content } from "rbx";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUpload, faImage } from '@fortawesome/free-solid-svg-icons'
@@ -32,8 +32,8 @@ export default function NewBlogPost(props) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [body, setBody] = useState('');
-    const [imageUrl, setImageUrl] = useState('https://bulma.io/images/placeholders/128x128.png');
-    const [imageSrc, setImageSrc] = useState('https://bulma.io/images/placeholders/128x128.png');
+    const [imageUrl, setImageUrl] = useState('https://source.unsplash.com/random/1600x900/?technology');
+    const [imageSrc, setImageSrc] = useState('https://source.unsplash.com/random/1600x900/?technology');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [categories, setCategories] = useState([])
     const [date, setDate] = useState(new Date());
@@ -41,6 +41,8 @@ export default function NewBlogPost(props) {
     const [edited, setEdited] = useState(false);
 
     const [previewHidden, setPreviewHidden] = useState(true);
+
+    const history = useHistory();
 
     useEffect(() => {
         axios
@@ -72,7 +74,7 @@ export default function NewBlogPost(props) {
     }
 
     const handleChangeBody = e => {
-        let shortDesc = e.target.value.substring(0, 40) + '...';
+        let shortDesc = e.target.value.substring(0, 40);
         setDescription(shortDesc);
         setBody(e.target.value);
     }
@@ -101,6 +103,9 @@ export default function NewBlogPost(props) {
             .then(response => {
                 console.log(response);
                 alert(`Post ${blogpost.title} created`);
+                history.push({
+                    pathname: '/',
+                })
             })
             .catch(error => {
                  console.log(error);
@@ -119,14 +124,6 @@ export default function NewBlogPost(props) {
                 alert(`Error: Post '${blogpost.title}' was not updated`)
             })
        }
-
-
-       console.log('submit');
-    }
-
-    const handlePreview = e => {
-        e.preventDefault();
-        setPreviewHidden(!previewHidden);
     }
 
     const renderImage = () => {
@@ -154,7 +151,7 @@ export default function NewBlogPost(props) {
         <div>
             <Container breakpoint="touch">
             <Box style={box} >
-                <form>
+                <form onSubmit={handleSubmit}>
                     <Field>
                         <Label>Title</Label>
                         <Control>
@@ -209,19 +206,6 @@ export default function NewBlogPost(props) {
                             <Button onClick={handleAddImageUrl} color="link" >Add</Button>
                         </Control>
                     </Field>
-                    <Field>
-                        <File>
-                            <File.Label>
-                                <File.Input name="image" />
-                                <File.CTA>
-                                <File.Icon>
-                                    <FontAwesomeIcon icon={faUpload} />
-                                </File.Icon>
-                                <File.Label as="span">Choose an Image</File.Label>
-                                </File.CTA>
-                            </File.Label>
-                        </File>
-                    </Field>
 
                     <Media>
                     <Media.Item as="figure" align="left">
@@ -236,9 +220,8 @@ export default function NewBlogPost(props) {
                     <Field kind="group">
                         <Control style={buttonControls}>
                             <Button.Group>
-                                <Button onClick={handleSubmit} color="link" >Publish</Button>
-                                <Button onClick={handlePreview} >Preview</Button>
-                                <Button text as={Link} to="/" >Cancel</Button>
+                                <Input as={Button} type="submit" color="link" >Publish</Input>
+                                <Button text as={Link} to="/dashboard" >Cancel</Button>
                             </Button.Group>
                         </Control>
                     </Field>
