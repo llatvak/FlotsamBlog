@@ -133,6 +133,8 @@ public class ServerApplication implements CommandLineRunner {
         System.out.println("UPDATE category: ");
         System.out.println("	curl -X PUT -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Updated Category\\\"}\" http://localhost:8080/api/categories/1");
         System.out.println("-------------");
+        System.out.println("Dashboard admin username and password: ");
+        System.out.println("Username: admin, Password: admin");
 
         //postRepository.findAll().forEach(System.out::println);
     }
