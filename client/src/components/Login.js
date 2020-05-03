@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Field, Input, Box, Control, Button, Title, Label } from "rbx";
 import { Link } from "react-router-dom";
 import axios from 'axios';
@@ -55,6 +55,10 @@ export default function Login(props) {
         //setAuthTokens(response.data)
         //setLoggedIn(true)
         console.log(response)
+        if(response.headers.authorization.startsWith("Bearer ")) {
+          const token = response.headers.authorization.substring(7)
+          console.log(token)
+        }
       } else {
         //setIsError(true)
         console.log("Error set")
