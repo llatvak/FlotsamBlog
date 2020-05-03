@@ -76,18 +76,6 @@ function logOut() {
 
 
         <Label>All posts</Label>
-        <Field kind="addons">
-          <Control>
-              <Input disabled placeholder="Search" />
-          </Control>
-          <Control>
-              <Button disabled color="info">
-                  <Icon>
-                      <FontAwesomeIcon icon={faSearch} />
-                  </Icon>
-              </Button>
-          </Control>
-        </Field>
 
         <Table fullwidth>
           <Table.Head>
