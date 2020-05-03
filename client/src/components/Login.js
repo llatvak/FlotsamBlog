@@ -17,8 +17,6 @@ const textField = {
 
 export default function Login(props) {
   const [post, setPost] = useState([])
-  let isMounted = useRef(true)
-  const [isLoading, setLoading] = useState(false)
   const [isLoggedIn, setLoggedIn] = useState(false)
   const [passwordRef, setPasswordRef] = useState('')
   const [usernameRef, setUsernameRef] = useState('')
@@ -51,20 +49,16 @@ export default function Login(props) {
     console.log(usernameValue)
     console.log(passwordValue)
     console.log(tempData)
-    setLoading(true)
     axios
     .post(loginUrl, tempData)
     .then(response => {
       if(response.status === 200) {
         console.log(response)
         console.log(response.status)
-        if(isMounted.current) {
           if(response.headers.authorization.startsWith("Bearer ")) {
-            console.log('here')
             setLoggedIn(true)
             setAuthTokens(response.headers.authorization)
           } 
-        }
       } else {
         console.log("Error set")
       }
@@ -73,12 +67,6 @@ export default function Login(props) {
         console.log(error.message)
     })
   }
-
-  useEffect(() => {  
-    return () => {
-      isMounted.current = false
-    }
-  }, []);
   
   if(isLoggedIn) {
     return <Redirect to="/dashboard" />
@@ -104,7 +92,7 @@ export default function Login(props) {
 
         <Field>
           <Control>
-            <Button as={Link} onClick={postLogin} to="/dashboard" color="success">Login</Button>
+            <Button onClick={postLogin} color="success">Login</Button>
           </Control>
         </Field>
       </Box>

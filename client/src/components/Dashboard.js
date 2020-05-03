@@ -65,7 +65,7 @@ function shorten(description) {
 }
 
 function logOut() {
-  setAuthTokens();
+  setAuthTokens("");
 }
 
   return (
