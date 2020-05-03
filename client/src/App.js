@@ -15,7 +15,7 @@ import SearchResults from './components/SearchResults';
 
 export default function App() {
   return (
-    <AuthContext.Provider value={true}>
+    <AuthContext.Provider value={false}>
     <Router>
       <NavBar />
       <div>
