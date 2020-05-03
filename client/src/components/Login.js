@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Field, Input, Box, Control, Button, Title, Label } from "rbx";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from "../context/auth"
 
@@ -46,21 +46,16 @@ export default function Login(props) {
     let usernameValue = usernameRef.value
     let passwordValue = passwordRef.value
     let tempData = { username: usernameValue, password: passwordValue }
-    console.log(usernameValue)
-    console.log(passwordValue)
-    console.log(tempData)
     axios
     .post(loginUrl, tempData)
     .then(response => {
       if(response.status === 200) {
-        console.log(response)
-        console.log(response.status)
           if(response.headers.authorization.startsWith("Bearer ")) {
             setAuthTokens(response.headers.authorization)
             setLoggedIn(true)
           } 
       } else {
-        console.log("Error set")
+        alert('Wrong username or password!')
       }
     }).catch(error => {
         alert('Wrong username or password!')
