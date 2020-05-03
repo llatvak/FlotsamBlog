@@ -56,8 +56,8 @@ export default function Login(props) {
         console.log(response)
         console.log(response.status)
           if(response.headers.authorization.startsWith("Bearer ")) {
-            setLoggedIn(true)
             setAuthTokens(response.headers.authorization)
+            setLoggedIn(true)
           } 
       } else {
         console.log("Error set")
