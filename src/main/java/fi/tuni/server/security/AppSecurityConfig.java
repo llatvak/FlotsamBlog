@@ -28,7 +28,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.cors().and()
                 .csrf().disable()
                     // Sets session to stateless
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -36,8 +36,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager()))
                 .addFilterAfter(new JwtTokenVerifier(), JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/api/**").hasRole(ApplicationUserRole.ADMIN.name());
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll();
+                //.antMatchers("/api/**").hasRole(ApplicationUserRole.ADMIN.name());
     }
 
     // Retrieve user from database
