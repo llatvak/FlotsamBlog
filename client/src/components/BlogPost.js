@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Content, Title, Box, Container, Image, Media, Button, Field, Control, Textarea } from "rbx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { useHistory } from "react-router-dom";
 
 import Comment from './Comment';
 import GridView from './GridView'
@@ -57,6 +58,8 @@ export default function BlogPost(props) {
   const [comments, setComments] = useState([])
   const [commentAreaRef, setCommentAreaRef] = useState('')
 
+  let history = useHistory();
+  
   let url = process.env.REACT_APP_POSTS_API_URL_PROD;
   let postUrl = url + `${id}`;
   let commentUrl = process.env.REACT_APP_COMMENTS_API_URL_PROD;
@@ -78,7 +81,6 @@ export default function BlogPost(props) {
      .get(postUrl)
      .then(response => {
        setPost(response.data);
-       console.log(response);
      }).catch(error => {
        alert(`${error}`)
    })
@@ -164,6 +166,13 @@ export default function BlogPost(props) {
     return [year, month, day].join('.');
 }
 
+const handleClickCategory = e => {
+  history.push({
+              pathname: '/search',
+              state: { query: e.target.lastChild.data}
+              })
+}
+
   return (
     <div>
     <Container breakpoint="mobile" style={container}>
@@ -171,7 +180,7 @@ export default function BlogPost(props) {
         
         <Content>
           <Title style={title}>{post.title}</Title>
-          <Title size={6}><a>#{post.category}</a></Title>
+          <Title size={6} onClick={handleClickCategory}><a>{post.category}</a></Title>
             <p>{post.date}</p>
         </Content>
 

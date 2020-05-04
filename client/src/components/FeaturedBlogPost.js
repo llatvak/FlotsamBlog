@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Title, Image, Icon, Level } from "rbx";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
@@ -17,6 +17,7 @@ export default function FeaturedBlogPost(props) {
     const { post } = props;
     const [ isPostRead, setIsPostRead ] = useState(false);
 
+    let history = useHistory();
 
     let url = process.env.REACT_APP_POSTS_API_URL_PROD + `${post.id}`;
 
@@ -72,6 +73,13 @@ export default function FeaturedBlogPost(props) {
         }
     }
 
+    const handleClickCategory = e => {
+        history.push({
+                    pathname: '/search',
+                    state: { query: e.target.lastChild.data }
+                    })
+    }
+
     return (
         <div>
             <Card>
@@ -84,7 +92,7 @@ export default function FeaturedBlogPost(props) {
                 <Card.Content>
                 <Level>
                         <Level.Item align="left">{post.date}</Level.Item>
-                        <Level.Item align="right"><a>#{post.category}</a></Level.Item>
+                        <Level.Item align="right" onClick={handleClickCategory}><a>{post.category}</a></Level.Item>
                 </Level>
                     <span><Title as={Link} to={route} size={4} style={title} onClick={onReadMore}>{post.title}</Title></span>
                     <span><Title 
