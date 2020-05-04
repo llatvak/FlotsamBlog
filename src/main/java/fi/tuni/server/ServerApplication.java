@@ -129,6 +129,9 @@ public class ServerApplication implements CommandLineRunner {
         comments.add(new Comment(1,"Guest123","Very good post!", "2020.04.14", 3));
         comments.add(new Comment(2, "Guest222","Best post!", "2020.03.13", 100));
         comments.add(new Comment(3, "Guest333", "Nice one!", "2020.03.23", 22));
+        comments.add(new Comment(4, "Guest578", "Really good!", "2020.04.16", 4));
+        comments.add(new Comment(5, "Guest895", "Liked this one!", "2020.05.02", 7));
+        comments.add(new Comment(6, "Guest925", "W A U!", "2020.05.04", 12));
         commentRepository.saveAll(comments);
 
         // Curl commands and author text
