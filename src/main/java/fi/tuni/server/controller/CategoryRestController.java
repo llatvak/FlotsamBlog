@@ -1,5 +1,7 @@
-package fi.tuni.server.category;
+package fi.tuni.server.controller;
 
+import fi.tuni.server.category.Category;
+import fi.tuni.server.category.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -1,5 +1,7 @@
-package fi.tuni.server.comment;
+package fi.tuni.server.controller;
 
+import fi.tuni.server.comment.Comment;
+import fi.tuni.server.comment.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
