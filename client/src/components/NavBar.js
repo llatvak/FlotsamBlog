@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Icon, Image} from "rbx";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faUserCircle } from '@fortawesome/free-solid-svg-icons'
@@ -10,6 +10,8 @@ import Search from './SearchBar'
 export default function NavBar() {
     const [navbarOpen, setNavbarOpen] = useState(false);
     const [categories, setCategories] = useState([]);
+
+    let history = useHistory();
 
     let postUrl = process.env.REACT_APP_POSTS_API_URL_PROD;
     let categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_PROD;
@@ -30,6 +32,13 @@ export default function NavBar() {
 
      }, [])
 
+    const handleClickCategory = e => {
+        history.push({
+                    pathname: '/search',
+                    state: { query: e.target.firstChild.data}
+                    })
+    }
+
     return (
         <div>
             <Navbar fixed='top' active={navbarOpen} >
@@ -43,7 +52,9 @@ export default function NavBar() {
                 <Navbar.Menu>
                     <Navbar.Segment align="start">
                          {categories.map(category => (
-                            <Navbar.Item key={category.id}>
+                            <Navbar.Item
+                            key={category.id}
+                            onClick={handleClickCategory}>
                                 {category.title}
                             </Navbar.Item>
                         ))}
