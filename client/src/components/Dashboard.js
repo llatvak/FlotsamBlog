@@ -3,7 +3,7 @@ import { Table, Input, Box, Control, Button, Title, Icon, Field, Label, Containe
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faSearch, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faSearch, faEdit, faComments } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from "../context/auth";
 
 const container = {
@@ -91,6 +91,7 @@ function logOut() {
               <Table.Heading>Title</Table.Heading>
               <Table.Heading>Description</Table.Heading>
               <Table.Heading>Date</Table.Heading>
+              <Table.Heading>Comments</Table.Heading>
               <Table.Heading>Edit</Table.Heading>
               <Table.Heading>Remove</Table.Heading>
             </Table.Row>
@@ -103,6 +104,17 @@ function logOut() {
               <Table.Cell>{post.title}</Table.Cell>
               <Table.Cell>{shorten(post.description)}</Table.Cell>
               <Table.Cell>{post.date}</Table.Cell>
+              <Table.Cell>
+                <Button color="info"
+                    as={Link} to={{
+                      pathname: '/comments',
+                      state: { postData: post }
+                    }}>
+                  <Icon>
+                      <FontAwesomeIcon icon={faComments} />
+                  </Icon>
+                </Button>
+              </Table.Cell>
               <Table.Cell>
                 <Button color="info"
                     as={Link} to={{
