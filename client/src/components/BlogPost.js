@@ -248,6 +248,7 @@ const handleClickCategory = e => {
               </Button>
               <Icon style={likeButton} as="a">
                   <FontAwesomeIcon size="lg" color={heartIconColor} icon={faHeart} onClick={() => handleHeartIconClick()} />
+                  <small>{20}</small>
               </Icon>
           </Level>
           
