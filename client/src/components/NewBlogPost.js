@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Input, Field, Button, Box, Label, Control, Textarea, Select, Container, File, Icon, Divider, Media, Image, Title, Content } from "rbx";
+import { Input, Field, Button, Box, Label, Control, Textarea, Select, Container, Help, Icon, Divider, Media, Image} from "rbx";
 import { Link, useHistory } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUpload, faImage } from '@fortawesome/free-solid-svg-icons'
+import { faImage } from '@fortawesome/free-solid-svg-icons'
+import { useForm } from "react-hook-form";
 
 const box = {
     margin: '60px',
@@ -39,6 +40,7 @@ export default function NewBlogPost(props) {
     const [date, setDate] = useState(new Date());
     const [dateMonthYear, setDateMonthYear] = useState(`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`)
     const [edited, setEdited] = useState(false);
+    const { register, handleSubmit, errors } = useForm();
 
     const [previewHidden, setPreviewHidden] = useState(true);
 
@@ -94,8 +96,7 @@ export default function NewBlogPost(props) {
         setImageUrl(imageSrc);
     }
 
-   const handleSubmit = e => {
-        e.preventDefault();
+   const handlePostPublish = e => {
         if(!edited) {
             setDate(new Date());
             axios
@@ -151,16 +152,21 @@ export default function NewBlogPost(props) {
         <div>
             <Container breakpoint="touch">
             <Box style={box} >
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit(handlePostPublish)}>
                     <Field>
                         <Label>Title</Label>
                         <Control>
                             <Input 
+                                name="Title"
                                 placeholder="Post title"
                                 value={title}
                                 onChange={handleChangeTitle}
-                                required
+                                ref={register({required: true, minLength: 10, maxLength: 60})}
                             />
+                            <Help color={'danger'}>{errors.Title?.type === 'required' && "Title is required"}</Help>
+                            <Help color={'danger'}>{errors.Title?.type === 'minLength' && "Title is too short"}</Help>
+                            <Help color={'danger'}>{errors.Title?.type === 'maxLength' && "Title is too long"}</Help>
+                            <Help color={'danger'}>{errors.Title?.type === 'pattern' && "Must start with capital letter"}</Help>
                         </Control>
                     </Field>
 
@@ -168,12 +174,16 @@ export default function NewBlogPost(props) {
                         <Label>Body</Label>
                         <Control>
                             <Textarea 
+                                name="Body"
                                 rows={15}
                                 placeholder="Write here"
                                 value={body}
                                 onChange={handleChangeBody}
-                                required
+                                ref={register({required: true, minLength: 10, maxLength: 5000})}
                             />
+                            <Help color={'danger'}>{errors.Body?.type === 'required' && "Body is required"}</Help>
+                            <Help color={'danger'}>{errors.Body?.type === 'minLength' && "Body is too short"}</Help>
+                            <Help color={'danger'}>{errors.Body?.type === 'maxLength' && "Body is too long"}</Help>
                         </Control>
                     </Field>
 
@@ -181,8 +191,7 @@ export default function NewBlogPost(props) {
                         <Label>Category</Label>
                         <Control>
                             <Select.Container>
-                                <Select onChange={handleChangeCategory}>
-                                <Select.Option>None</Select.Option>
+                                <Select>
                                     {categories.map(category => (
                                         <Select.Option key={category.title} value={category.title}>{category.title}</Select.Option>
                                     ))}

@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Table, Input, Box, Control, Button, Title, Icon, Field, Label } from "rbx";
+import { Table, Input, Box, Control, Button, Title, Icon, Field, Label, Container } from "rbx";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faSearch, faEdit, faComments } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from "../context/auth";
 
+const container = {
+  'padding': '16px'
+};
 const box = {
   'margin': 'auto',
   'padding': '50px',
   'marginTop': '50px',
-  'maxWidth': '80%'
+  'width': '80%',
+};
+const newpostbutton = {
+  'marginTop': '20px',
+  'marginBottom': '20px',
 };
 
 export default function Dashboard(props) {
@@ -24,8 +31,6 @@ export default function Dashboard(props) {
   if(process.env.NODE_ENV !== 'production') {
       url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
   }
-  
-
 
    useEffect(() => {
     axios
@@ -70,13 +75,15 @@ function logOut() {
 
   return (
     <div>
+      <Container breakpoint="mobile" style={container}>
       <Box style={box}>
+      <Button.Group align="right" >
+        <Button onClick={logOut} color="danger" >Logout</Button>
+      </Button.Group>
         <Title>Dashboard</Title>
-        <Button as={Link} to="new" color="primary" >New post</Button>
-
+        <Button style={newpostbutton} as={Link} to="new" color="primary" >New post</Button>
 
         <Label>All posts</Label>
-
         <Table fullwidth>
           <Table.Head>
             <Table.Row>
@@ -130,9 +137,8 @@ function logOut() {
             ))}
           </Table.Body>
         </Table>
-        
-        <Button onClick={logOut} color="danger" >Logout</Button>
       </Box>
+      </Container>
     </div>
   );
 }

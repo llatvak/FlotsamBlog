@@ -3,10 +3,11 @@ import { Button, Control, Input, Field, Icon} from "rbx";
 import { Link, useHistory  } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
+import { useForm } from "react-hook-form";
 
 export default function SearchBar() {
     const [postFilter, setPostFilter] = useState('');
+    const { register, handleSubmit, errors } = useForm();
 
     let history = useHistory();
 
@@ -14,38 +15,45 @@ export default function SearchBar() {
       setPostFilter(e.target.value);
     }
 
+    const handleClickSearch = () => {
+      history.push({
+        pathname: '/search',
+        state: { query: postFilter}
+      })
+      setPostFilter('')
+    }
+
     const handleKeyPressSearch = (event) => {
-      if(event.key === 'Enter'){
-        history.push({
-                      pathname: '/search',
-                      state: { query: postFilter}
-                    })
+      if(event.key === 'Enter') {
+        handleClickSearch();
       }
     }
 
     return (
         <div>
+          <form onSubmit={handleSubmit(handleClickSearch)}>
             <Field kind="addons">
                 <Control>
                     <Input 
-                        type="text" 
+                        type="text"
+                        name="Search"
                         value={postFilter} 
                         onChange={handleChangeSearchQuery}
                         onKeyDown={handleKeyPressSearch} 
-                        placeholder="Search posts" />
+                        placeholder="Search posts" 
+                        ref={register({required: true, minLength: 1 })}/>
                 </Control>
                 <Control>
-                    <Button color="primary" 
-                      as={Link} to={{
-                      pathname: '/search',
-                      state: { query: postFilter}
-                    }}>
+                    <Input as={Button} 
+                      color="primary"
+                      type="submit">
                         <Icon>
                             <FontAwesomeIcon icon={faSearch} />
                         </Icon>
-                    </Button>
+                    </Input>
                 </Control>
             </Field>
+          </form>
         </div>
     );
 }
