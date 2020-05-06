@@ -34,12 +34,12 @@ const body = {
 };
 
 const button = {
-  'width': '70%',
-  'marginLeft': '10%'
+  'width': '72%',
+  'marginLeft': '5%'
 };
 
 const likeButton = {
-  paddingLeft: '50px',
+  paddingLeft: '40px',
 };
 
 const media = {
@@ -79,8 +79,8 @@ export default function BlogPost(props) {
     fetchRecommendations();
     
       let likedPosts = [];
-      if(localStorage.getItem(`likedPosts${id}`)) {
-        likedPosts = JSON.parse(localStorage.getItem(`likedPosts${id}`));
+      if(localStorage.getItem(`likedPosts`)) {
+        likedPosts = JSON.parse(localStorage.getItem(`likedPosts`));
           
           if(likedPosts.includes(id) && !initialized) {
               setPostLiked(true);
@@ -92,37 +92,47 @@ export default function BlogPost(props) {
 
   const handleHeartIconClick = e => {
     let likedPostsInStorage = [];
-    if(localStorage.getItem(`likedPosts${id}`)) {
-      likedPostsInStorage = JSON.parse(localStorage.getItem(`likedPosts${id}`));
+    if(localStorage.getItem(`likedPosts`)) {
+      likedPostsInStorage = JSON.parse(localStorage.getItem(`likedPosts`));
     }
 
     if(!likedPostsInStorage.includes(id)) {
       likedPostsInStorage.push(id);
     }
-    localStorage.setItem(`likedPosts${id}`, JSON.stringify(likedPostsInStorage));
+    localStorage.setItem(`likedPosts`, JSON.stringify(likedPostsInStorage));
 
     if (!isPostLiked) {
       setHeartIconColor('red')
-      //updateLikes(++post.likes);
+      updateLikes(++post.postLikes);
       setPostLiked(true)
     } else {
-      //updateLikes(--post.likes)
+      updateLikes(--post.postLikes)
       setHeartIconColor('default')
       setPostLiked(false)
       localStorage.setItem(`likedPosts${id}`, '')
     }
   }
 
-  /*const updateLikes = (e) => {
-    //const tempPost = {author: comment.author, content: comment.content, date: comment.date, likes: comment.likes, postId: comment.postId}
+  const updateLikes = (e) => {
+    const tempPost = {
+      title: post.title,
+      description: post.description,
+      body: post.body,
+      date: post.date,
+      url: post.url,
+      imageUrl: post.imageUrl,
+      category: post.category,
+      postLikes: post.postLikes
+    }
+    console.log(tempPost)
     axios
-     .put(commentUrl, tempPost)
+     .put(postUrl, tempPost)
      .then(response => {
        console.log(response)
      }).catch(error => {
        alert(`${error}`)
    })
-  }*/
+  }
 
   const fetchPost = () => {
     axios
@@ -169,7 +179,6 @@ export default function BlogPost(props) {
     return randomPosts;
  }
  
-
   const filterData = (data) => {
     const commentArray = [];
     for(let i = 0; i < data.length; i++) {
@@ -248,7 +257,7 @@ const handleClickCategory = e => {
               </Button>
               <Icon style={likeButton} as="a">
                   <FontAwesomeIcon size="lg" color={heartIconColor} icon={faHeart} onClick={() => handleHeartIconClick()} />
-                  <small>{20}</small>
+                  <small>{post.postLikes}</small>
               </Icon>
           </Level>
           
