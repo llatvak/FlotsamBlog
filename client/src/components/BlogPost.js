@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Content, Title, Box, Container, Image, Media, Button, Field, Control, Textarea } from "rbx";
+import { Content, Icon, Level, Title, Box, Container, Image, Media, Button, Field, Control, Textarea } from "rbx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { faUserCircle, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from "react-router-dom";
 
 import Comment from './Comment';
@@ -30,13 +30,15 @@ const image = {
 
 const body = {
   'whiteSpace': 'pre-line',
-  'fontSize': '18px'
+  'fontSize': '18px',
 };
 
 const button = {
   'width': '50%',
-  'marginLeft': '25%',
-  'marginRight': '25%',
+};
+
+const likeButton = {
+  whiteSpace: 'nowrap',
 };
 
 const media = {
@@ -47,9 +49,6 @@ const title = {
   'paddingTop': '20px',
 };
 
-
-
-
 export default function BlogPost(props) {
   const id  = props.match.params.id;
   const [post, setPost] = useState([])
@@ -57,6 +56,9 @@ export default function BlogPost(props) {
   const [commentsBoxOpen, setCommentBoxOpen] = useState(true);
   const [comments, setComments] = useState([])
   const [commentAreaRef, setCommentAreaRef] = useState('')
+  let [heartIconColor, setHeartIconColor] = useState('default')
+  const [isPostLiked, setPostLiked] = useState(false)
+  const [initialized, setInitialized] = useState(false)
 
   let history = useHistory();
   
@@ -74,7 +76,52 @@ export default function BlogPost(props) {
     fetchPost();
     fetchComments();
     fetchRecommendations();
+    
+      let likedPosts = [];
+      if(localStorage.getItem(`likedPosts${id}`)) {
+        likedPosts = JSON.parse(localStorage.getItem(`likedPosts${id}`));
+          
+          if(likedPosts.includes(id) && !initialized) {
+              setPostLiked(true);
+              setHeartIconColor('red')
+              setInitialized(true)
+          };
+      };
   }, [])
+
+  const handleHeartIconClick = e => {
+    let likedPostsInStorage = [];
+    if(localStorage.getItem(`likedPosts${id}`)) {
+      likedPostsInStorage = JSON.parse(localStorage.getItem(`likedPosts${id}`));
+    }
+
+    if(!likedPostsInStorage.includes(id)) {
+      likedPostsInStorage.push(id);
+    }
+    localStorage.setItem(`likedPosts${id}`, JSON.stringify(likedPostsInStorage));
+
+    if (!isPostLiked) {
+      setHeartIconColor('red')
+      //updateLikes(++post.likes);
+      setPostLiked(true)
+    } else {
+      //updateLikes(--post.likes)
+      setHeartIconColor('default')
+      setPostLiked(false)
+      localStorage.setItem(`likedPosts${id}`, '')
+    }
+  }
+
+  /*const updateLikes = (e) => {
+    //const tempPost = {author: comment.author, content: comment.content, date: comment.date, likes: comment.likes, postId: comment.postId}
+    axios
+     .put(commentUrl, tempPost)
+     .then(response => {
+       console.log(response)
+     }).catch(error => {
+       alert(`${error}`)
+   })
+  }*/
 
   const fetchPost = () => {
     axios
@@ -194,11 +241,15 @@ const handleClickCategory = e => {
             </p>
           </Content>
 
-          <Control>
-            <Button style={button} outlined color={'#333'} key={'#333'} onClick={() => setCommentBoxOpen(!commentsBoxOpen)} >
-              View Comments ({comments.length})
-            </Button>
-          </Control>
+          <Level>
+              <Button style={button} outlined color={'#333'} key={'#333'} onClick={() => setCommentBoxOpen(!commentsBoxOpen)} >
+                View Comments ({comments.length})
+              </Button>
+              <Icon style={likeButton} as="a">
+                  <FontAwesomeIcon size="lg" color={heartIconColor} icon={faHeart} onClick={() => handleHeartIconClick()} />
+              </Icon>
+          </Level>
+          
 
           <Content hidden={commentsBoxOpen} key={comments.id}>
               {comments.map(comment => (
