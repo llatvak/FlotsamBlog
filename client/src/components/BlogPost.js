@@ -74,7 +74,7 @@ export default function BlogPost(props) {
     fetchPost();
     fetchComments();
     fetchRecommendations();
-  }, [])
+  }, [id])
 
   const fetchPost = () => {
     axios
