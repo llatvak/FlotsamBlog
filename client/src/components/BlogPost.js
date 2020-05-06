@@ -50,6 +50,9 @@ const title = {
   'paddingTop': '20px',
 };
 
+
+
+
 export default function BlogPost(props) {
   const id  = props.match.params.id;
   const [post, setPost] = useState([])
@@ -77,18 +80,18 @@ export default function BlogPost(props) {
     fetchPost();
     fetchComments();
     fetchRecommendations();
-    
+
       let likedPosts = [];
       if(localStorage.getItem(`likedPosts`)) {
         likedPosts = JSON.parse(localStorage.getItem(`likedPosts`));
-          
+
           if(likedPosts.includes(id) && !initialized) {
               setPostLiked(true);
               setHeartIconColor('light')
               setInitialized(true)
           };
       };
-  }, [])
+  }, [id])
 
   const handleHeartIconClick = e => {
     let likedPostsInStorage = [];
@@ -179,6 +182,7 @@ export default function BlogPost(props) {
     return randomPosts;
  }
  
+
   const filterData = (data) => {
     const commentArray = [];
     for(let i = 0; i < data.length; i++) {
@@ -260,7 +264,7 @@ const handleClickCategory = e => {
                   <small>{post.postLikes}</small>
               </Icon>
           </Level>
-          
+
 
           <Content hidden={commentsBoxOpen} key={comments.id}>
               {comments.map(comment => (

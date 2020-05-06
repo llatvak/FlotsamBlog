@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Hero, Title, Container } from "rbx";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { Hero, Title, Container, Button, Icon } from "rbx";
 
 import GridView from "./GridView";
 
 const hero = {
   'marginBottom': '50px'
+};
+
+const backtToTopButton = {
+  'bottom': '20px',
+  'right': '20px',
+  'position': 'fixed',
 };
 
 export default function Main() {
@@ -29,6 +37,10 @@ export default function Main() {
     })
   }, [])
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  }
+
   posts.reverse();
 
     return (
@@ -44,6 +56,13 @@ export default function Main() {
               </Hero.Body>
             </Hero>
             <GridView posts={posts}></GridView>
+            <div>
+              <Button style={backtToTopButton} onClick={scrollToTop} color={'primary'}>
+                <Icon size="small">
+                  <FontAwesomeIcon icon={faChevronUp} />
+                </Icon>
+              </Button>
+            </div>
         </div>
     );
 }

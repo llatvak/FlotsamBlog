@@ -191,7 +191,7 @@ export default function NewBlogPost(props) {
                         <Label>Category</Label>
                         <Control>
                             <Select.Container>
-                                <Select>
+                                <Select onChange={handleChangeCategory}>
                                     {categories.map(category => (
                                         <Select.Option key={category.title} value={category.title}>{category.title}</Select.Option>
                                     ))}

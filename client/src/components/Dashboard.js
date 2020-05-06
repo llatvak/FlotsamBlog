@@ -3,7 +3,7 @@ import { Table, Input, Box, Control, Button, Title, Icon, Field, Label, Containe
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faSearch, faEdit, faComments } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faSearch, faEdit, faComments, faSignOutAlt, faPen } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from "../context/auth";
 
 const container = {
@@ -78,10 +78,20 @@ function logOut() {
       <Container breakpoint="mobile" style={container}>
       <Box style={box}>
       <Button.Group align="right" >
-        <Button onClick={logOut} color="danger" >Logout</Button>
+        <Button onClick={logOut} color="danger" >
+        <Icon size="small">
+            <FontAwesomeIcon icon={faSignOutAlt} />
+          </Icon>
+            <span>Logout</span>
+          </Button>
       </Button.Group>
         <Title>Dashboard</Title>
-        <Button style={newpostbutton} as={Link} to="new" color="primary" >New post</Button>
+        <Button style={newpostbutton} as={Link} to="new" color="primary" >
+          <Icon size="small">
+            <FontAwesomeIcon icon={faPen} />
+          </Icon>
+          <span>New post</span>
+          </Button>
 
         <Label>All posts</Label>
         <Table fullwidth>

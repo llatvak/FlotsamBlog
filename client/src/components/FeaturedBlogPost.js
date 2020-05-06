@@ -63,6 +63,7 @@ export default function FeaturedBlogPost(props) {
     }
 
     function renderReadIcon() {
+        window.scrollTo(0, 0);
         if(!isPostRead) {
             return (
                 <span>
@@ -76,6 +77,7 @@ export default function FeaturedBlogPost(props) {
                 </span>
             );
         }
+
     }
 
     const handleClickCategory = e => {
