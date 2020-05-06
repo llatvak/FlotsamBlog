@@ -19,7 +19,7 @@ const button = {
 export default function CommentTable(props) {
   const postData = props.location.state.postData;
   const id = postData.id;
-  
+
   let history = useHistory();
   const [comments, setComments] = useState([])
 
@@ -59,6 +59,27 @@ export default function CommentTable(props) {
     setComments(commentArray);
   }
 
+  function onDelete(id, event) {
+    axios
+        .delete(commentUrl + id)
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => {
+            alert(`Error: Comment  was not deleted`)
+        })
+  
+        let updatedComments = [];
+        for(let i = 0; i < comments.length; i++) {
+          if (comments[i].id === id) {
+              comments.splice(i, 1)
+              updatedComments = comments.splice(0)
+              break;
+          }
+        }
+        setComments(updatedComments);
+  }
+
   return (
     <div>
       <Box style={box}>
@@ -85,7 +106,7 @@ export default function CommentTable(props) {
               <Table.Cell>{comment.likes}</Table.Cell>
               <Table.Cell>{comment.date}</Table.Cell>
               <Table.Cell>
-                <Button color="danger">
+                <Button color="danger" onClick={(e) => onDelete(comment.id, e)}>
                   <Icon>
                       <FontAwesomeIcon icon={faTrash} />
                   </Icon>
