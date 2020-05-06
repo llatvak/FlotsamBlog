@@ -108,7 +108,7 @@ public class ServerApplication implements CommandLineRunner {
                                                 "The case over whether only humans should hold such rights has similarities to the infamous monkey selfie saga where PETA argued that a monkey could own the copyright to a selfie. The US Copyright Office also ruled in that instance that only photographs taken by humans can be copyrighted and PETA’s case was subsequently dismissed.",
                                         "30.4.2020",
                                         "https://artificialintelligence-news.com/2020/04/30/us-patent-office-ai-credited-inventor/",
-                                        "https://www.wpp.com/-/media/project/wpp/images/voices/ai-and-the-personalised-marketing-approach-of-the-future-min.jpg?width=1600&height=900",
+                                        "https://www.phdmedia.com/austria/wp-content/uploads/sites/110/2018/02/AI-image-2.jpg",
                                         "AI",
                                         55
         );
