@@ -22,7 +22,7 @@ export default function CommentTable(props) {
 
   let history = useHistory();
   const [comments, setComments] = useState([])
-
+  let shortDescription = '';
 
   let commentUrl = process.env.REACT_APP_COMMENTS_API_URL_PROD;
 
@@ -80,6 +80,13 @@ export default function CommentTable(props) {
         setComments(updatedComments);
   }
 
+  function shorten(description) {
+    if(description.length > 20) {
+      return shortDescription = description.substring(0, 40) + '...'
+    }
+    return description
+  }
+
   return (
     <div>
       <Box style={box}>
@@ -102,7 +109,7 @@ export default function CommentTable(props) {
             {comments.map(comment => (
             <Table.Row key={comment.id}>
               <Table.Cell>{comment.id}</Table.Cell>
-              <Table.Cell>{comment.content}</Table.Cell>
+              <Table.Cell>{shorten(comment.content)}</Table.Cell>
               <Table.Cell>{comment.likes}</Table.Cell>
               <Table.Cell>{comment.date}</Table.Cell>
               <Table.Cell>
