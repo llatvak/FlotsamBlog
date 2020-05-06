@@ -57,7 +57,7 @@ export default function BlogPost(props) {
   const [commentsBoxOpen, setCommentBoxOpen] = useState(true);
   const [comments, setComments] = useState([])
   const [commentAreaRef, setCommentAreaRef] = useState('')
-  let [heartIconColor, setHeartIconColor] = useState('default')
+  let [heartIconColor, setHeartIconColor] = useState('grey')
   const [isPostLiked, setPostLiked] = useState(false)
   const [initialized, setInitialized] = useState(false)
 
@@ -84,7 +84,7 @@ export default function BlogPost(props) {
           
           if(likedPosts.includes(id) && !initialized) {
               setPostLiked(true);
-              setHeartIconColor('red')
+              setHeartIconColor('light')
               setInitialized(true)
           };
       };
@@ -102,14 +102,14 @@ export default function BlogPost(props) {
     localStorage.setItem(`likedPosts`, JSON.stringify(likedPostsInStorage));
 
     if (!isPostLiked) {
-      setHeartIconColor('red')
+      setHeartIconColor('info')
       updateLikes(++post.postLikes);
       setPostLiked(true)
     } else {
       updateLikes(--post.postLikes)
-      setHeartIconColor('default')
+      setHeartIconColor('grey')
       setPostLiked(false)
-      localStorage.setItem(`likedPosts${id}`, '')
+      localStorage.setItem(`likedPosts`, '')
     }
   }
 
@@ -255,8 +255,8 @@ const handleClickCategory = e => {
               <Button style={button} outlined color={'#333'} key={'#333'} onClick={() => setCommentBoxOpen(!commentsBoxOpen)} >
                 View Comments ({comments.length})
               </Button>
-              <Icon style={likeButton} as="a">
-                  <FontAwesomeIcon size="lg" color={heartIconColor} icon={faHeart} onClick={() => handleHeartIconClick()} />
+              <Icon style={likeButton} color={heartIconColor} as="a">
+                  <FontAwesomeIcon size="lg" icon={faHeart} onClick={() => handleHeartIconClick()} />
                   <small>{post.postLikes}</small>
               </Icon>
           </Level>

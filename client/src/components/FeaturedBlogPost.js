@@ -110,8 +110,8 @@ export default function FeaturedBlogPost(props) {
                 </Card.Content>
                 <Card.Content>
                     {renderReadIcon()}
-                    <Icon style={iconHeart}>
-                        <FontAwesomeIcon size="lg" color='red' icon={faHeart} />
+                    <Icon style={iconHeart} color="info">
+                        <FontAwesomeIcon size="lg" icon={faHeart} />
                         <small>{post.postLikes}</small>
                     </Icon>
                 </Card.Content>

@@ -9,7 +9,7 @@ const media = {
 };
 
 export default function Comment(props) {
-  let [heartIconColor, setHeartIconColor] = useState('default')
+  let [heartIconColor, setHeartIconColor] = useState('grey')
   const [isCommentLiked, setCommentLiked] = useState(false)
   const [initialized, setInitialized] = useState(false)
 
@@ -29,7 +29,7 @@ export default function Comment(props) {
         
         if(likedComments.includes(comment.id) && !initialized) {
             setCommentLiked(true);
-            setHeartIconColor('red')
+            setHeartIconColor('info')
             setInitialized(true)
         };
     };
@@ -48,12 +48,12 @@ export default function Comment(props) {
     localStorage.setItem(`likedComments${comment.postId}`, JSON.stringify(likedCommentsInStorage));
 
     if (!isCommentLiked) {
-      setHeartIconColor('red')
+      setHeartIconColor('info')
       updateLikes(++comment.likes);
       setCommentLiked(true)
     } else {
       updateLikes(--comment.likes)
-      setHeartIconColor('default')
+      setHeartIconColor('grey')
       setCommentLiked(false)
       localStorage.setItem(`likedComments${comment.postId}`, '')
     }
@@ -93,8 +93,8 @@ export default function Comment(props) {
                             </small>
                         </Level.Item>
                         <Level.Item as="a">
-                            <Icon size="small">
-                                <FontAwesomeIcon color={heartIconColor} icon={faHeart} onClick={() => handleHeartIconClick()} />
+                            <Icon size="small" color={heartIconColor}>
+                                <FontAwesomeIcon icon={faHeart} onClick={() => handleHeartIconClick()} />
                             </Icon>
                         </Level.Item>
                         <Content>
