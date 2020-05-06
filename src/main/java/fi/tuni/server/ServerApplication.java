@@ -60,7 +60,18 @@ public class ServerApplication implements CommandLineRunner {
                                         "https://i.kinja-img.com/gawker-media/image/upload/c_scale,f_auto,fl_progressive,q_80,w_1600/fmagv2s9zlk3iopmkwfb.jpg", 
                                         "Technology"
                                     );
-        BlogPost post3 = new BlogPost("Meet the finalists of the Google Play Indie Games Festival ",
+        BlogPost post3 = new BlogPost("GitHub makes its core tools free for all development teams",
+                                        "GitHub has given developers a welcome helping hand during these diffic...",
+                                        "GitHub has given developers a welcome helping hand during these difficult times by making its core tools free. Organisations can now make private repositories without paying any fees. Previously, even small teams would’ve had to pay for a premium membership starting from $7/month.\n\n" +
+                                                "Last year, GitHub made private repositories available for free users but with restrictions in areas such as the number of collaborators; which hindered teams. Unlimited collaborators and private repositories are now included in the free tier. Teams can now also access 2,000 GitHub “action minutes” per month at no additional cost.\n\n" +
+                                                "GitHub Actions enable applications to automate individual tasks. Developers can combine their own series of tasks to create Actions, or use ones created by the community. 500MB of GitHub Packages storage is also now included in the free tier. The free tier is great for many small teams with smaller budgets, but larger teams will likely need a few more features.\n\n" +
+                                                "GitHub has reduced its former “Team” premium tier from $9/month to $4/month. For the additional fee, development teams can access 3,000 Actions minutes and 2GB of GitHub Packages storage. While the COVID-19 pandemic likely prompted a quicker rollout, GitHub CEO Nat Friedman says the company has been considering the change for the last 18 months.",
+                                        "15.4.2020",
+                                        "https://developer-tech.com/news/2020/apr/15/github-core-tools-free-development-teams/",
+                                        "https://images.wallpaperscraft.com/image/code_text_colorful_140555_1600x900.jpg",
+                                        "Programming"
+        );
+        BlogPost post4 = new BlogPost("Meet the finalists of the Google Play Indie Games Festival ",
                                         "At the start of this year we opened submissions for 2020’s Google Play...", 
                                         "At the start of this year we opened submissions for 2020’s Google Play Indie Games Festival - an international competition celebrating incredible indie games from Europe, Japan and South Korea.\n\n" +
                                         "We’ve received hundreds of fantastic submissions that showcase the technical abilities and groundbreaking creativity of independent studios. Many thanks to everyone who submitted their game. After some hard choices and late nights, we’re happy to announce our 20 finalists in each region.\n\n" +
@@ -71,20 +82,8 @@ public class ServerApplication implements CommandLineRunner {
                                         "https://3.bp.blogspot.com/-Z7zdfBjgT7s/Xn5KK2tHgSI/AAAAAAAAOx8/T6bReu6ky4E8gnTOSsSZJDbTOs4W1HbzQCLcBGAsYHQ/s1600/Android%2BDevelopers%2BBlog%2B%25281200x600%2529.png", 
                                         "Android"
                                     );
-        BlogPost post4 = new BlogPost("USPTO: AIs cannot be credited as inventors...",
-                                        "US Patent Office has ruled that an AI cannot be legally credited as an inventor...",
-                                        "The US Patent and Trademark Office (USPTO) has ruled that an AI cannot be legally credited as an inventor. AI will assist us mere humans in coming up with new innovations in the years to come. However, the USPTO will not let them take the credit. The USPTO has rejected two early filings of inventions credited to an AI system called DABUS which was created by Stephen Thaler. \n\n" +
-                                                "DABUS invented two devices; a shape-shifting food container, and a new type of emergency flashlight. The filings were submitted by the Artificial Inventor Project (AIP) last year. AIP’s lawyers argued that Thaler is an expert in building AI systems like DABUS but has no experience in consumer goods and would not have created them himself.\n\n" +
-                                                "The USPTO concluded that “only natural persons may be named as an inventor in a patent application,” under the current law. Similar applications by the AIP in the UK and EU were rejected along the same lines by their respective patent authorities.\n\n" +
-                                                "“If I teach my Ph.D. student and they go on to make a final complex idea, that doesn’t make me an inventor on their patent, so it shouldn’t with a machine,” Ryan Abbott, a professor at the University of Surrey who led a group of legal experts in the AI patent project, told the Wall Street Journal last year. \n\n" +
-                                                "The case over whether only humans should hold such rights has similarities to the infamous monkey selfie saga where PETA argued that a monkey could own the copyright to a selfie. The US Copyright Office also ruled in that instance that only photographs taken by humans can be copyrighted and PETA’s case was subsequently dismissed.",
-                                        "30.4.2020",
-                                        "https://artificialintelligence-news.com/2020/04/30/us-patent-office-ai-credited-inventor/",
-                                        "https://www.wpp.com/-/media/project/wpp/images/voices/ai-and-the-personalised-marketing-approach-of-the-future-min.jpg?width=1600&height=900",
-                                        "AI"
-        );
         BlogPost post5 = new BlogPost("Coronavirus: Graduates struggling for job",
-                                        "On the cusp of entering the world of work, young people are seeing uncertainty engulf their employment prospects...",
+                                        "On the cusp of entering the world of work, young people are seeing unc...",
                                         "On the cusp of entering the world of work, young people are seeing uncertainty engulf their employment prospects. Elise Lauriot-Prévost, from Lyon, France, has just finished a master's degree.\n\n " +
                                                 "After sending 50 job applications, she has received little encouragement. Especially right now, you are getting the negative responses and you are getting the responses 'there are no new job adverts anyway', said the 22-year-old.\n\n" +
                                                 "And even when it's not an outright rejection, there's still no good news. You are getting the responses, 'thanks for applying, however, because of coronavirus, we are suspending our job hunting and we will let you know when things have moved on', but none of us know when that will be, she said. \n\n" +
@@ -95,16 +94,17 @@ public class ServerApplication implements CommandLineRunner {
                                         "https://www.albawaba.com/sites/default/files/styles/de2e_standard/public/im_new/dima/Unemployment_shutterstock_Apr15.jpg?h=b3660f0d&itok=s9eK1KUg",
                                         "Work"
         );
-        BlogPost post6 = new BlogPost("GitHub makes its core tools free for all development teams",
-                                        "GitHub has given developers a welcome helping hand during these difficult times by making its core tools free...",
-                                        "GitHub has given developers a welcome helping hand during these difficult times by making its core tools free. Organisations can now make private repositories without paying any fees. Previously, even small teams would’ve had to pay for a premium membership starting from $7/month.\n\n" +
-                                                "Last year, GitHub made private repositories available for free users but with restrictions in areas such as the number of collaborators; which hindered teams. Unlimited collaborators and private repositories are now included in the free tier. Teams can now also access 2,000 GitHub “action minutes” per month at no additional cost.\n\n" +
-                                                "GitHub Actions enable applications to automate individual tasks. Developers can combine their own series of tasks to create Actions, or use ones created by the community. 500MB of GitHub Packages storage is also now included in the free tier. The free tier is great for many small teams with smaller budgets, but larger teams will likely need a few more features.\n\n" +
-                                                "GitHub has reduced its former “Team” premium tier from $9/month to $4/month. For the additional fee, development teams can access 3,000 Actions minutes and 2GB of GitHub Packages storage. While the COVID-19 pandemic likely prompted a quicker rollout, GitHub CEO Nat Friedman says the company has been considering the change for the last 18 months.",
-                                        "15.4.2020",
-                                        "https://developer-tech.com/news/2020/apr/15/github-core-tools-free-development-teams/",
-                                        "https://images.wallpaperscraft.com/image/code_text_colorful_140555_1600x900.jpg",
-                                        "Programming"
+        BlogPost post6 = new BlogPost("USPTO: AIs cannot be credited as inventors",
+                                        "US Patent Office has ruled that an AI cannot be legally credited as an...",
+                                        "The US Patent and Trademark Office (USPTO) has ruled that an AI cannot be legally credited as an inventor. AI will assist us mere humans in coming up with new innovations in the years to come. However, the USPTO will not let them take the credit. The USPTO has rejected two early filings of inventions credited to an AI system called DABUS which was created by Stephen Thaler. \n\n" +
+                                                "DABUS invented two devices; a shape-shifting food container, and a new type of emergency flashlight. The filings were submitted by the Artificial Inventor Project (AIP) last year. AIP’s lawyers argued that Thaler is an expert in building AI systems like DABUS but has no experience in consumer goods and would not have created them himself.\n\n" +
+                                                "The USPTO concluded that “only natural persons may be named as an inventor in a patent application,” under the current law. Similar applications by the AIP in the UK and EU were rejected along the same lines by their respective patent authorities.\n\n" +
+                                                "“If I teach my Ph.D. student and they go on to make a final complex idea, that doesn’t make me an inventor on their patent, so it shouldn’t with a machine,” Ryan Abbott, a professor at the University of Surrey who led a group of legal experts in the AI patent project, told the Wall Street Journal last year. \n\n" +
+                                                "The case over whether only humans should hold such rights has similarities to the infamous monkey selfie saga where PETA argued that a monkey could own the copyright to a selfie. The US Copyright Office also ruled in that instance that only photographs taken by humans can be copyrighted and PETA’s case was subsequently dismissed.",
+                                        "30.4.2020",
+                                        "https://artificialintelligence-news.com/2020/04/30/us-patent-office-ai-credited-inventor/",
+                                        "https://www.wpp.com/-/media/project/wpp/images/voices/ai-and-the-personalised-marketing-approach-of-the-future-min.jpg?width=1600&height=900",
+                                        "AI"
         );
 
         // Add dummy BlogPosts to list and save to crud repository
