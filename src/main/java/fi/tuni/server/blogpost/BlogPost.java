@@ -17,8 +17,9 @@ public class BlogPost {
     private String date;
     private String url;
     private String category;
+    private int postLikes;
 
-    public BlogPost(String title, String description, String body, String date, String url, String imageUrl, String category) {
+    public BlogPost(String title, String description, String body, String date, String url, String imageUrl, String category, int postLikes) {
         this.title = title;
         this.description = description;
         this.body = body;
@@ -26,6 +27,7 @@ public class BlogPost {
         this.imageUrl = imageUrl;
         this.url = url;
         this.category = category;
+        this.postLikes = postLikes;
     }
 
     public BlogPost() {
@@ -87,6 +89,14 @@ public class BlogPost {
         this.category = category;
     }
 
+    public int getPostLikes() {
+        return postLikes;
+    }
+
+    public void setPostLikes(int postLikes) {
+        this.postLikes = postLikes;
+    }
+
     public int getId() {
         return id;
     }
@@ -102,6 +112,7 @@ public class BlogPost {
                 ", url='" + url + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", category='" + category + '\'' +
+                ", postLikes='" + postLikes + '\'' +
                 '}';
     }
 

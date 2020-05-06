@@ -47,7 +47,8 @@ public class ServerApplication implements CommandLineRunner {
                                         "11.3.2020", 
                                         "https://edition.cnn.com/2020/04/12/business/new-emoji-apple-android-2021-postponed/index.html", 
                                         "https://blog.emojipedia.org/content/images/2018/07/facebook-emoji-set-emojipedia.jpg", 
-                                        "Technology"
+                                        "Technology",
+                                        1
                                     );
          BlogPost post2 = new BlogPost("How to Share Files Wirelessly Between Windows 10 and Your Samsung Phone",
                                         "The latest Windows 10 Insider build now supports wireless file transfe...", 
@@ -58,7 +59,8 @@ public class ServerApplication implements CommandLineRunner {
                                         "15.3.2020", 
                                         "https://lifehacker.com/how-to-share-files-wirelessly-between-windows-10-and-yo-1842839656", 
                                         "https://i.kinja-img.com/gawker-media/image/upload/c_scale,f_auto,fl_progressive,q_80,w_1600/fmagv2s9zlk3iopmkwfb.jpg", 
-                                        "Technology"
+                                        "Technology",
+                                        3
                                     );
         BlogPost post3 = new BlogPost("GitHub makes its core tools free for all development teams",
                                         "GitHub has given developers a welcome helping hand during these diffic...",
@@ -69,7 +71,8 @@ public class ServerApplication implements CommandLineRunner {
                                         "15.4.2020",
                                         "https://developer-tech.com/news/2020/apr/15/github-core-tools-free-development-teams/",
                                         "https://images.wallpaperscraft.com/image/code_text_colorful_140555_1600x900.jpg",
-                                        "Programming"
+                                        "Programming",
+                                        15
         );
         BlogPost post4 = new BlogPost("Meet the finalists of the Google Play Indie Games Festival ",
                                         "At the start of this year we opened submissions for 2020’s Google Play...", 
@@ -80,7 +83,8 @@ public class ServerApplication implements CommandLineRunner {
                                         "20.4.2020", 
                                         "https://android-developers.googleblog.com/2020/03/meet-finalists-of-google-play-indie.html", 
                                         "https://3.bp.blogspot.com/-Z7zdfBjgT7s/Xn5KK2tHgSI/AAAAAAAAOx8/T6bReu6ky4E8gnTOSsSZJDbTOs4W1HbzQCLcBGAsYHQ/s1600/Android%2BDevelopers%2BBlog%2B%25281200x600%2529.png", 
-                                        "Android"
+                                        "Android",
+                                        19
                                     );
         BlogPost post5 = new BlogPost("Coronavirus: Graduates struggling for job",
                                         "On the cusp of entering the world of work, young people are seeing unc...",
@@ -92,7 +96,8 @@ public class ServerApplication implements CommandLineRunner {
                                         "29.4.2020",
                                         "https://www.euronews.com/2020/04/29/coronavirus-graduates-struggling-for-job-leads-amid-covid-19-lockdown-uncertainty",
                                         "https://www.albawaba.com/sites/default/files/styles/de2e_standard/public/im_new/dima/Unemployment_shutterstock_Apr15.jpg?h=b3660f0d&itok=s9eK1KUg",
-                                        "Work"
+                                        "Work",
+                                        100
         );
         BlogPost post6 = new BlogPost("USPTO: AIs cannot be credited as inventors",
                                         "US Patent Office has ruled that an AI cannot be legally credited as an...",
@@ -104,7 +109,8 @@ public class ServerApplication implements CommandLineRunner {
                                         "30.4.2020",
                                         "https://artificialintelligence-news.com/2020/04/30/us-patent-office-ai-credited-inventor/",
                                         "https://www.wpp.com/-/media/project/wpp/images/voices/ai-and-the-personalised-marketing-approach-of-the-future-min.jpg?width=1600&height=900",
-                                        "AI"
+                                        "AI",
+                                        55
         );
 
         // Add dummy BlogPosts to list and save to crud repository
@@ -122,7 +128,6 @@ public class ServerApplication implements CommandLineRunner {
         categories.add(new Category("AI"));
         categories.add(new Category("Android"));
         categories.add(new Category("Work"));
-        categories.add(new Category("Lifestyle"));
         categoryRepository.saveAll(categories);
 
         // Add dummy Comments to list and save to crud repository
@@ -148,9 +153,9 @@ public class ServerApplication implements CommandLineRunner {
         System.out.println("DELETE one post: ");
         System.out.println("	curl -X DELETE http://localhost:8080/api/posts/1");
         System.out.println("POST one post: ");
-        System.out.println("	curl -X POST -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Featured post\\\", \\\"description\\\": \\\"Post description\\\",  \\\"body\\\": \\\"Post body\\\", \\\"date\\\": \\\"Dec 20\\\", \\\"url\\\": \\\"Post url.\\\", \\\"imageUrl\\\": \\\"https://source.unsplash.com/random\\\", \\\"category\\\": \\\"Category 1\\\"}\" http://localhost:8080/api/posts/");
+        System.out.println("	curl -X POST -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Featured post\\\", \\\"description\\\": \\\"Post description\\\",  \\\"body\\\": \\\"Post body\\\", \\\"date\\\": \\\"Dec 20\\\", \\\"url\\\": \\\"Post url.\\\", \\\"imageUrl\\\": \\\"https://source.unsplash.com/random\\\", \\\"category\\\": \\\"Category 1\\\", \\\"postLikes\\\": \\1\\}\" http://localhost:8080/api/posts/");
         System.out.println("UPDATE post: ");
-        System.out.println("	curl -X PUT -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Updated Featured post\\\", \\\"description\\\": \\\"Updated Post description\\\",  \\\"body\\\": \\\"Updated post body\\\", \\\"date\\\": \\\"Dec 24\\\", \\\"url\\\": \\\"Updated post url.\\\", \\\"imageUrl\\\": \\\"https://source.unsplash.com/random\\\", \\\"category\\\": \\\"Updated Category 1\\\"}\" http://localhost:8080/api/posts/1");
+        System.out.println("	curl -X PUT -H \"Content-type: application/json\" -d \"{\\\"title\\\": \\\"Updated Featured post\\\", \\\"description\\\": \\\"Updated Post description\\\",  \\\"body\\\": \\\"Updated post body\\\", \\\"date\\\": \\\"Dec 24\\\", \\\"url\\\": \\\"Updated post url.\\\", \\\"imageUrl\\\": \\\"https://source.unsplash.com/random\\\", \\\"category\\\": \\\"Updated Category 1\\\", \\\"postLikes\\\": \\2\\}\" http://localhost:8080/api/posts/1");
         System.out.println("-------------");
         System.out.println("GET all comments: ");
         System.out.println("	curl -X GET http://localhost:8080/api/comments");
