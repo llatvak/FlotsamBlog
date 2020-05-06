@@ -3,6 +3,7 @@ import { Field, Input, Box, Control, Button, Title, Label, Container } from "rbx
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from "../context/auth"
+import { useForm } from "react-hook-form";
 
 const container = {
   'padding': '16px'
@@ -13,12 +14,16 @@ const box = {
   'marginTop': '100px',
   'width': '320px'
 };
+const loginbutton = {
+  'marginTop': '20px',
+};
 
 export default function Login(props) {
   const [isLoggedIn, setLoggedIn] = useState(false)
-  const [passwordRef, setPasswordRef] = useState('')
-  const [usernameRef, setUsernameRef] = useState('')
+  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
   const { setAuthTokens } = useAuth();
+  const { register, handleSubmit, errors } = useForm();
 
   let loginUrl = process.env.REACT_APP_LOGIN_URL_DEVEL;
 
@@ -26,10 +31,17 @@ export default function Login(props) {
     // needs production login url?
     // loginUrl = process.env.REACT_APP_LOGIN_URL_PROD;
   }
+  const handleChangeUsername = e => {
+    setUsername(e.target.value);
+  }
+
+  const handleChangePassword = e => {
+    setPassword(e.target.value);
+  }
 
   const postLogin = () => {
-    let usernameValue = usernameRef.value
-    let passwordValue = passwordRef.value
+    let usernameValue = username;
+    let passwordValue = password
     let tempData = { username: usernameValue, password: passwordValue }
     axios
     .post(loginUrl, tempData)
@@ -63,26 +75,30 @@ export default function Login(props) {
     <div>
     <Container breakpoint="mobile" style={container}>
       <Box style={box}>
+      <form onSubmit={handleSubmit(postLogin)}>
       <Title>Login</Title>
         <Field align="centered">
           <Label>Username</Label>
           <Control>
-            <Input type="text" placeholder="Username" ref={(username) => {setUsernameRef(username)}} onKeyDown={handleKeyPressLogin}/>
+            <Input type="text" color={'primary'} name="Username" placeholder="Username" ref={register({required: true})} onKeyDown={handleKeyPressLogin} onChange={handleChangeUsername}/>
+            {errors.Username && "Username is required"}
           </Control>
         </Field>
 
         <Field align="centered">
           <Label>Password</Label>
           <Control>
-            <Input type="password" placeholder="Password" ref={(password) => {setPasswordRef(password)}} onKeyDown={handleKeyPressLogin}/>
+            <Input type="password" color={'primary'} name="Password" placeholder="Password" ref={register({required: true})} onKeyDown={handleKeyPressLogin} onChange={handleChangePassword}/>
+            {errors.Password && "Password is required"}
           </Control>
         </Field>
 
-        <Field>
+        <Field style={loginbutton}>
           <Control>
-            <Button onClick={postLogin} color="primary">Login</Button>
+            <Input as={Button} type="submit" color="primary" >Login</Input>
           </Control>
         </Field>
+        </form>
       </Box>
       </Container>
     </div>
