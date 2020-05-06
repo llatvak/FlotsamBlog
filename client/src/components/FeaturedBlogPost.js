@@ -49,6 +49,7 @@ export default function FeaturedBlogPost(props) {
       }, []);
 
     function onReadMore(event) {
+        window.scrollTo(0, 0);
         // Mark post as read to local storage
         var readPostsInStorage = [];
         if(localStorage.getItem("readPosts")) {
@@ -63,7 +64,6 @@ export default function FeaturedBlogPost(props) {
     }
 
     function renderReadIcon() {
-        window.scrollTo(0, 0);
         if(!isPostRead) {
             return (
                 <span>
