@@ -62,7 +62,6 @@ export default function Login(props) {
   
   const handleKeyPressLogin = (event) => {
     if(event.key === 'Enter'){
-      console.log('enter')
       postLogin();
     }
   }
