@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Title, Image, Icon, Level } from "rbx";
 import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faHeart } from '@fortawesome/free-solid-svg-icons'
 
 const title = {
 };
@@ -10,6 +10,11 @@ const subtitle = {
     'marginTop': '10px'
 };
 const button = {
+};
+
+const iconHeart = {
+    marginTop: '5px',
+    marginLeft: '20px',
 };
 
 export default function FeaturedBlogPost(props) {
@@ -105,6 +110,10 @@ export default function FeaturedBlogPost(props) {
                 </Card.Content>
                 <Card.Content>
                     {renderReadIcon()}
+                    <Icon style={iconHeart}>
+                        <FontAwesomeIcon size="lg" color='red' icon={faHeart} />
+                        <small>{post.postLikes}</small>
+                    </Icon>
                 </Card.Content>
             </Card>
         </div>
