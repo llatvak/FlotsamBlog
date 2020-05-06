@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Field, Input, Box, Control, Button, Title, Label, Container } from "rbx";
+import { Field, Input, Box, Control, Button, Title, Label, Container, Help } from "rbx";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from "../context/auth"
@@ -80,7 +80,7 @@ export default function Login(props) {
           <Label>Username</Label>
           <Control>
             <Input type="text" color={'primary'} name="Username" placeholder="Username" ref={register({required: true})} onKeyDown={handleKeyPressLogin} onChange={handleChangeUsername}/>
-            {errors.Username && "Username is required"}
+            <Help color={'danger'}>{errors.Username && "Username is required"}</Help>
           </Control>
         </Field>
 
@@ -88,7 +88,7 @@ export default function Login(props) {
           <Label>Password</Label>
           <Control>
             <Input type="password" color={'primary'} name="Password" placeholder="Password" ref={register({required: true})} onKeyDown={handleKeyPressLogin} onChange={handleChangePassword}/>
-            {errors.Password && "Password is required"}
+            <Help color={'danger'}>{errors.Password && "Password is required"}</Help>
           </Control>
         </Field>
 
