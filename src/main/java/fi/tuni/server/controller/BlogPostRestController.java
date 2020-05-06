@@ -42,6 +42,7 @@ public class BlogPostRestController {
         post.setDate(postDetails.getDate());
         post.setImageUrl(postDetails.getImageUrl());
         post.setCategory(postDetails.getCategory());
+        post.setPostLikes(postDetails.getPostLikes());
         final BlogPost updatedPost = postRepository.save(post);
         return ResponseEntity.ok(updatedPost);
     }
