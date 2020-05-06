@@ -17,17 +17,46 @@ const button = {
 };
 
 export default function CommentTable(props) {
-  const [posts, setPosts] = useState([])
+  const postData = props.location.state.postData;
+  const id = postData.id;
+  
   let history = useHistory();
+  const [comments, setComments] = useState([])
 
-  let url = process.env.REACT_APP_POSTS_API_URL_PROD;
+
+  let commentUrl = process.env.REACT_APP_COMMENTS_API_URL_PROD;
 
   if(process.env.NODE_ENV !== 'production') {
-      url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
+      commentUrl = process.env.REACT_APP_COMMENTS_API_URL_DEVEL;
+
   }
+
+  useEffect(() => {
+    fetchComments();
+  }, [])
 
   const handleClickBack = e => {
     history.goBack()
+  }
+
+  const fetchComments = () => {
+    axios
+     .get(commentUrl)
+     .then(response => {
+       filterData(response.data);
+     }).catch(error => {
+       alert(`${error}`)
+   })
+  }
+
+  const filterData = (data) => {
+    const commentArray = [];
+    for(let i = 0; i < data.length; i++) {
+      if(Number(data[i].postId) === Number(id)) {
+        commentArray.push(data[i]);
+      }
+    }
+    setComments(commentArray);
   }
 
   return (
@@ -49,11 +78,12 @@ export default function CommentTable(props) {
           </Table.Head>
 
           <Table.Body>
-            <Table.Row key={0}>
-              <Table.Cell>1</Table.Cell>
-              <Table.Cell>Nice post!</Table.Cell>
-              <Table.Cell>20</Table.Cell>
-              <Table.Cell>05.05.2020</Table.Cell>
+            {comments.map(comment => (
+            <Table.Row key={comment.id}>
+              <Table.Cell>{comment.id}</Table.Cell>
+              <Table.Cell>{comment.content}</Table.Cell>
+              <Table.Cell>{comment.likes}</Table.Cell>
+              <Table.Cell>{comment.date}</Table.Cell>
               <Table.Cell>
                 <Button color="danger">
                   <Icon>
@@ -62,6 +92,7 @@ export default function CommentTable(props) {
                 </Button>
               </Table.Cell>
             </Table.Row>
+            ))}
           </Table.Body>
         </Table>
         <Button style={button} onClick={handleClickBack} >Back</Button>
