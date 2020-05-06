@@ -3,6 +3,7 @@ import { Table, Box, Button, Title, Icon, Label } from "rbx";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { useHistory } from "react-router-dom";
 
 const box = {
   'margin': 'auto',
@@ -11,13 +12,22 @@ const box = {
   'maxWidth': '80%'
 };
 
+const button = {
+  marginTop: '20px',
+};
+
 export default function CommentTable(props) {
   const [posts, setPosts] = useState([])
+  let history = useHistory();
 
   let url = process.env.REACT_APP_POSTS_API_URL_PROD;
 
   if(process.env.NODE_ENV !== 'production') {
       url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
+  }
+
+  const handleClickBack = e => {
+    history.goBack()
   }
 
   return (
@@ -54,6 +64,7 @@ export default function CommentTable(props) {
             </Table.Row>
           </Table.Body>
         </Table>
+        <Button style={button} onClick={handleClickBack} >Back</Button>
         </Box>
     </div>
   );
