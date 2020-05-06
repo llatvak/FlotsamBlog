@@ -25,11 +25,10 @@ export default function Login(props) {
   const { setAuthTokens } = useAuth();
   const { register, handleSubmit, errors } = useForm();
 
-  let loginUrl = process.env.REACT_APP_LOGIN_URL_DEVEL;
+  let loginUrl = process.env.REACT_APP_LOGIN_URL_PROD;
 
   if(process.env.NODE_ENV !== 'production') {
-    // needs production login url?
-    // loginUrl = process.env.REACT_APP_LOGIN_URL_PROD;
+    loginUrl = process.env.REACT_APP_LOGIN_URL_DEVEL;
   }
   const handleChangeUsername = e => {
     setUsername(e.target.value);
