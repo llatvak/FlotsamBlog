@@ -41,7 +41,7 @@ export default function SearchBar() {
                         onChange={handleChangeSearchQuery}
                         onKeyDown={handleKeyPressSearch} 
                         placeholder="Search posts" 
-                        ref={register({required: true, min: 1 })}/>
+                        ref={register({required: true, minLength: 1 })}/>
                 </Control>
                 <Control>
                     <Input as={Button} 
