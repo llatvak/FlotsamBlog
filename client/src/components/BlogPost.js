@@ -34,11 +34,12 @@ const body = {
 };
 
 const button = {
-  'width': '50%',
+  'width': '70%',
+  'marginLeft': '10%'
 };
 
 const likeButton = {
-  whiteSpace: 'nowrap',
+  paddingLeft: '50px',
 };
 
 const media = {
@@ -241,7 +242,7 @@ const handleClickCategory = e => {
             </p>
           </Content>
 
-          <Level>
+          <Level align="center">
               <Button style={button} outlined color={'#333'} key={'#333'} onClick={() => setCommentBoxOpen(!commentsBoxOpen)} >
                 View Comments ({comments.length})
               </Button>
