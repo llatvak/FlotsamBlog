@@ -12,6 +12,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import NavBar from "./components/NavBar";
 import SearchResults from './components/SearchResults';
+import CommentTable from './components/CommentTable';
 
 export default function App() {
 
@@ -36,6 +37,7 @@ export default function App() {
             <PrivateRoute path="/dashboard" component={Dashboard}/>
             <PrivateRoute path="/new" component={NewBlogPost}/>
             <PrivateRoute path="/edit" component={NewBlogPost}/>
+            <PrivateRoute path="/comments" component={CommentTable}/>
           </Switch>
       </div>
     </Router>
