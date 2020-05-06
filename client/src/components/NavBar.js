@@ -67,7 +67,7 @@ export default function NavBar() {
 
                         <Navbar.Item as='div'>
                             <Icon as={Link} to="/dashboard" color={'primary'}>
-                                <FontAwesomeIcon icon={faUserCircle} />
+                                <FontAwesomeIcon icon={faUserCircle} size="lg"/>
                             </Icon>
                         </Navbar.Item>
                     </Navbar.Segment>
