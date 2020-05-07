@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -21,8 +22,11 @@ public class CommentRestController {
     CommentRepository commentRepository;
 
     @RequestMapping(value = "api/comments", method = RequestMethod.POST)
-    public ResponseEntity<Comment> saveComment(@RequestBody Comment c, UriComponentsBuilder b) {
+    public ResponseEntity<Comment> saveComment(@RequestBody(required = true) @Valid Comment c, UriComponentsBuilder b, BindingResult result) {
 
+        if(result.hasErrors()) {
+            return new ResponseEntity<Comment>(HttpStatus.BAD_REQUEST);
+        }
         this.commentRepository.save(c);
 
         UriComponents uriComponents = b.path("api/comments/{id}").buildAndExpand(c.getId());
@@ -33,7 +37,10 @@ public class CommentRestController {
     }
 
     @PutMapping("api/comments/{commentId}")
-    public ResponseEntity<Comment> updateComment(@PathVariable(value = "commentId") int commentId, @Valid @RequestBody Comment commentDetails) throws Exception {
+    public ResponseEntity<Comment> updateComment(@PathVariable(value = "commentId") int commentId, @Valid @RequestBody Comment commentDetails, BindingResult result) throws Exception {
+        if(result.hasErrors()) {
+            return new ResponseEntity<Comment>(HttpStatus.BAD_REQUEST);
+        }
         Comment comment = commentRepository.findById(commentId).orElse(commentRepository.save(commentDetails));
         comment.setAuthor(commentDetails.getAuthor());
         comment.setContent(commentDetails.getContent());

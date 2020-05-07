@@ -1,9 +1,13 @@
 package fi.tuni.server.comment;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Comment {
@@ -11,10 +15,18 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Range(min = 1)
     private int postId;
+    @NotNull
+    @NotBlank
     private String author;
+    @NotNull
+    @NotBlank
     private String content;
+    @NotNull
+    @NotBlank
     private String date;
+    @Range(min = 0)
     private int likes;
 
     public Comment(int postId, String author, String content, String date, int likes) {

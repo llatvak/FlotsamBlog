@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -21,10 +22,12 @@ public class CategoryRestController {
     CategoryRepository categoryRepository;
 
     @RequestMapping(value = "api/categories", method = RequestMethod.POST)
-    public ResponseEntity<Category> saveCategory(@RequestBody Category p, UriComponentsBuilder b) {
+    public ResponseEntity<Category> saveCategory(@RequestBody(required = true) @Valid Category p, UriComponentsBuilder b, BindingResult result) {
 
+        if(result.hasErrors()) {
+            return new ResponseEntity<Category>(HttpStatus.BAD_REQUEST);
+        }
         this.categoryRepository.save(p);
-
         UriComponents uriComponents = b.path("api/categories/{id}").buildAndExpand(p.getId());
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponents.toUri());

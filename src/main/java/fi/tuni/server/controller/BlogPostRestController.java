@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -23,10 +26,12 @@ public class BlogPostRestController {
     BlogPostRepository postRepository;
 
     @RequestMapping(value = POSTS_URL, method = RequestMethod.POST)
-    public ResponseEntity<BlogPost> savePost(@RequestBody BlogPost p, UriComponentsBuilder b) {
-
+    public ResponseEntity<BlogPost> savePost(@RequestBody(required = true) @Valid BlogPost p, UriComponentsBuilder b, BindingResult result) {
+        if (result.hasErrors()) {
+            // Validation problems!
+            return new ResponseEntity<BlogPost>(HttpStatus.BAD_REQUEST);
+        }
         this.postRepository.save(p);
-
         UriComponents uriComponents = b.path("api/posts/{id}").buildAndExpand(p.getId());
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponents.toUri());
