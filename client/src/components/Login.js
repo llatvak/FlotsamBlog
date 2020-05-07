@@ -22,6 +22,7 @@ export default function Login(props) {
   const [isLoggedIn, setLoggedIn] = useState(false)
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
+  const [loginError, setLoginError] = useState(false)
   const { setAuthTokens } = useAuth();
   const { register, handleSubmit, errors } = useForm();
 
@@ -51,11 +52,10 @@ export default function Login(props) {
             setLoggedIn(true)
           } 
       } else {
-        alert('Wrong username or password!')
+        setLoginError(true)
       }
     }).catch(error => {
-        alert('Wrong username or password!')
-        console.log(error.message)
+      setLoginError(true)
     })
   }
   
@@ -75,6 +75,8 @@ export default function Login(props) {
       <Box style={box}>
       <form onSubmit={handleSubmit(postLogin)}>
       <Title>Login</Title>
+      <Help color={'danger'}>{loginError && "Wrong username or password"}</Help>
+      
         <Field align="centered">
           <Label>Username</Label>
           <Control>
@@ -90,7 +92,6 @@ export default function Login(props) {
             <Help color={'danger'}>{errors.Password && "Password is required"}</Help>
           </Control>
         </Field>
-
         <Field style={loginbutton}>
           <Control>
             <Input as={Button} type="submit" color="primary" >Login</Input>

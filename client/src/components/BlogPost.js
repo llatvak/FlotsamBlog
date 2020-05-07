@@ -42,6 +42,10 @@ const likeButton = {
   paddingLeft: '40px',
 };
 
+const iconHeartText = {
+  marginRight: '3px',
+};
+
 const media = {
   'margin': '20px'
 };
@@ -182,7 +186,6 @@ export default function BlogPost(props) {
     }
 
     for(let i of arr) {
-      console.log(i)
       randomPosts.push(allPosts[i])
     }
     return randomPosts;
@@ -265,7 +268,7 @@ const handleClickCategory = e => {
                 View Comments ({comments.length})
               </Button>
               <Icon style={likeButton} color={heartIconColor} as="a">
-                  <FontAwesomeIcon size="lg" icon={faHeart} onClick={() => handleHeartIconClick()} />
+                  <FontAwesomeIcon style={iconHeartText} size="lg" icon={faHeart} onClick={() => handleHeartIconClick()} />
                   <small>{post.postLikes}</small>
               </Icon>
           </Level>

@@ -13,6 +13,10 @@ const iconHeart = {
     marginLeft: '20px',
 };
 
+const iconHeartText = {
+    marginRight: '3px',
+};
+
 const getReadPostsFromLocalStorage = () => {
     let readPostsInStorage = localStorage.getItem("readPosts");
     if(!readPostsInStorage) {
@@ -107,8 +111,8 @@ export default function FeaturedBlogPost(props) {
                 </Card.Content>
                 <Card.Content>
                     {renderReadIcon()}
-                    <Icon style={iconHeart} color="info">
-                        <FontAwesomeIcon size="lg" icon={faHeart} />
+                    <Icon style={iconHeart} color="grey">
+                        <FontAwesomeIcon style={iconHeartText} size="lg" icon={faHeart} />
                         <small>{post.postLikes}</small>
                     </Icon>
                 </Card.Content>
