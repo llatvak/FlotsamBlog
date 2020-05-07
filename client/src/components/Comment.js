@@ -64,7 +64,6 @@ export default function Comment(props) {
     axios
      .put(commentUrl, tempComment)
      .then(response => {
-       console.log(response)
      }).catch(error => {
        alert(`${error}`)
    })
@@ -87,11 +86,6 @@ export default function Comment(props) {
             </Content>
                 <Level breakpoint="mobile">
                     <Level.Item align="left">
-                        <Level.Item>
-                            <small>
-                                <a href="#reply">Reply</a>
-                            </small>
-                        </Level.Item>
                         <Level.Item as="a">
                             <Icon size="small" color={heartIconColor}>
                                 <FontAwesomeIcon icon={faHeart} onClick={() => handleHeartIconClick()} />
