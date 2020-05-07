@@ -13,4 +13,10 @@ public class ResponseEntityExceptionHandler {
         ErrorInfo e = new ErrorInfo("Could not find post with id " + ex.getPostId());
         return new ResponseEntity<ErrorInfo>(e, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(CannotFindCommentException.class)
+    public ResponseEntity<ErrorInfo> handleConflict(CannotFindCommentException ex) {
+        ErrorInfo e = new ErrorInfo("Could not find comment with id " + ex.getCommentId());
+        return new ResponseEntity<ErrorInfo>(e, HttpStatus.NOT_FOUND);
+    }
 }

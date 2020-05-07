@@ -2,6 +2,7 @@ package fi.tuni.server.controller;
 
 import fi.tuni.server.comment.Comment;
 import fi.tuni.server.comment.CommentRepository;
+import fi.tuni.server.exception.CannotFindCommentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -55,7 +56,11 @@ public class CommentRestController {
 
     @RequestMapping(value = "api/comments/{commentId}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteComment(@PathVariable int commentId) {
-        commentRepository.deleteById(commentId);
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        if(commentRepository.findById(commentId).isPresent()) {
+            commentRepository.deleteById(commentId);
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        } else {
+            throw new CannotFindCommentException(commentId);
+        }
     }
 }
