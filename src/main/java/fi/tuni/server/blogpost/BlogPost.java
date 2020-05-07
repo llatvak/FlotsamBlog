@@ -1,22 +1,47 @@
 package fi.tuni.server.blogpost;
 
-import javax.persistence.*;
+import org.hibernate.validator.constraints.Range;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+/**
+ * Entity that holds blog post information.
+ *
+ * @version 1.0
+ * @author Lauri Latva-Kyyny
+ */
 @Entity
 public class BlogPost {
 
     @Id
     @GeneratedValue
     private int id;
+    @NotNull
+    @NotBlank
     private String title;
+     @NotNull
+     @NotBlank
     private String description;
     @Lob
     @Column(length=100000)
+    @NotNull
+    @NotBlank
     private String body;
+    @NotNull
+    @NotBlank
     private String imageUrl;
+    @NotNull
+    @NotBlank
     private String date;
+    @NotNull
+    @NotBlank
     private String url;
+    @NotNull
+    @NotBlank
     private String category;
+    @Range(min = 0)
     private int postLikes;
 
     public BlogPost(String title, String description, String body, String date, String url, String imageUrl, String category, int postLikes) {

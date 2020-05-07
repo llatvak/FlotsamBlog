@@ -16,15 +16,34 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Verifies credentials sent by client to determine can JWT-token be created.
+ *
+ * @author Lauri Latva-Kyyny
+ * @version 1.0
+ */
 // Verify credentials sent by client
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Parameter constuctor to initialize authentication manager.
+     *
+     * @param authenticationManager current authentication manager to be initialized
+     */
     public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
+    /**
+     * Authenticates user by checking username and password.
+     *
+     * @param request current request
+     * @param response current response
+     * @return authentication from manager
+     * @throws AuthenticationException authentication exception to be thrown
+     */
     // Try to authenticate user
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
@@ -44,6 +63,16 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         }
     }
 
+    /**
+     * Called when authentication successful and generates JWT-token and adds it to header.
+     *
+     * @param request current request
+     * @param response current response
+     * @param chain current filter chain
+     * @param authResult authentication result to get credentials
+     * @throws IOException IO exception to be thrown
+     * @throws ServletException servlet exception to be thrown
+     */
     // Called if authentication is successful
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
