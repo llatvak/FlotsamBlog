@@ -55,7 +55,11 @@ public class BlogPostRestController {
 
     @RequestMapping(value = "api/posts/{postId}", method = RequestMethod.GET)
     public Optional<BlogPost> fetchPost(@PathVariable int postId) {
-        return postRepository.findById(postId);
+        if(postRepository.findById(postId).isPresent()) {
+            return postRepository.findById(postId);
+        } else {
+            throw new CannotFindPostException(postId);
+        }
     }
 
     @RequestMapping(value = "api/posts/{postId}", method = RequestMethod.DELETE)

@@ -51,7 +51,11 @@ public class CommentRestController {
 
     @RequestMapping(value = "api/comments/{commentId}", method = RequestMethod.GET)
     public Optional<Comment> fetchComments(@PathVariable int commentId) {
-        return commentRepository.findById(commentId);
+        if(commentRepository.findById(commentId).isPresent()) {
+            return commentRepository.findById(commentId);
+        } else {
+            throw new CannotFindCommentException(commentId);
+        }
     }
 
     @RequestMapping(value = "api/comments/{commentId}", method = RequestMethod.DELETE)

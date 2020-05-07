@@ -47,7 +47,11 @@ public class CategoryRestController {
 
     @RequestMapping(value = "api/categories/{categoryId}", method = RequestMethod.GET)
     public Optional<Category> fetchCategories(@PathVariable int categoryId) {
-        return categoryRepository.findById(categoryId);
+        if(categoryRepository.findById(categoryId).isPresent()) {
+            return categoryRepository.findById(categoryId);
+        } else {
+            throw new CannotFindCategoryException(categoryId);
+        }
     }
 
     @RequestMapping(value = "api/categories/{categoryId}", method = RequestMethod.DELETE)
