@@ -5,6 +5,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { useForm } from "react-hook-form";
+import Modali, { useModali } from 'modali';
 
 const box = {
     margin: '60px',
@@ -46,6 +47,42 @@ export default function NewBlogPost(props) {
 
     const history = useHistory();
 
+    const [publishModal, togglePublishModal] = useModali({
+        animated: true,
+        title: `Publish a new post?`,
+        message: 'Post will be public',
+        buttons: [
+          <Modali.Button
+            label="Cancel"
+            isStyleCancel
+            onClick={() => togglePublishModal()}
+          />,
+          <Modali.Button
+            label="Publish"
+            isStyleDefault
+            onClick={() => handlePostPublish()}
+          />,
+        ],
+      });
+
+      const [cancelModal, toggleCancelModal] = useModali({
+        animated: true,
+        title: `Cancel and go to dashboard?`,
+        message: 'All modified data will be lost',
+        buttons: [
+          <Modali.Button
+            label="Continue writing"
+            isStyleCancel
+            onClick={() => toggleCancelModal()}
+          />,
+          <Modali.Button
+            label="Go to dashboard"
+            isStyleDestructive
+            onClick={() => handleCancel()}
+          />,
+        ],
+      });
+
     useEffect(() => {
         axios
          .get(categoryUrl)
@@ -57,7 +94,6 @@ export default function NewBlogPost(props) {
 
        if(props.location.state !== undefined) {
             const postData = props.location.state.postData;
-            console.log(postData);
             setId(postData.id);
             setTitle(postData.title);
             setDescription(postData.description);
@@ -102,10 +138,9 @@ export default function NewBlogPost(props) {
             axios
             .post(postUrl, blogpost)
             .then(response => {
-                console.log(response);
                 alert(`Post ${blogpost.title} created`);
                 history.push({
-                    pathname: '/',
+                    pathname: '/dashboard',
                 })
             })
             .catch(error => {
@@ -117,7 +152,9 @@ export default function NewBlogPost(props) {
             axios
             .put(postUrl, blogpost)
             .then(response => {
-                console.log(response);
+                history.push({
+                    pathname: '/dashboard',
+                })
                 alert(`Post ${blogpost.title} updated`);
             })
             .catch(error => {
@@ -125,6 +162,13 @@ export default function NewBlogPost(props) {
                 alert(`Error: Post '${blogpost.title}' was not updated`)
             })
        }
+    }
+
+    const handleCancel = () => {
+        togglePublishModal()
+        history.push({
+            pathname: '/dashboard',
+        })
     }
 
     const renderImage = () => {
@@ -152,7 +196,7 @@ export default function NewBlogPost(props) {
         <div>
             <Container breakpoint="touch">
             <Box style={box} >
-                <form onSubmit={handleSubmit(handlePostPublish)}>
+                <form onSubmit={handleSubmit(togglePublishModal)}>
                     <Field>
                         <Label>Title</Label>
                         <Control>
@@ -230,17 +274,16 @@ export default function NewBlogPost(props) {
                         <Control style={buttonControls}>
                             <Button.Group>
                                 <Input as={Button} type="submit" color="link" >Publish</Input>
-                                <Button text as={Link} to="/dashboard" >Cancel</Button>
+                                <Button text onClick={toggleCancelModal} >Cancel</Button>
                             </Button.Group>
                         </Control>
                     </Field>
                 </form>
+                <Modali.Modal {...cancelModal} />
+                <Modali.Modal {...publishModal} />
             </Box>
             </Container>
 
-            <div hidden={previewHidden}>
-                
-            </div>
         </div>
     );
 }
