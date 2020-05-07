@@ -36,7 +36,7 @@ public class BlogPostRestController {
 
     @PutMapping("api/posts/{postId}")
     public ResponseEntity<BlogPost> updatePost(@PathVariable(value = "postId") int postId, @Valid @RequestBody BlogPost postDetails) throws Exception {
-        BlogPost post = postRepository.findById(postId).orElseThrow(() -> new Exception("Not valid id"));
+        BlogPost post = (BlogPost) postRepository.findById(postId).orElse(postRepository.save(postDetails));
         post.setTitle(postDetails.getTitle());
         post.setDescription(postDetails.getDescription());
         post.setBody(postDetails.getBody());
