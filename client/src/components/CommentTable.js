@@ -4,6 +4,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from "react-router-dom";
+import Modali, { useModali } from 'modali';
 
 const box = {
   'margin': 'auto',
@@ -22,7 +23,26 @@ export default function CommentTable(props) {
 
   let history = useHistory();
   const [comments, setComments] = useState([])
+  const [commentToDelete, setCommentToDelete] = useState(-1)
   let shortDescription = '';
+
+  const [deleteModal, toggleDeleteModal] = useModali({
+    animated: true,
+    title: `Delete comment ${commentToDelete}?`,
+    message: 'Comment will be permanently deleted.',
+    buttons: [
+      <Modali.Button
+        label="Cancel"
+        isStyleCancel
+        onClick={() => toggleDeleteModal()}
+      />,
+      <Modali.Button
+        label="Delete"
+        isStyleDestructive
+        onClick={() => onDelete(commentToDelete)}
+      />,
+    ],
+  });
 
   let commentUrl = process.env.REACT_APP_COMMENTS_API_URL_PROD;
 
@@ -63,7 +83,7 @@ export default function CommentTable(props) {
     axios
         .delete(commentUrl + id)
         .then(response => {
-            console.log(response)
+
         })
         .catch(error => {
             alert(`Error: Comment  was not deleted`)
@@ -78,6 +98,7 @@ export default function CommentTable(props) {
           }
         }
         setComments(updatedComments);
+        toggleDeleteModal();
   }
 
   function shorten(description) {
@@ -90,7 +111,8 @@ export default function CommentTable(props) {
   return (
     <div>
       <Box style={box}>
-        <Title>Comment Table</Title>
+        <Title>Comments for post:</Title>
+        <Label>{postData.id} - {postData.title}</Label>
 
         <Label>All comments</Label>
 
@@ -113,7 +135,10 @@ export default function CommentTable(props) {
               <Table.Cell>{comment.likes}</Table.Cell>
               <Table.Cell>{comment.date}</Table.Cell>
               <Table.Cell>
-                <Button color="danger" onClick={(e) => onDelete(comment.id, e)}>
+                <Button color="danger" onClick={(e) => {
+                    setCommentToDelete(comment.id)
+                    toggleDeleteModal()
+                    }}>
                   <Icon>
                       <FontAwesomeIcon icon={faTrash} />
                   </Icon>
@@ -124,6 +149,7 @@ export default function CommentTable(props) {
           </Table.Body>
         </Table>
         <Button style={button} onClick={handleClickBack} >Back</Button>
+        <Modali.Modal {...deleteModal} />
         </Box>
     </div>
   );
