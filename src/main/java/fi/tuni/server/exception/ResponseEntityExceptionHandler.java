@@ -19,4 +19,10 @@ public class ResponseEntityExceptionHandler {
         ErrorInfo e = new ErrorInfo("Could not find comment with id " + ex.getCommentId());
         return new ResponseEntity<ErrorInfo>(e, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(CannotFindCategoryException.class)
+    public ResponseEntity<ErrorInfo> handleConflict(CannotFindCategoryException ex) {
+        ErrorInfo e = new ErrorInfo("Could not find category with id " + ex.getCategoryId());
+        return new ResponseEntity<ErrorInfo>(e, HttpStatus.NOT_FOUND);
+    }
 }

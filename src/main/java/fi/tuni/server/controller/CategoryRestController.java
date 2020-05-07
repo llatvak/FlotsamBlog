@@ -2,6 +2,7 @@ package fi.tuni.server.controller;
 
 import fi.tuni.server.category.Category;
 import fi.tuni.server.category.CategoryRepository;
+import fi.tuni.server.exception.CannotFindCategoryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,11 @@ public class CategoryRestController {
 
     @RequestMapping(value = "api/categories/{categoryId}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteCategory(@PathVariable int categoryId) {
-        categoryRepository.deleteById(categoryId);
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        if(categoryRepository.findById(categoryId).isPresent()) {
+            categoryRepository.deleteById(categoryId);
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        } else {
+            throw new CannotFindCategoryException(categoryId);
+        }
     }
 }
