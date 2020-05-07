@@ -13,11 +13,9 @@ export default function NavBar() {
 
     let history = useHistory();
 
-    let postUrl = process.env.REACT_APP_POSTS_API_URL_PROD;
     let categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_PROD;
 
     if(process.env.NODE_ENV !== 'production') {
-        postUrl = process.env.REACT_APP_POSTS_API_URL_DEVEL;
         categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_DEVEL;
     }
 

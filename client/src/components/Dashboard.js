@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Table, Input, Box, Control, Button, Title, Icon, Field, Label, Container } from "rbx";
-import { Link } from "react-router-dom";
+import { Table, Box, Button, Title, Icon, Label, Container } from "rbx";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faSearch, faEdit, faComments, faSignOutAlt, faPen } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit, faComments, faSignOutAlt, faPen } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from "../context/auth";
 import Modali, { useModali } from 'modali';
 import { useHistory } from "react-router-dom";
@@ -102,7 +101,6 @@ export default function Dashboard(props) {
   
 
   let history = useHistory();
-  let shortDescription = '';
   const { setAuthTokens } = useAuth();
 
   let url = process.env.REACT_APP_POSTS_API_URL_PROD;
@@ -165,6 +163,7 @@ export default function Dashboard(props) {
 }
 
 function shorten(description) {
+  let shortDescription = '';
   return shortDescription = description.substring(0, 40) + '...'
 }
 

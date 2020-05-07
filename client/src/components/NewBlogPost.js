@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Input, Field, Button, Box, Label, Control, Textarea, Select, Container, Help, Icon, Divider, Media, Image} from "rbx";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
@@ -9,10 +9,6 @@ import Modali, { useModali } from 'modali';
 
 const box = {
     margin: '60px',
-};
-
-const button = {
-    marginRight: '20px',
 };
 
 const buttonControls = {
@@ -42,8 +38,6 @@ export default function NewBlogPost(props) {
     const [dateMonthYear, setDateMonthYear] = useState(`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`)
     const [edited, setEdited] = useState(false);
     const { register, handleSubmit, errors } = useForm();
-
-    const [previewHidden, setPreviewHidden] = useState(true);
 
     const history = useHistory();
 

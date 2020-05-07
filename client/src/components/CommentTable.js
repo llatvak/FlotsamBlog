@@ -24,7 +24,6 @@ export default function CommentTable(props) {
   let history = useHistory();
   const [comments, setComments] = useState([])
   const [commentToDelete, setCommentToDelete] = useState(-1)
-  let shortDescription = '';
 
   const [deleteModal, toggleDeleteModal] = useModali({
     animated: true,
@@ -103,6 +102,7 @@ export default function CommentTable(props) {
 
   function shorten(description) {
     if(description.length > 20) {
+      let shortDescription = '';
       return shortDescription = description.substring(0, 40) + '...'
     }
     return description
