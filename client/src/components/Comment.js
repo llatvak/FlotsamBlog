@@ -15,10 +15,10 @@ export default function Comment(props) {
 
   const { comment } = props;
 
-  let commentUrl = `${process.env.REACT_APP_COMMENTS_API_URL_PROD}${comment.id}` ;
+  let commentUrl = `${process.env.REACT_APP_COMMENTS_API_URL_PROD}/${comment.id}` ;
   
   if(process.env.NODE_ENV !== 'production') {
-    commentUrl = process.env.REACT_APP_COMMENTS_API_URL_DEVEL + `${comment.id}`;
+    commentUrl = process.env.REACT_APP_COMMENTS_API_URL_DEVEL + `/${comment.id}`;
   }
 
   useEffect(() => {

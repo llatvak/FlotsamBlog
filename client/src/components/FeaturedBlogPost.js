@@ -34,12 +34,6 @@ export default function FeaturedBlogPost(props) {
 
     let history = useHistory();
 
-    let url = process.env.REACT_APP_POSTS_API_URL_PROD + `${post.id}`;
-
-    if(process.env.NODE_ENV !== 'production') {
-        url = process.env.REACT_APP_POSTS_API_URL_DEVEL + `${post.id}`;
-    }
-
     const route = `/posts/${post.id}`
 
     useEffect(() => {

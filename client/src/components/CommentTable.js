@@ -21,6 +21,14 @@ export default function CommentTable(props) {
   const postData = props.location.state.postData;
   const id = postData.id;
 
+  let commentUrl = process.env.REACT_APP_COMMENTS_API_URL_PROD;
+  let commentDelUrl = commentUrl + `/${id}`;
+
+  if(process.env.NODE_ENV !== 'production') {
+      commentUrl = process.env.REACT_APP_COMMENTS_API_URL_DEVEL;
+      commentDelUrl = commentUrl + `/${id}`;
+  }
+
   let history = useHistory();
   const [comments, setComments] = useState([])
   const [commentToDelete, setCommentToDelete] = useState(-1)
@@ -43,12 +51,7 @@ export default function CommentTable(props) {
     ],
   });
 
-  let commentUrl = process.env.REACT_APP_COMMENTS_API_URL_PROD;
 
-  if(process.env.NODE_ENV !== 'production') {
-      commentUrl = process.env.REACT_APP_COMMENTS_API_URL_DEVEL;
-
-  }
 
   useEffect(() => {
     fetchComments();
@@ -80,7 +83,7 @@ export default function CommentTable(props) {
 
   function onDelete(id, event) {
     axios
-        .delete(commentUrl + id)
+        .delete(commentDelUrl)
         .then(response => {
 
         })

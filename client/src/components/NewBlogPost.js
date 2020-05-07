@@ -19,10 +19,12 @@ const buttonControls = {
 export default function NewBlogPost(props) {
 
     let postUrl = process.env.REACT_APP_POSTS_API_URL_PROD;
+    let postEditUrl = postUrl + `/${id}`;
     let categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_PROD;
 
     if(process.env.NODE_ENV !== 'production') {
         postUrl = process.env.REACT_APP_POSTS_API_URL_DEVEL;
+        postEditUrl = postUrl + `/${id}`;
         categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_DEVEL;
     }
 
@@ -157,19 +159,16 @@ export default function NewBlogPost(props) {
                 togglePostSuccessModal();
             })
             .catch(error => {
-                 console.log(error);
                 alert(`Error: Post '${blogpost.title}' was not posted`)
             })
        } else {
-            postUrl = postUrl + `${id}`
             axios
-            .put(postUrl, blogpost)
+            .put(postEditUrl, blogpost)
             .then(response => {
                 togglePostSuccessModal();
                 //alert(`Post ${blogpost.title} updated`);
             })
             .catch(error => {
-                 console.log(error);
                 alert(`Error: Post '${blogpost.title}' was not updated`)
             })
        }

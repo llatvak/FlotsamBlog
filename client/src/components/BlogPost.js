@@ -77,12 +77,12 @@ export default function BlogPost(props) {
   let history = useHistory();
   
   let url = process.env.REACT_APP_POSTS_API_URL_PROD;
-  let postUrl = url + `${id}`;
+  let postUrl = url + `/${id}`;
   let commentUrl = process.env.REACT_APP_COMMENTS_API_URL_PROD;
 
   if(process.env.NODE_ENV !== 'production') {
       url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
-      postUrl = url + `${id}`;
+      postUrl = url + `/${id}`;
       commentUrl = process.env.REACT_APP_COMMENTS_API_URL_DEVEL;
   }
 

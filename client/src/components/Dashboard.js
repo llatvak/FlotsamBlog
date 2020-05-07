@@ -25,6 +25,17 @@ export default function Dashboard(props) {
   const [posts, setPosts] = useState([])
   const [postToDelete, setPostToDelete] = useState(-1)
   const [postToEdit, setPostToEdit] = useState(-1)
+  
+  let history = useHistory();
+  const { setAuthTokens } = useAuth();
+
+  let url = process.env.REACT_APP_POSTS_API_URL_PROD;
+  let postDelUrl = url + `/${id}`;
+
+  if(process.env.NODE_ENV !== 'production') {
+      url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
+      postDelUrl = url + `/${id}`;
+  }
 
   const [newpostModal, toggleNewpostModal] = useModali({
     animated: true,
@@ -98,16 +109,7 @@ export default function Dashboard(props) {
     ],
   });
 
-  
 
-  let history = useHistory();
-  const { setAuthTokens } = useAuth();
-
-  let url = process.env.REACT_APP_POSTS_API_URL_PROD;
-
-  if(process.env.NODE_ENV !== 'production') {
-      url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
-  }
 
    useEffect(() => {
     axios
@@ -142,7 +144,7 @@ export default function Dashboard(props) {
  
  function onDelete(id, event) {
   axios
-      .delete(url + id)
+      .delete(postDelUrl)
       .then(response => {
       })
       .catch(error => {
