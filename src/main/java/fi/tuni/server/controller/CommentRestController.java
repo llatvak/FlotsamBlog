@@ -34,7 +34,7 @@ public class CommentRestController {
 
     @PutMapping("api/comments/{commentId}")
     public ResponseEntity<Comment> updateComment(@PathVariable(value = "commentId") int commentId, @Valid @RequestBody Comment commentDetails) throws Exception {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new Exception("Not valid id"));
+        Comment comment = commentRepository.findById(commentId).orElse(commentRepository.save(commentDetails));
         comment.setAuthor(commentDetails.getAuthor());
         comment.setContent(commentDetails.getContent());
         comment.setDate(commentDetails.getDate());
