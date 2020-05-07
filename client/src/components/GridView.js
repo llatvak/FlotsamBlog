@@ -14,7 +14,7 @@ export default function GridView(props) {
     return (
         <div>
         <Container>
-            <Column.Group vcentered multiline>
+            <Column.Group multiline>
                 {posts.map(post => (
                     <Column key={post.id} size="one-third">
                         <FeaturedBlogPost key={post.id} post={post} />

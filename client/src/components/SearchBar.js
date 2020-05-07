@@ -1,89 +1,59 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState  } from "react";
 import { Button, Control, Input, Field, Icon} from "rbx";
-import { Link, useLocation } from "react-router-dom";
-import axios from 'axios';
+import { useHistory  } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
+import { useForm } from "react-hook-form";
 
 export default function SearchBar() {
-    const [categories, setCategories] = useState([]);
     const [postFilter, setPostFilter] = useState('');
-    const [posts, setPosts] = useState([]);
-    const [filteredPosts, setFilteredPosts] = useState([]);
-    const location = useLocation();
+    const { register, handleSubmit } = useForm();
 
-
-    let postUrl = process.env.REACT_APP_POSTS_API_URL_PROD;
-    let categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_PROD;
-
-    if(process.env.NODE_ENV !== 'production') {
-        postUrl = process.env.REACT_APP_POSTS_API_URL_DEVEL;
-        categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_DEVEL;
-    }
-
-    useEffect(() => {
-        axios
-         .get(categoryUrl)
-         .then(response => {
-            setCategories(response.data);
-         }).catch(error => {
-           alert(`Backend error: ${error}`)
-        })
-
-        axios
-        .get(postUrl)
-        .then(response => {
-           setPosts(response.data);
-        }).catch(error => {
-          alert(`Backend error: ${error}`)
-       })
-
-     }, [])
+    let history = useHistory();
 
     const handleChangeSearchQuery = e => {
       setPostFilter(e.target.value);
-      filter();
     }
 
-    const handleClickSearch = e => {
-      if(location.pathname === '/search') {
-        console.log(true)
-      }
-    }
-
-    const filter = () => {
-      let filtered = []
-      filtered = posts.filter( (post) => {
-        return post.title.toLowerCase().indexOf(postFilter.toLowerCase())!==-1
+    const handleClickSearch = () => {
+      history.push({
+        pathname: '/search',
+        state: { query: postFilter}
       })
+      setPostFilter('')
+    }
 
-      setFilteredPosts(filtered);
+    const handleKeyPressSearch = (event) => {
+      if(event.key === 'Enter') {
+        handleClickSearch();
+      }
     }
 
     return (
         <div>
+          <form onSubmit={handleSubmit(handleClickSearch)}>
             <Field kind="addons">
                 <Control>
                     <Input 
-                        type="text" 
+                        type="text"
+                        name="Search"
                         value={postFilter} 
-                        onChange={handleChangeSearchQuery} 
-                        placeholder="Search posts" />
+                        onChange={handleChangeSearchQuery}
+                        onKeyDown={handleKeyPressSearch} 
+                        placeholder="Search posts" 
+                        ref={register({required: true, minLength: 1 })}/>
                 </Control>
                 <Control>
-                    <Button color="primary" 
-                      onClick={handleClickSearch} 
-                      as={Link} to={{
-                      pathname: '/search',
-                      state: { results: filteredPosts }
-                    }}>
+                    <Input as={Button} 
+                      color="primary"
+                      type="submit">
                         <Icon>
                             <FontAwesomeIcon icon={faSearch} />
                         </Icon>
-                    </Button>
+                    </Input>
                 </Control>
             </Field>
+          </form>
         </div>
     );
 }

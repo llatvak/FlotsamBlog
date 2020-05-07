@@ -1,67 +1,105 @@
 import React, { useState } from "react";
-import { Field, Input, Box, Control, Button, Title, Label } from "rbx";
-import { Link } from "react-router-dom";
+import { Field, Input, Box, Control, Button, Title, Label, Container, Help } from "rbx";
+import { Redirect } from "react-router-dom";
 import axios from 'axios';
+import { useAuth } from "../context/auth"
+import { useForm } from "react-hook-form";
 
-
+const container = {
+  'padding': '16px'
+};
 const box = {
   'margin': 'auto',
-  'padding': '50px',
-  'marginTop': '150px',
-  'maxWidth': '40%'
+  'padding': '30px',
+  'marginTop': '100px',
+  'width': '320px'
 };
-
-const textField = {
-
+const loginbutton = {
+  'marginTop': '20px',
 };
-
 
 export default function Login(props) {
-  const [post, setPost] = useState([])
+  const [isLoggedIn, setLoggedIn] = useState(false)
+  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
+  const [loginError, setLoginError] = useState(false)
+  const { setAuthTokens } = useAuth();
+  const { register, handleSubmit, errors } = useForm();
 
-  let url = process.env.REACT_APP_POSTS_API_URL_PROD;
+  let loginUrl = process.env.REACT_APP_LOGIN_URL_PROD;
 
   if(process.env.NODE_ENV !== 'production') {
-      url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
+    loginUrl = process.env.REACT_APP_LOGIN_URL_DEVEL;
+  }
+  const handleChangeUsername = e => {
+    setUsername(e.target.value);
   }
 
-/*
-   useEffect(() => {
+  const handleChangePassword = e => {
+    setPassword(e.target.value);
+  }
+
+  const postLogin = () => {
+    let usernameValue = username;
+    let passwordValue = password
+    let tempData = { username: usernameValue, password: passwordValue }
     axios
-     .get(url)
-     .then(response => {
-       setPost(response.data);
-       console.log(response);
-     }).catch(error => {
-       alert(`${error}`)
-   })
- }, []) 
- */
+    .post(loginUrl, tempData)
+    .then(response => {
+      if(response.status === 200) {
+          if(response.headers.authorization.startsWith("Bearer ")) {
+            setAuthTokens(response.headers.authorization)
+            setLoggedIn(true)
+          } 
+      } else {
+        setLoginError(true)
+      }
+    }).catch(error => {
+      setLoginError(true)
+    })
+  }
+  
+  const handleKeyPressLogin = (event) => {
+    if(event.key === 'Enter'){
+      postLogin();
+    }
+  }
+
+  if(isLoggedIn) {
+    return <Redirect to="/dashboard" />
+  }
 
   return (
     <div>
+    <Container breakpoint="mobile" style={container}>
       <Box style={box}>
+      <form onSubmit={handleSubmit(postLogin)}>
       <Title>Login</Title>
-        <Field style={textField}>
+      <Help color={'danger'}>{loginError && "Wrong username or password"}</Help>
+      
+        <Field align="centered">
           <Label>Username</Label>
           <Control>
-            <Input type="text" placeholder="Username" />
+            <Input type="text" color={'primary'} name="Username" placeholder="Username" ref={register({required: true})} onKeyDown={handleKeyPressLogin} onChange={handleChangeUsername}/>
+            <Help color={'danger'}>{errors.Username && "Username is required"}</Help>
           </Control>
         </Field>
 
-        <Field style={textField}>
+        <Field align="centered">
           <Label>Password</Label>
           <Control>
-            <Input type="password" placeholder="Password" />
+            <Input type="password" color={'primary'} name="Password" placeholder="Password" ref={register({required: true})} onKeyDown={handleKeyPressLogin} onChange={handleChangePassword}/>
+            <Help color={'danger'}>{errors.Password && "Password is required"}</Help>
           </Control>
         </Field>
-
-        <Field>
+        <Field style={loginbutton}>
           <Control>
-            <Button as={Link} to="/user/dashboard" color="success">Login</Button>
+            <Input as={Button} type="submit" color="primary" >Login</Input>
           </Control>
         </Field>
+        </form>
       </Box>
+      </Container>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Icon, Image} from "rbx";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faUserCircle } from '@fortawesome/free-solid-svg-icons'
@@ -11,11 +11,11 @@ export default function NavBar() {
     const [navbarOpen, setNavbarOpen] = useState(false);
     const [categories, setCategories] = useState([]);
 
-    let postUrl = process.env.REACT_APP_POSTS_API_URL_PROD;
+    let history = useHistory();
+
     let categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_PROD;
 
     if(process.env.NODE_ENV !== 'production') {
-        postUrl = process.env.REACT_APP_POSTS_API_URL_DEVEL;
         categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_DEVEL;
     }
 
@@ -30,12 +30,19 @@ export default function NavBar() {
 
      }, [])
 
+    const handleClickCategory = e => {
+        history.push({
+                    pathname: '/search',
+                    state: { query: e.target.firstChild.data}
+                    })
+    }
+
     return (
         <div>
             <Navbar fixed='top' active={navbarOpen} >
                 <Navbar.Brand>
                     <Navbar.Item as={Link} to="/">
-                        <Image src="logo.png" />
+                        <Image src="favicon.png" />
                     </Navbar.Item>
                 <Navbar.Burger onClick={() => setNavbarOpen(!navbarOpen)}/>
                 </Navbar.Brand>
@@ -43,7 +50,9 @@ export default function NavBar() {
                 <Navbar.Menu>
                     <Navbar.Segment align="start">
                          {categories.map(category => (
-                            <Navbar.Item key={category.id}>
+                            <Navbar.Item
+                            key={category.id}
+                            onClick={handleClickCategory}>
                                 {category.title}
                             </Navbar.Item>
                         ))}
@@ -55,8 +64,8 @@ export default function NavBar() {
                         </Navbar.Item>
 
                         <Navbar.Item as='div'>
-                            <Icon as={Link} to="/user/login">
-                                <FontAwesomeIcon icon={faUserCircle} />
+                            <Icon as={Link} to="/dashboard" color={'primary'}>
+                                <FontAwesomeIcon icon={faUserCircle} size="lg"/>
                             </Icon>
                         </Navbar.Item>
                     </Navbar.Segment>

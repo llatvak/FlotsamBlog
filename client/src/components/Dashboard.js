@@ -1,30 +1,112 @@
 import React, { useState, useEffect } from "react";
-import { Table, Input, Box, Control, Button, Title, Icon, Field, Label } from "rbx";
-import { Link } from "react-router-dom";
+import { Table, Box, Button, Title, Icon, Label, Container } from "rbx";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faSearch, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit, faComments, faSignOutAlt, faPen } from '@fortawesome/free-solid-svg-icons'
+import { useAuth } from "../context/auth";
+import Modali, { useModali } from 'modali';
+import { useHistory } from "react-router-dom";
 
+const container = {
+  'padding': '16px'
+};
 const box = {
   'margin': 'auto',
   'padding': '50px',
   'marginTop': '50px',
-  'maxWidth': '80%'
+  'width': '80%',
 };
-
-
+const newpostbutton = {
+  'marginTop': '20px',
+  'marginBottom': '20px',
+};
 
 export default function Dashboard(props) {
   const [posts, setPosts] = useState([])
-
-  let shortDescription = '';
+  const [postToDelete, setPostToDelete] = useState(-1)
+  const [postToEdit, setPostToEdit] = useState(-1)
+  
+  let history = useHistory();
+  const { setAuthTokens } = useAuth();
 
   let url = process.env.REACT_APP_POSTS_API_URL_PROD;
 
   if(process.env.NODE_ENV !== 'production') {
       url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
   }
-  
+
+  const [newpostModal, toggleNewpostModal] = useModali({
+    animated: true,
+    title: `Create a new post?`,
+    message: 'A text editor will be opened',
+    buttons: [
+      <Modali.Button
+        label="Cancel"
+        isStyleCancel
+        onClick={() => toggleNewpostModal()}
+      />,
+      <Modali.Button
+        label="Go to editor"
+        isStyleDefault
+        onClick={() => onNewPost()}
+      />,
+    ],
+  });
+
+
+  const [deleteModal, toggleDeleteModal] = useModali({
+    animated: true,
+    title: `Delete post ${postToDelete}?`,
+    message: 'Post will be permanently deleted.',
+    buttons: [
+      <Modali.Button
+        label="Cancel"
+        isStyleCancel
+        onClick={() => toggleDeleteModal()}
+      />,
+      <Modali.Button
+        label="Delete"
+        isStyleDestructive
+        onClick={() => onDelete(postToDelete)}
+      />,
+    ],
+  });
+
+  const [editModal, toggleEditModal] = useModali({
+    animated: true,
+    title: `Edit post ${postToEdit.id}?`,
+    message: 'Post will be modified',
+    buttons: [
+      <Modali.Button
+        label="Cancel"
+        isStyleCancel
+        onClick={() => toggleEditModal()}
+      />,
+      <Modali.Button
+        label="Edit"
+        isStyleDefault
+        onClick={() => onEdit(postToEdit)}
+      />,
+    ],
+  });
+
+  const [logoutModal, toggleLogoutModal] = useModali({
+    animated: true,
+    title: `Log out?`,
+    buttons: [
+      <Modali.Button
+        label="Cancel"
+        isStyleCancel
+        onClick={() => toggleLogoutModal()}
+      />,
+      <Modali.Button
+        label="Log out"
+        isStyleDestructive
+        onClick={() => logOut()}
+      />,
+    ],
+  });
+
 
 
    useEffect(() => {
@@ -36,13 +118,33 @@ export default function Dashboard(props) {
        alert(`${error}`)
    })
  }, []) 
+
+ function onNewPost() {
+  history.push({
+    pathname: '/new',
+  })
+ }
+
+
+ function onEdit(postData) {
+  history.push({
+    pathname: '/edit',
+    state: { postData: postData }
+    })
+ }
+
+ function onShowComments(postData) {
+  history.push({
+    pathname: '/comments',
+    state: { postData: postData }
+    })
+ }
  
  function onDelete(id, event) {
-  console.log(`delete ${id}`);
+  let delURL = url + `/` + id;
   axios
-      .delete(url + id)
+      .delete(delURL)
       .then(response => {
-          console.log(response)
       })
       .catch(error => {
           alert(`Error: Post  was not deleted`)
@@ -58,33 +160,39 @@ export default function Dashboard(props) {
         }
       }
       setPosts(updatedPosts);
+      toggleDeleteModal();
 }
 
 function shorten(description) {
+  let shortDescription = '';
   return shortDescription = description.substring(0, 40) + '...'
 }
 
+function logOut() {
+  setAuthTokens("");
+}
 
   return (
     <div>
+      <Container breakpoint="mobile" style={container}>
       <Box style={box}>
+      <Button.Group align="right" >
+        <Button onClick={toggleLogoutModal} color="danger" >
+        <Icon size="small">
+            <FontAwesomeIcon icon={faSignOutAlt} />
+          </Icon>
+            <span>Log out</span>
+          </Button>
+      </Button.Group>
         <Title>Dashboard</Title>
-        <Button as={Link} to="/user/new" color="primary" >New post</Button>
+        <Button style={newpostbutton} color={'success'} onClick={(e) => toggleNewpostModal()} >
+          <Icon size="small">
+            <FontAwesomeIcon icon={faPen} />
+          </Icon>
+          <span>New post</span>
+          </Button>
 
         <Label>All posts</Label>
-        <Field kind="addons">
-          <Control>
-              <Input disabled placeholder="Search" />
-          </Control>
-          <Control>
-              <Button disabled color="info">
-                  <Icon>
-                      <FontAwesomeIcon icon={faSearch} />
-                  </Icon>
-              </Button>
-          </Control>
-        </Field>
-
         <Table fullwidth>
           <Table.Head>
             <Table.Row>
@@ -92,6 +200,7 @@ function shorten(description) {
               <Table.Heading>Title</Table.Heading>
               <Table.Heading>Description</Table.Heading>
               <Table.Heading>Date</Table.Heading>
+              <Table.Heading>Comments</Table.Heading>
               <Table.Heading>Edit</Table.Heading>
               <Table.Heading>Remove</Table.Heading>
             </Table.Row>
@@ -105,18 +214,27 @@ function shorten(description) {
               <Table.Cell>{shorten(post.description)}</Table.Cell>
               <Table.Cell>{post.date}</Table.Cell>
               <Table.Cell>
-                <Button color="info"
-                    as={Link} to={{
-                      pathname: '/user/new',
-                      state: { postData: post }
-                    }}>
+                <Button color="info" onClick={(e) => {onShowComments(post)}}>
+                  <Icon>
+                      <FontAwesomeIcon icon={faComments} />
+                  </Icon>
+                </Button>
+              </Table.Cell>
+              <Table.Cell>
+                <Button color="info" onClick={(e) => {
+                  setPostToEdit(post)
+                  toggleEditModal()
+                  }}>
                   <Icon>
                       <FontAwesomeIcon icon={faEdit} />
                   </Icon>
                 </Button>
               </Table.Cell>
               <Table.Cell>
-                <Button color="danger" onClick={(e) => onDelete(post.id, e)}>
+                <Button color="danger" onClick={(e) => {
+                  setPostToDelete(post.id)
+                  toggleDeleteModal()
+                  }}>
                   <Icon>
                       <FontAwesomeIcon icon={faTrash} />
                   </Icon>
@@ -126,7 +244,12 @@ function shorten(description) {
             ))}
           </Table.Body>
         </Table>
+        <Modali.Modal {...deleteModal} />
+        <Modali.Modal {...editModal} />
+        <Modali.Modal {...logoutModal} />
+        <Modali.Modal {...newpostModal} />
       </Box>
+      </Container>
     </div>
   );
 }

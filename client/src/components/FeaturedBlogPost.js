@@ -1,65 +1,83 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Title, Image, Icon } from "rbx";
-import { Link } from "react-router-dom";
+import { Card, Button, Title, Image, Icon, Level } from "rbx";
+import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
-const readCheckIcon = {
-    marginTop:'7px'
+const subtitle = {
+    'marginTop': '10px'
 };
+
+const iconHeart = {
+    marginTop: '5px',
+    marginLeft: '20px',
+};
+
+const iconHeartText = {
+    marginRight: '3px',
+};
+
+const getReadPostsFromLocalStorage = () => {
+    let readPostsInStorage = localStorage.getItem("readPosts");
+    if(!readPostsInStorage) {
+        localStorage.setItem('readPosts', JSON.stringify([]));
+    } 
+
+    return JSON.parse(localStorage.getItem("readPosts"));
+}
 
 export default function FeaturedBlogPost(props) {
 
     const { post } = props;
     const [ isPostRead, setIsPostRead ] = useState(false);
+    const [ readPosts, setReadPosts ] = useState(getReadPostsFromLocalStorage())
 
-
-    let url = process.env.REACT_APP_POSTS_API_URL_PROD + `${post.id}`;
-
-    if(process.env.NODE_ENV !== 'production') {
-        url = process.env.REACT_APP_POSTS_API_URL_DEVEL + `${post.id}`;
-    }
+    let history = useHistory();
 
     const route = `/posts/${post.id}`
 
     useEffect(() => {
-        // Get read posts from localstorage and compare to post id
-        var readPosts = [];
-
-        if(localStorage.getItem("readPosts")) {
-            readPosts = JSON.parse(localStorage.getItem("readPosts"));
-            
-            if(!readPosts.includes(post.id)) {
-                setIsPostRead(true);
-            }
-        } else {
-            localStorage.setItem('readPosts', JSON.stringify(readPosts));
+        if(readPosts.includes(post.id) && isPostRead !== true) {
+            setIsPostRead(true);
         }
-
       }, []);
 
     function onReadMore(event) {
+        window.scrollTo(0, 0);
         // Mark post as read to local storage
-        var readPostsInStorage = [];
-        if(localStorage.getItem("readPosts")) {
-            readPostsInStorage = JSON.parse(localStorage.getItem("readPosts"));
-        };
+        let readPostsInStorage = JSON.parse(localStorage.getItem("readPosts"));
 
         if(!readPostsInStorage.includes(post.id)) {
             readPostsInStorage.push(post.id)
         };
 
         localStorage.setItem('readPosts', JSON.stringify(readPostsInStorage));
+        setReadPosts(JSON.stringify(readPostsInStorage));
+        
     }
 
     function renderReadIcon() {
-        if(!isPostRead) {
+        if(isPostRead) {
             return (
-                <Icon  style={readCheckIcon} >
-                    <FontAwesomeIcon icon={faCheckCircle} />
-                </Icon>
+                <span>
+                <Button as={Link} to={route} color="light" onClick={onReadMore}>Read more</Button>
+                </span>
+            );
+        } else {
+            return (
+                <span>
+                <Button as={Link} to={route} color="primary" onClick={onReadMore}>Read more</Button>
+                </span>
             );
         }
+
+    }
+
+    const handleClickCategory = e => {
+        history.push({
+                    pathname: '/search',
+                    state: { query: e.target.lastChild.data }
+                    })
     }
 
     return (
@@ -72,15 +90,26 @@ export default function FeaturedBlogPost(props) {
                 </Card.Image>
 
                 <Card.Content>
-                    <Title size={4}>{post.title}</Title>
-                    <Title subtitle>{post.description}</Title>
-                    <Button as={Link} to={route} color="primary" onClick={onReadMore}>Read more</Button>
-                    {renderReadIcon()}
+                <Level>
+                        <Level.Item align="left">{post.date}</Level.Item>
+                        <Level.Item align="right" onClick={handleClickCategory}><a>{post.category}</a></Level.Item>
+                </Level>
+                    <span><Title as={Link} to={route} size={4} onClick={onReadMore}>{post.title}</Title></span>
+                    <span><Title 
+                        subtitle 
+                        style={subtitle}
+                        responsive={{
+                            touch: { hide: { value: true } }
+                          }}
+                        >{post.description}</Title></span>
                 </Card.Content>
-                <Card.Footer>
-                    {post.date}
-                </Card.Footer>
-
+                <Card.Content>
+                    {renderReadIcon()}
+                    <Icon style={iconHeart} color="grey">
+                        <FontAwesomeIcon style={iconHeartText} size="lg" icon={faHeart} />
+                        <small>{post.postLikes}</small>
+                    </Icon>
+                </Card.Content>
             </Card>
         </div>
     );
