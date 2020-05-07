@@ -5,6 +5,8 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faSearch, faEdit, faComments, faSignOutAlt, faPen } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from "../context/auth";
+import Modali, { useModali } from 'modali';
+import { useHistory } from "react-router-dom";
 
 const container = {
   'padding': '16px'
@@ -22,7 +24,65 @@ const newpostbutton = {
 
 export default function Dashboard(props) {
   const [posts, setPosts] = useState([])
+  const [postToDelete, setPostToDelete] = useState(-1)
+  const [postToEdit, setPostToEdit] = useState(-1)
 
+  const [deleteModal, toggleDeleteModal] = useModali({
+    animated: true,
+    title: `Delete post ${postToDelete}?`,
+    message: 'Post will be permanently deleted.',
+    buttons: [
+      <Modali.Button
+        label="Cancel"
+        isStyleCancel
+        onClick={() => toggleDeleteModal()}
+      />,
+      <Modali.Button
+        label="Delete"
+        isStyleDestructive
+        onClick={() => onDelete(postToDelete)}
+      />,
+    ],
+  });
+
+  const [editModal, toggleEditModal] = useModali({
+    animated: true,
+    title: `Edit post ${postToEdit.id}?`,
+    message: 'Post will be modified',
+    buttons: [
+      <Modali.Button
+        label="Cancel"
+        isStyleCancel
+        onClick={() => toggleEditModal()}
+      />,
+      <Modali.Button
+        label="Edit"
+        isStyleDefault
+        onClick={() => onEdit(postToEdit)}
+      />,
+    ],
+  });
+
+  const [logoutModal, toggleLogoutModal] = useModali({
+    animated: true,
+    title: `Log out?`,
+    buttons: [
+      <Modali.Button
+        label="Cancel"
+        isStyleCancel
+        onClick={() => toggleLogoutModal()}
+      />,
+      <Modali.Button
+        label="Log out"
+        isStyleDestructive
+        onClick={() => logOut()}
+      />,
+    ],
+  });
+
+  
+
+  let history = useHistory();
   let shortDescription = '';
   const { setAuthTokens } = useAuth();
 
@@ -41,13 +101,25 @@ export default function Dashboard(props) {
        alert(`${error}`)
    })
  }, []) 
+
+ function onEdit(postData) {
+  history.push({
+    pathname: '/edit',
+    state: { postData: postData }
+    })
+ }
+
+ function onShowComments(postData) {
+  history.push({
+    pathname: '/comments',
+    state: { postData: postData }
+    })
+ }
  
  function onDelete(id, event) {
-  console.log(`delete ${id}`);
   axios
       .delete(url + id)
       .then(response => {
-          console.log(response)
       })
       .catch(error => {
           alert(`Error: Post  was not deleted`)
@@ -63,6 +135,7 @@ export default function Dashboard(props) {
         }
       }
       setPosts(updatedPosts);
+      toggleDeleteModal();
 }
 
 function shorten(description) {
@@ -78,11 +151,11 @@ function logOut() {
       <Container breakpoint="mobile" style={container}>
       <Box style={box}>
       <Button.Group align="right" >
-        <Button onClick={logOut} color="danger" >
+        <Button onClick={toggleLogoutModal} color="danger" >
         <Icon size="small">
             <FontAwesomeIcon icon={faSignOutAlt} />
           </Icon>
-            <span>Logout</span>
+            <span>Log out</span>
           </Button>
       </Button.Group>
         <Title>Dashboard</Title>
@@ -115,29 +188,27 @@ function logOut() {
               <Table.Cell>{shorten(post.description)}</Table.Cell>
               <Table.Cell>{post.date}</Table.Cell>
               <Table.Cell>
-                <Button color="info"
-                    as={Link} to={{
-                      pathname: '/comments',
-                      state: { postData: post }
-                    }}>
+                <Button color="info" onClick={(e) => {onShowComments(post)}}>
                   <Icon>
                       <FontAwesomeIcon icon={faComments} />
                   </Icon>
                 </Button>
               </Table.Cell>
               <Table.Cell>
-                <Button color="info"
-                    as={Link} to={{
-                      pathname: '/edit',
-                      state: { postData: post }
-                    }}>
+                <Button color="info" onClick={(e) => {
+                  setPostToEdit(post)
+                  toggleEditModal()
+                  }}>
                   <Icon>
                       <FontAwesomeIcon icon={faEdit} />
                   </Icon>
                 </Button>
               </Table.Cell>
               <Table.Cell>
-                <Button color="danger" onClick={(e) => onDelete(post.id, e)}>
+                <Button color="danger" onClick={(e) => {
+                  setPostToDelete(post.id)
+                  toggleDeleteModal()
+                  }}>
                   <Icon>
                       <FontAwesomeIcon icon={faTrash} />
                   </Icon>
@@ -147,6 +218,9 @@ function logOut() {
             ))}
           </Table.Body>
         </Table>
+        <Modali.Modal {...deleteModal} />
+        <Modali.Modal {...editModal} />
+        <Modali.Modal {...logoutModal} />
       </Box>
       </Container>
     </div>
