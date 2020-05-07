@@ -27,6 +27,25 @@ export default function Dashboard(props) {
   const [postToDelete, setPostToDelete] = useState(-1)
   const [postToEdit, setPostToEdit] = useState(-1)
 
+  const [newpostModal, toggleNewpostModal] = useModali({
+    animated: true,
+    title: `Create a new post?`,
+    message: 'A text editor will be opened',
+    buttons: [
+      <Modali.Button
+        label="Cancel"
+        isStyleCancel
+        onClick={() => toggleNewpostModal()}
+      />,
+      <Modali.Button
+        label="Go to"
+        isStyleDefault
+        onClick={() => onNewPost()}
+      />,
+    ],
+  });
+
+
   const [deleteModal, toggleDeleteModal] = useModali({
     animated: true,
     title: `Delete post ${postToDelete}?`,
@@ -102,6 +121,13 @@ export default function Dashboard(props) {
    })
  }, []) 
 
+ function onNewPost() {
+  history.push({
+    pathname: '/new',
+  })
+ }
+
+
  function onEdit(postData) {
   history.push({
     pathname: '/edit',
@@ -159,7 +185,7 @@ function logOut() {
           </Button>
       </Button.Group>
         <Title>Dashboard</Title>
-        <Button style={newpostbutton} as={Link} to="new" color="primary" >
+        <Button style={newpostbutton} color={'success'} onClick={(e) => toggleNewpostModal()} >
           <Icon size="small">
             <FontAwesomeIcon icon={faPen} />
           </Icon>
@@ -221,6 +247,7 @@ function logOut() {
         <Modali.Modal {...deleteModal} />
         <Modali.Modal {...editModal} />
         <Modali.Modal {...logoutModal} />
+        <Modali.Modal {...newpostModal} />
       </Box>
       </Container>
     </div>
