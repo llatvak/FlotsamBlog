@@ -49,7 +49,7 @@ public class CategoryRestController {
             return ResponseEntity.ok(updatedCategory);
         } else {
             categoryRepository.save(categoryDetails);
-            UriComponents uriComponents = b.path("api/category/{id}").buildAndExpand(categoryDetails.getId());
+            UriComponents uriComponents = b.path("api/categories/{id}").buildAndExpand(categoryDetails.getId());
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(uriComponents.toUri());
             return new ResponseEntity<Category>(categoryDetails, headers, HttpStatus.CREATED);
