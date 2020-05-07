@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Input, Field, Button, Box, Label, Control, Textarea, Select, Container, Help, Icon, Divider, Media, Image} from "rbx";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { useForm } from "react-hook-form";
+import Modali, { useModali } from 'modali';
 
 const box = {
     margin: '60px',
-};
-
-const button = {
-    marginRight: '20px',
 };
 
 const buttonControls = {
@@ -42,9 +39,65 @@ export default function NewBlogPost(props) {
     const [edited, setEdited] = useState(false);
     const { register, handleSubmit, errors } = useForm();
 
-    const [previewHidden, setPreviewHidden] = useState(true);
-
     const history = useHistory();
+
+    const [publishModal, togglePublishModal] = useModali({
+        animated: true,
+        title: `Publish a new post?`,
+        message: 'Post will be public',
+        buttons: [
+          <Modali.Button
+            label="Cancel"
+            isStyleCancel
+            onClick={() => togglePublishModal()}
+          />,
+          <Modali.Button
+            label="Publish"
+            isStyleDefault
+            onClick={() => handlePostPublish()}
+          />,
+        ],
+      });
+
+      const [cancelModal, toggleCancelModal] = useModali({
+        animated: true,
+        title: `Cancel and go to dashboard?`,
+        message: 'All modified data will be lost',
+        buttons: [
+          <Modali.Button
+            label="Continue writing"
+            isStyleCancel
+            onClick={() => toggleCancelModal()}
+          />,
+          <Modali.Button
+            label="Go to dashboard"
+            isStyleDestructive
+            onClick={() => handleCancel()}
+          />,
+        ],
+      });
+
+      const [postSuccessModal, togglePostSuccessModal] = useModali({
+        animated: true,
+        title: `Post ${title} was created/updated`,
+        message: 'Return to dashboard or go to home page?',
+        onHide: () => {
+            history.push({
+            pathname: '/dashboard',
+        })},
+        buttons: [
+          <Modali.Button
+            label="Go to home"
+            isStyleDefault
+            onClick={() => goToHome()}
+          />,
+          <Modali.Button
+            label="Go to dashboard"
+            isStyleDefault
+            onClick={() => goToDashBoard()}
+          />,
+        ],
+      });
 
     useEffect(() => {
         axios
@@ -57,7 +110,6 @@ export default function NewBlogPost(props) {
 
        if(props.location.state !== undefined) {
             const postData = props.location.state.postData;
-            console.log(postData);
             setId(postData.id);
             setTitle(postData.title);
             setDescription(postData.description);
@@ -102,11 +154,7 @@ export default function NewBlogPost(props) {
             axios
             .post(postUrl, blogpost)
             .then(response => {
-                console.log(response);
-                alert(`Post ${blogpost.title} created`);
-                history.push({
-                    pathname: '/',
-                })
+                togglePostSuccessModal();
             })
             .catch(error => {
                  console.log(error);
@@ -117,14 +165,31 @@ export default function NewBlogPost(props) {
             axios
             .put(postUrl, blogpost)
             .then(response => {
-                console.log(response);
-                alert(`Post ${blogpost.title} updated`);
+                togglePostSuccessModal();
+                //alert(`Post ${blogpost.title} updated`);
             })
             .catch(error => {
                  console.log(error);
                 alert(`Error: Post '${blogpost.title}' was not updated`)
             })
        }
+    }
+
+    const handleCancel = () => {
+        togglePublishModal()
+        goToDashBoard();
+    }
+
+    const goToDashBoard = () => {
+        history.push({
+            pathname: '/dashboard',
+        })
+    }
+
+    const goToHome= () => {
+        history.push({
+            pathname: '/',
+        })
     }
 
     const renderImage = () => {
@@ -152,7 +217,7 @@ export default function NewBlogPost(props) {
         <div>
             <Container breakpoint="touch">
             <Box style={box} >
-                <form onSubmit={handleSubmit(handlePostPublish)}>
+                <form onSubmit={handleSubmit(togglePublishModal)}>
                     <Field>
                         <Label>Title</Label>
                         <Control>
@@ -230,17 +295,17 @@ export default function NewBlogPost(props) {
                         <Control style={buttonControls}>
                             <Button.Group>
                                 <Input as={Button} type="submit" color="link" >Publish</Input>
-                                <Button text as={Link} to="/dashboard" >Cancel</Button>
+                                <Button text onClick={toggleCancelModal} >Cancel</Button>
                             </Button.Group>
                         </Control>
                     </Field>
                 </form>
+                <Modali.Modal {...cancelModal} />
+                <Modali.Modal {...publishModal} />
+                <Modali.Modal {...postSuccessModal} />
             </Box>
             </Container>
 
-            <div hidden={previewHidden}>
-                
-            </div>
         </div>
     );
 }

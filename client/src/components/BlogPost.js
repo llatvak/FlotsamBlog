@@ -42,6 +42,10 @@ const likeButton = {
   paddingLeft: '40px',
 };
 
+const iconHeartText = {
+  marginRight: '3px',
+};
+
 const media = {
   'margin': '20px'
 };
@@ -51,7 +55,14 @@ const title = {
 };
 
 
+const getLikedPostsFromLocalStorage = () => {
+  let likedPostsInStorage = localStorage.getItem('likedPosts');
+  if(!likedPostsInStorage) {
+      localStorage.setItem('likedPosts', JSON.stringify([]));
+  } 
 
+  return JSON.parse(localStorage.getItem('likedPosts'));
+}
 
 export default function BlogPost(props) {
   const id  = props.match.params.id;
@@ -60,9 +71,8 @@ export default function BlogPost(props) {
   const [commentsBoxOpen, setCommentBoxOpen] = useState(true);
   const [comments, setComments] = useState([])
   const [commentAreaRef, setCommentAreaRef] = useState('')
-  let [heartIconColor, setHeartIconColor] = useState('grey')
-  const [isPostLiked, setPostLiked] = useState(false)
-  const [initialized, setInitialized] = useState(false)
+  const [heartIconColor, setHeartIconColor] = useState('grey')
+  const [ likedPosts, setLikedPosts ] =  useState(getLikedPostsFromLocalStorage())
 
   let history = useHistory();
   
@@ -81,39 +91,38 @@ export default function BlogPost(props) {
     fetchComments();
     fetchRecommendations();
 
-      let likedPosts = [];
-      if(localStorage.getItem(`likedPosts`)) {
-        likedPosts = JSON.parse(localStorage.getItem(`likedPosts`));
-
-          if(likedPosts.includes(id) && !initialized) {
-              setPostLiked(true);
-              setHeartIconColor('light')
-              setInitialized(true)
-          };
-      };
+     if(likedPosts.includes(Number(id))) {
+        setHeartIconColor('info')
+      } else {
+        setHeartIconColor('grey')
+      }
+      
   }, [id])
 
   const handleHeartIconClick = e => {
-    let likedPostsInStorage = [];
-    if(localStorage.getItem(`likedPosts`)) {
-      likedPostsInStorage = JSON.parse(localStorage.getItem(`likedPosts`));
-    }
+    let likedPostsInStorage = JSON.parse(localStorage.getItem(`likedPosts`));
 
-    if(!likedPostsInStorage.includes(id)) {
-      likedPostsInStorage.push(id);
-    }
-    localStorage.setItem(`likedPosts`, JSON.stringify(likedPostsInStorage));
+    let idAsNumber = Number(id);
 
-    if (!isPostLiked) {
+    if(!likedPostsInStorage.includes(idAsNumber)) {
+      likedPostsInStorage.push(idAsNumber);
       setHeartIconColor('info')
       updateLikes(++post.postLikes);
-      setPostLiked(true)
+
     } else {
       updateLikes(--post.postLikes)
       setHeartIconColor('grey')
-      setPostLiked(false)
-      localStorage.setItem(`likedPosts`, '')
+
+      if(likedPostsInStorage.includes(idAsNumber)) {
+        const index = likedPostsInStorage.indexOf(idAsNumber);
+        if (index > -1) {
+          likedPostsInStorage.splice(index, 1);
+        }
+      }
     }
+
+    localStorage.setItem(`likedPosts`, JSON.stringify(likedPostsInStorage));
+    setLikedPosts(JSON.stringify(likedPostsInStorage));
   }
 
   const updateLikes = (e) => {
@@ -127,11 +136,9 @@ export default function BlogPost(props) {
       category: post.category,
       postLikes: post.postLikes
     }
-    console.log(tempPost)
     axios
      .put(postUrl, tempPost)
      .then(response => {
-       console.log(response)
      }).catch(error => {
        alert(`${error}`)
    })
@@ -173,7 +180,9 @@ export default function BlogPost(props) {
 
     while(arr.length < 3){
         var r = Math.floor(Math.random() * allPosts.length);
-        if(arr.indexOf(r) === -1) arr.push(r);
+        if(r !== Number(id)-1) {
+          if(arr.indexOf(r) === -1) arr.push(r);
+        }
     }
 
     for(let i of arr) {
@@ -202,7 +211,6 @@ export default function BlogPost(props) {
       axios
       .post(commentUrl, tempComment)
       .then(response => {
-        console.log(response)
         commentAreaRef.value = ''
       }).then(() =>
           fetchComments()
@@ -265,7 +273,7 @@ const handleClickCategory = e => {
                 View Comments ({comments.length})
               </Button>
               <Icon style={likeButton} color={heartIconColor} as="a">
-                  <FontAwesomeIcon size="lg" icon={faHeart} onClick={() => handleHeartIconClick()} />
+                  <FontAwesomeIcon style={iconHeartText} size="lg" icon={faHeart} onClick={() => handleHeartIconClick()} />
                   <small>{post.postLikes}</small>
               </Icon>
           </Level>

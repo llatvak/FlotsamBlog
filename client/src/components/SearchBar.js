@@ -1,13 +1,13 @@
 import React, { useState  } from "react";
 import { Button, Control, Input, Field, Icon} from "rbx";
-import { Link, useHistory  } from "react-router-dom";
+import { useHistory  } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useForm } from "react-hook-form";
 
 export default function SearchBar() {
     const [postFilter, setPostFilter] = useState('');
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit } = useForm();
 
     let history = useHistory();
 
