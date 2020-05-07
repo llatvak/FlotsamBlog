@@ -24,7 +24,7 @@ export default function NewBlogPost(props) {
     const [body, setBody] = useState('');
     const [imageUrl, setImageUrl] = useState('https://source.unsplash.com/random/1600x900/?technology');
     const [imageSrc, setImageSrc] = useState('https://source.unsplash.com/random/1600x900/?technology');
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('Programming');
     const [categories, setCategories] = useState([])
     const [date, setDate] = useState(new Date());
     const [dateMonthYear, setDateMonthYear] = useState(`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`)
