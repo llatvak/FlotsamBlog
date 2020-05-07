@@ -30,11 +30,9 @@ export default function Dashboard(props) {
   const { setAuthTokens } = useAuth();
 
   let url = process.env.REACT_APP_POSTS_API_URL_PROD;
-  let postDelUrl = url + `/${id}`;
 
   if(process.env.NODE_ENV !== 'production') {
       url = process.env.REACT_APP_POSTS_API_URL_DEVEL;
-      postDelUrl = url + `/${id}`;
   }
 
   const [newpostModal, toggleNewpostModal] = useModali({
@@ -143,8 +141,9 @@ export default function Dashboard(props) {
  }
  
  function onDelete(id, event) {
+  let delURL = url + `/` + id;
   axios
-      .delete(postDelUrl)
+      .delete(delURL)
       .then(response => {
       })
       .catch(error => {
