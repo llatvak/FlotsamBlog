@@ -43,7 +43,7 @@ export default function FeaturedBlogPost(props) {
     const route = `/posts/${post.id}`
 
     useEffect(() => {
-        if(readPosts.includes(post.id) && isPostRead != true) {
+        if(readPosts.includes(post.id) && isPostRead !== true) {
             setIsPostRead(true);
         }
       }, []);
