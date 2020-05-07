@@ -36,7 +36,10 @@ public class CategoryRestController {
     }
 
     @PutMapping("api/categories/{categoryId}")
-    public ResponseEntity<Category> updateCategory(@PathVariable(value = "categoryId") int categoryId, @Valid @RequestBody Category categoryDetails) throws Exception {
+    public ResponseEntity<Category> updateCategory(@PathVariable(value = "categoryId") int categoryId, @Valid @RequestBody Category categoryDetails, BindingResult result) throws Exception {
+        if(result.hasErrors()) {
+            return new ResponseEntity<Category>(HttpStatus.BAD_REQUEST);
+        }
         Category category = categoryRepository.findById(categoryId).orElse(categoryRepository.save(categoryDetails));
         category.setTitle(categoryDetails.getTitle());
         final Category updatedCategory = categoryRepository.save(category);

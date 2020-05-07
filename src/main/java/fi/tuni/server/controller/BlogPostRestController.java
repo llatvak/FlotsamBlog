@@ -2,6 +2,7 @@ package fi.tuni.server.controller;
 
 import fi.tuni.server.blogpost.BlogPost;
 import fi.tuni.server.blogpost.BlogPostRepository;
+import fi.tuni.server.category.Category;
 import fi.tuni.server.exception.CannotFindPostException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -40,7 +41,10 @@ public class BlogPostRestController {
     }
 
     @PutMapping("api/posts/{postId}")
-    public ResponseEntity<BlogPost> updatePost(@PathVariable(value = "postId") int postId, @Valid @RequestBody BlogPost postDetails) throws Exception {
+    public ResponseEntity<BlogPost> updatePost(@PathVariable(value = "postId") int postId, @Valid @RequestBody BlogPost postDetails, BindingResult result) throws Exception {
+        if(result.hasErrors()) {
+            return new ResponseEntity<BlogPost>(HttpStatus.BAD_REQUEST);
+        }
         BlogPost post = (BlogPost) postRepository.findById(postId).orElse(postRepository.save(postDetails));
         post.setTitle(postDetails.getTitle());
         post.setDescription(postDetails.getDescription());
