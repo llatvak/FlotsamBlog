@@ -18,6 +18,12 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Rest controller for blog posts, allows get, post, put and delete requests.
+ *
+ * @version 1.0
+ * @author Lauri Latva-Kyyny
+ */
 @RestController
 public class BlogPostRestController {
 
@@ -26,6 +32,14 @@ public class BlogPostRestController {
     @Autowired
     BlogPostRepository postRepository;
 
+    /**
+     * Saves new post from POST request.
+     *
+     * @param p received post to be added
+     * @param b url builder to expand url to correct value
+     * @param result result for checking validation errors
+     * @return returns ResponseEntity with appropriate status, and meta info if required
+     */
     @RequestMapping(value = POSTS_URL, method = RequestMethod.POST)
     public ResponseEntity<BlogPost> savePost(@RequestBody(required = true) @Valid BlogPost p, UriComponentsBuilder b, BindingResult result) {
         if (result.hasErrors()) {
@@ -40,8 +54,17 @@ public class BlogPostRestController {
         return new ResponseEntity<BlogPost>(p, headers, HttpStatus.CREATED);
     }
 
+    /**
+     * Updates posts from PUT request if post doesn't exist create one.
+     *
+     * @param postId post id to be updated
+     * @param postDetails current post data to update or create from
+     * @param result result to check validation errors
+     * @param b url builder to expand url to correct value
+     * @return returns ResponseEntity with appropriate status, and meta info if required
+     */
     @PutMapping("api/posts/{postId}")
-    public ResponseEntity<BlogPost> updatePost(@PathVariable(value = "postId") int postId, @Valid @RequestBody BlogPost postDetails, BindingResult result, UriComponentsBuilder b) throws Exception {
+    public ResponseEntity<BlogPost> updatePost(@PathVariable(value = "postId") int postId, @Valid @RequestBody BlogPost postDetails, BindingResult result, UriComponentsBuilder b) {
         if(result.hasErrors()) {
             return new ResponseEntity<BlogPost>(HttpStatus.BAD_REQUEST);
         }
@@ -66,11 +89,22 @@ public class BlogPostRestController {
         }
     }
 
+    /**
+     * Gets all posts from GET request.
+     *
+     * @return returns all posts from repository
+     */
     @RequestMapping(value = POSTS_URL, method = RequestMethod.GET)
     public Iterable<BlogPost> fetchPosts() {
         return postRepository.findAll();
     }
 
+    /**
+     * Gets one post from GET request by id.
+     *
+     * @param postId post id to get
+     * @return returns post if found
+     */
     @RequestMapping(value = "api/posts/{postId}", method = RequestMethod.GET)
     public Optional<BlogPost> fetchPost(@PathVariable int postId) {
         if(postRepository.findById(postId).isPresent()) {
@@ -80,6 +114,12 @@ public class BlogPostRestController {
         }
     }
 
+    /**
+     * Delete one post from id received.
+     *
+     * @param postId post id to be deleted
+     * @return returns appropriate status if post found
+     */
     @RequestMapping(value = "api/posts/{postId}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deletePost(@PathVariable int postId) {
         if(postRepository.findById(postId).isPresent()) {

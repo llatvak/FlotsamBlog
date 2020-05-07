@@ -7,6 +7,12 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Entity that holds category information.
+ *
+ * @version 1.0
+ * @author Lauri Latva-Kyyny
+ */
 @Entity
 public class Category {
 

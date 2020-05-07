@@ -15,12 +15,26 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.util.Optional;
 
+/**
+ * Rest controller for comments, allows get, post, put and delete requests.
+ *
+ * @version 1.0
+ * @author Lauri Latva-Kyyny
+ */
 @RestController
 public class CommentRestController {
 
     @Autowired
     CommentRepository commentRepository;
 
+    /**
+     * Saves new comment from POST request.
+     *
+     * @param c received comment to be added
+     * @param b url builder to expand url to correct value
+     * @param result result for checking validation errors
+     * @return returns ResponseEntity with appropriate status, and meta info if required
+     */
     @RequestMapping(value = "api/comments", method = RequestMethod.POST)
     public ResponseEntity<Comment> saveComment(@RequestBody(required = true) @Valid Comment c, UriComponentsBuilder b, BindingResult result) {
 
@@ -36,6 +50,15 @@ public class CommentRestController {
         return new ResponseEntity<Comment>(c, headers, HttpStatus.CREATED);
     }
 
+    /**
+     * Updates comment from PUT request if comment doesn't exist create one.
+     *
+     * @param commentId comment id to be updated
+     * @param commentDetails current comment data to update or create from
+     * @param result result to check validation errors
+     * @param b url builder to expand url to correct value
+     * @return returns ResponseEntity with appropriate status, and meta info if required
+     */
     @PutMapping("api/comments/{commentId}")
     public ResponseEntity<Comment> updateComment(@PathVariable(value = "commentId") int commentId, @Valid @RequestBody Comment commentDetails, BindingResult result, UriComponentsBuilder b) throws Exception {
         if(result.hasErrors()) {
@@ -62,11 +85,22 @@ public class CommentRestController {
         }
     }
 
+    /**
+     * Gets all comments from GET request.
+     *
+     * @return returns all comments from repository
+     */
     @RequestMapping(value = "api/comments", method = RequestMethod.GET)
     public Iterable<Comment> fetchComments() {
         return commentRepository.findAll();
     }
 
+    /**
+     * Gets one comment from GET request by id.
+     *
+     * @param commentId comment id to get
+     * @return returns comment if found
+     */
     @RequestMapping(value = "api/comments/{commentId}", method = RequestMethod.GET)
     public Optional<Comment> fetchComments(@PathVariable int commentId) {
         if(commentRepository.findById(commentId).isPresent()) {
@@ -76,6 +110,12 @@ public class CommentRestController {
         }
     }
 
+    /**
+     * Delete one comment from id received.
+     *
+     * @param commentId comment id to be deleted
+     * @return returns appropriate status if comment found
+     */
     @RequestMapping(value = "api/comments/{commentId}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteComment(@PathVariable int commentId) {
         if(commentRepository.findById(commentId).isPresent()) {

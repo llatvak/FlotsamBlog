@@ -22,7 +22,23 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Verifies JWT-token to determine if authorization can be granted.
+ *
+ * @author Lauri Latva-Kyyny
+ * @version 1.0
+ */
 public class JwtTokenVerifier extends OncePerRequestFilter {
+
+    /**
+     * Verifies the JWT-token and parser all information to determine access.
+     *
+     * @param request current request
+     * @param response current response
+     * @param filterChain current filter chain to filter from and continue filter chain
+     * @throws ServletException servlet exception to be thrown
+     * @throws IOException io exception to be thrown
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,

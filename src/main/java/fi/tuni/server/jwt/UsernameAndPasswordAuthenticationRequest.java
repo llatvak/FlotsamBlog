@@ -1,5 +1,11 @@
 package fi.tuni.server.jwt;
 
+/**
+ * Pojo class for setting user username and password from request.
+ *
+ * @author Lauri Latva-Kyyny
+ * @version 1.0
+ */
 public class UsernameAndPasswordAuthenticationRequest {
     private String username;
     private String password;

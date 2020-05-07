@@ -9,6 +9,12 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Entity that holds comment information.
+ *
+ * @version 1.0
+ * @author Lauri Latva-Kyyny
+ */
 @Entity
 public class Comment {
 
