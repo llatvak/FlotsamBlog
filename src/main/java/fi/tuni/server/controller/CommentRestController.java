@@ -37,18 +37,29 @@ public class CommentRestController {
     }
 
     @PutMapping("api/comments/{commentId}")
-    public ResponseEntity<Comment> updateComment(@PathVariable(value = "commentId") int commentId, @Valid @RequestBody Comment commentDetails, BindingResult result) throws Exception {
+    public ResponseEntity<Comment> updateComment(@PathVariable(value = "commentId") int commentId, @Valid @RequestBody Comment commentDetails, BindingResult result, UriComponentsBuilder b) throws Exception {
         if(result.hasErrors()) {
             return new ResponseEntity<Comment>(HttpStatus.BAD_REQUEST);
         }
-        Comment comment = commentRepository.findById(commentId).orElse(commentRepository.save(commentDetails));
-        comment.setAuthor(commentDetails.getAuthor());
-        comment.setContent(commentDetails.getContent());
-        comment.setDate(commentDetails.getDate());
-        comment.setLikes(commentDetails.getLikes());
-        comment.setPostId(commentDetails.getPostId());
-        final Comment updatedComment = commentRepository.save(comment);
-        return ResponseEntity.ok(updatedComment);
+        Optional<Comment> comment = commentRepository.findById(commentId);
+        if(comment.isPresent()) {
+            Comment existingComment = comment.get();
+            existingComment.setAuthor(commentDetails.getAuthor());
+            existingComment.setContent(commentDetails.getContent());
+            existingComment.setDate(commentDetails.getDate());
+            existingComment.setLikes(commentDetails.getLikes());
+            existingComment.setPostId(commentDetails.getPostId());
+            final Comment updatedComment = commentRepository.save(existingComment);
+            return ResponseEntity.ok(updatedComment);
+        } else {
+            commentRepository.save(commentDetails);
+
+            UriComponents uriComponents = b.path("api/comments/{id}").buildAndExpand(commentDetails.getId());
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(uriComponents.toUri());
+
+            return new ResponseEntity<Comment>(commentDetails, headers, HttpStatus.CREATED);
+        }
     }
 
     @RequestMapping(value = "api/comments", method = RequestMethod.GET)

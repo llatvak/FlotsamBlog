@@ -41,20 +41,29 @@ public class BlogPostRestController {
     }
 
     @PutMapping("api/posts/{postId}")
-    public ResponseEntity<BlogPost> updatePost(@PathVariable(value = "postId") int postId, @Valid @RequestBody BlogPost postDetails, BindingResult result) throws Exception {
+    public ResponseEntity<BlogPost> updatePost(@PathVariable(value = "postId") int postId, @Valid @RequestBody BlogPost postDetails, BindingResult result, UriComponentsBuilder b) throws Exception {
         if(result.hasErrors()) {
             return new ResponseEntity<BlogPost>(HttpStatus.BAD_REQUEST);
         }
-        BlogPost post = (BlogPost) postRepository.findById(postId).orElse(postRepository.save(postDetails));
-        post.setTitle(postDetails.getTitle());
-        post.setDescription(postDetails.getDescription());
-        post.setBody(postDetails.getBody());
-        post.setDate(postDetails.getDate());
-        post.setImageUrl(postDetails.getImageUrl());
-        post.setCategory(postDetails.getCategory());
-        post.setPostLikes(postDetails.getPostLikes());
-        final BlogPost updatedPost = postRepository.save(post);
-        return ResponseEntity.ok(updatedPost);
+        Optional<BlogPost> blogPost = postRepository.findById(postId);
+        if(blogPost.isPresent()) {
+            BlogPost existingPost = blogPost.get();
+            existingPost.setTitle(postDetails.getTitle());
+            existingPost.setDescription(postDetails.getDescription());
+            existingPost.setBody(postDetails.getBody());
+            existingPost.setDate(postDetails.getDate());
+            existingPost.setImageUrl(postDetails.getImageUrl());
+            existingPost.setCategory(postDetails.getCategory());
+            existingPost.setPostLikes(postDetails.getPostLikes());
+            final BlogPost updatedPost = postRepository.save(existingPost);
+            return ResponseEntity.ok(updatedPost);
+        } else {
+            postRepository.save(postDetails);
+            UriComponents uriComponents = b.path("api/posts/{id}").buildAndExpand(postDetails.getId());
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(uriComponents.toUri());
+            return new ResponseEntity<BlogPost>(postDetails, headers, HttpStatus.CREATED);
+        }
     }
 
     @RequestMapping(value = POSTS_URL, method = RequestMethod.GET)

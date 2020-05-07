@@ -2,6 +2,7 @@ package fi.tuni.server.controller;
 
 import fi.tuni.server.category.Category;
 import fi.tuni.server.category.CategoryRepository;
+import fi.tuni.server.comment.Comment;
 import fi.tuni.server.exception.CannotFindCategoryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -36,14 +37,23 @@ public class CategoryRestController {
     }
 
     @PutMapping("api/categories/{categoryId}")
-    public ResponseEntity<Category> updateCategory(@PathVariable(value = "categoryId") int categoryId, @Valid @RequestBody Category categoryDetails, BindingResult result) throws Exception {
+    public ResponseEntity<Category> updateCategory(@PathVariable(value = "categoryId") int categoryId, @Valid @RequestBody Category categoryDetails, BindingResult result, UriComponentsBuilder b) throws Exception {
         if(result.hasErrors()) {
             return new ResponseEntity<Category>(HttpStatus.BAD_REQUEST);
         }
-        Category category = categoryRepository.findById(categoryId).orElse(categoryRepository.save(categoryDetails));
-        category.setTitle(categoryDetails.getTitle());
-        final Category updatedCategory = categoryRepository.save(category);
-        return ResponseEntity.ok(updatedCategory);
+        Optional<Category> category = categoryRepository.findById(categoryId);
+        if(category.isPresent()) {
+            Category existingCategory = category.get();
+            existingCategory.setTitle(categoryDetails.getTitle());
+            final Category updatedCategory = categoryRepository.save(existingCategory);
+            return ResponseEntity.ok(updatedCategory);
+        } else {
+            categoryRepository.save(categoryDetails);
+            UriComponents uriComponents = b.path("api/category/{id}").buildAndExpand(categoryDetails.getId());
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(uriComponents.toUri());
+            return new ResponseEntity<Category>(categoryDetails, headers, HttpStatus.CREATED);
+        }
     }
 
     @RequestMapping(value = "api/categories", method = RequestMethod.GET)
