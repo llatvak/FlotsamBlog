@@ -2,6 +2,7 @@ package fi.tuni.server.controller;
 
 import fi.tuni.server.blogpost.BlogPost;
 import fi.tuni.server.blogpost.BlogPostRepository;
+import fi.tuni.server.exception.CannotFindPostException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -59,7 +60,11 @@ public class BlogPostRestController {
 
     @RequestMapping(value = "api/posts/{postId}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deletePost(@PathVariable int postId) {
-        postRepository.deleteById(postId);
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        if(postRepository.findById(postId).isPresent()) {
+            postRepository.deleteById(postId);
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        } else {
+            throw new CannotFindPostException(postId);
+        }
     }
 }
