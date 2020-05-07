@@ -83,6 +83,28 @@ export default function NewBlogPost(props) {
         ],
       });
 
+      const [postSuccessModal, togglePostSuccessModal] = useModali({
+        animated: true,
+        title: `Post ${title} was created/updated`,
+        message: 'Return to dashboard or go to home page?',
+        onHide: () => {
+            history.push({
+            pathname: '/dashboard',
+        })},
+        buttons: [
+          <Modali.Button
+            label="Go to home"
+            isStyleDefault
+            onClick={() => goToHome()}
+          />,
+          <Modali.Button
+            label="Go to dashboard"
+            isStyleDefault
+            onClick={() => goToDashBoard()}
+          />,
+        ],
+      });
+
     useEffect(() => {
         axios
          .get(categoryUrl)
@@ -138,10 +160,7 @@ export default function NewBlogPost(props) {
             axios
             .post(postUrl, blogpost)
             .then(response => {
-                alert(`Post ${blogpost.title} created`);
-                history.push({
-                    pathname: '/dashboard',
-                })
+                togglePostSuccessModal();
             })
             .catch(error => {
                  console.log(error);
@@ -152,10 +171,8 @@ export default function NewBlogPost(props) {
             axios
             .put(postUrl, blogpost)
             .then(response => {
-                history.push({
-                    pathname: '/dashboard',
-                })
-                alert(`Post ${blogpost.title} updated`);
+                togglePostSuccessModal();
+                //alert(`Post ${blogpost.title} updated`);
             })
             .catch(error => {
                  console.log(error);
@@ -166,8 +183,18 @@ export default function NewBlogPost(props) {
 
     const handleCancel = () => {
         togglePublishModal()
+        goToDashBoard();
+    }
+
+    const goToDashBoard = () => {
         history.push({
             pathname: '/dashboard',
+        })
+    }
+
+    const goToHome= () => {
+        history.push({
+            pathname: '/',
         })
     }
 
@@ -281,6 +308,7 @@ export default function NewBlogPost(props) {
                 </form>
                 <Modali.Modal {...cancelModal} />
                 <Modali.Modal {...publishModal} />
+                <Modali.Modal {...postSuccessModal} />
             </Box>
             </Container>
 
