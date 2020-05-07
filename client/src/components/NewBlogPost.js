@@ -18,16 +18,6 @@ const buttonControls = {
 
 export default function NewBlogPost(props) {
 
-    let postUrl = process.env.REACT_APP_POSTS_API_URL_PROD;
-    let postEditUrl = postUrl + `/${id}`;
-    let categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_PROD;
-
-    if(process.env.NODE_ENV !== 'production') {
-        postUrl = process.env.REACT_APP_POSTS_API_URL_DEVEL;
-        postEditUrl = postUrl + `/${id}`;
-        categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_DEVEL;
-    }
-
     const [id, setId] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -41,6 +31,16 @@ export default function NewBlogPost(props) {
     const [edited, setEdited] = useState(false);
     const { register, handleSubmit, errors } = useForm();
 
+    let postUrl = process.env.REACT_APP_POSTS_API_URL_PROD;
+    let postEditUrl = postUrl + `/${id}`;
+    let categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_PROD;
+
+    if(process.env.NODE_ENV !== 'production') {
+        postUrl = process.env.REACT_APP_POSTS_API_URL_DEVEL;
+        postEditUrl = postUrl + `/${id}`;
+        categoryUrl = process.env.REACT_APP_CATEGORIES_API_URL_DEVEL;
+    }
+    
     const history = useHistory();
 
     const [publishModal, togglePublishModal] = useModali({
