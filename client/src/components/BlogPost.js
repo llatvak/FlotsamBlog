@@ -176,10 +176,13 @@ export default function BlogPost(props) {
 
     while(arr.length < 3){
         var r = Math.floor(Math.random() * allPosts.length);
-        if(arr.indexOf(r) === -1) arr.push(r);
+        if(r !== Number(id)-1) {
+          if(arr.indexOf(r) === -1) arr.push(r);
+        }
     }
 
     for(let i of arr) {
+      console.log(i)
       randomPosts.push(allPosts[i])
     }
     return randomPosts;
