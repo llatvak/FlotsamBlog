@@ -206,7 +206,8 @@ export default function BlogPost(props) {
     const tempDate = formatDate(new Date().toString())
     const tempContent = commentAreaRef.value
     if (commentAreaRef.value.length > 0) {
-      const tempComment = {author: 'Guest515', content: tempContent, date: tempDate, likes: 0, postId: id}
+      const tempAuthor = `Guest${createUserId()}`
+      const tempComment = {author: tempAuthor, content: tempContent, date: tempDate, likes: 0, postId: id}
       axios
       .post(commentUrl, tempComment)
       .then(response => {
@@ -219,6 +220,10 @@ export default function BlogPost(props) {
     } else {
       alert('Comment length must be at least 1')
     }
+  }
+
+  const createUserId = () => {
+    return Math.floor(Math.random()*(999-0)) + 0
   }
 
   const formatDate = (date) => {

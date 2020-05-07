@@ -14,6 +14,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main class that creates dummy data and prints testing commands and other info.
+ *
+ * @author Lauri Latva-Kyyny
+ * @version 1.0
+ */
 @SpringBootApplication
 public class ServerApplication implements CommandLineRunner {
 
@@ -30,6 +36,11 @@ public class ServerApplication implements CommandLineRunner {
         SpringApplication.run(ServerApplication.class, args);
     }
 
+    /**
+     * Creates dummy posts and prints info and testing commands.
+     *
+     * @param args parameter arguments
+     */
     @Override
     public void run(String... args) {
         // Insert dummy data as list to database and print them
