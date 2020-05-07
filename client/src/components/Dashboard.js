@@ -38,7 +38,7 @@ export default function Dashboard(props) {
         onClick={() => toggleNewpostModal()}
       />,
       <Modali.Button
-        label="Go to"
+        label="Go to editor"
         isStyleDefault
         onClick={() => onNewPost()}
       />,
