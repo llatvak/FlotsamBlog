@@ -2,14 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Title, Image, Icon, Level } from "rbx";
 import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheckCircle, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
-const title = {
-};
 const subtitle = {
     'marginTop': '10px'
-};
-const button = {
 };
 
 const iconHeart = {
@@ -17,10 +13,20 @@ const iconHeart = {
     marginLeft: '20px',
 };
 
+const getReadPostsFromLocalStorage = () => {
+    let readPostsInStorage = localStorage.getItem("readPosts");
+    if(!readPostsInStorage) {
+        localStorage.setItem('readPosts', JSON.stringify([]));
+    } 
+
+    return JSON.parse(localStorage.getItem("readPosts"));
+}
+
 export default function FeaturedBlogPost(props) {
 
     const { post } = props;
     const [ isPostRead, setIsPostRead ] = useState(false);
+    const [ readPosts, setReadPosts ] = useState(getReadPostsFromLocalStorage())
 
     let history = useHistory();
 
@@ -33,47 +39,36 @@ export default function FeaturedBlogPost(props) {
     const route = `/posts/${post.id}`
 
     useEffect(() => {
-        // Get read posts from localstorage and compare to post id
-        var readPosts = [];
-
-        if(localStorage.getItem("readPosts")) {
-            readPosts = JSON.parse(localStorage.getItem("readPosts"));
-            
-            if(!readPosts.includes(post.id)) {
-                setIsPostRead(true);
-            }
-        } else {
-            localStorage.setItem('readPosts', JSON.stringify(readPosts));
+        if(readPosts.includes(post.id) && isPostRead != true) {
+            setIsPostRead(true);
         }
-
       }, []);
 
     function onReadMore(event) {
         window.scrollTo(0, 0);
         // Mark post as read to local storage
-        var readPostsInStorage = [];
-        if(localStorage.getItem("readPosts")) {
-            readPostsInStorage = JSON.parse(localStorage.getItem("readPosts"));
-        };
+        let readPostsInStorage = JSON.parse(localStorage.getItem("readPosts"));
 
         if(!readPostsInStorage.includes(post.id)) {
             readPostsInStorage.push(post.id)
         };
 
         localStorage.setItem('readPosts', JSON.stringify(readPostsInStorage));
+        setReadPosts(JSON.stringify(readPostsInStorage));
+        
     }
 
     function renderReadIcon() {
-        if(!isPostRead) {
+        if(isPostRead) {
             return (
                 <span>
-                <Button as={Link} to={route} color="light" onClick={onReadMore} style={button}>Read more</Button>
+                <Button as={Link} to={route} color="light" onClick={onReadMore}>Read more</Button>
                 </span>
             );
         } else {
             return (
                 <span>
-                <Button as={Link} to={route} color="primary" onClick={onReadMore} style={button}>Read more</Button>
+                <Button as={Link} to={route} color="primary" onClick={onReadMore}>Read more</Button>
                 </span>
             );
         }
@@ -101,7 +96,7 @@ export default function FeaturedBlogPost(props) {
                         <Level.Item align="left">{post.date}</Level.Item>
                         <Level.Item align="right" onClick={handleClickCategory}><a>{post.category}</a></Level.Item>
                 </Level>
-                    <span><Title as={Link} to={route} size={4} style={title} onClick={onReadMore}>{post.title}</Title></span>
+                    <span><Title as={Link} to={route} size={4} onClick={onReadMore}>{post.title}</Title></span>
                     <span><Title 
                         subtitle 
                         style={subtitle}
